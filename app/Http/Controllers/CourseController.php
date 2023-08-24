@@ -49,7 +49,6 @@ class CourseController extends Controller
             ], 403);
         }
         $validated = $request->validated();
-        $validated['slug'] = Str::slug($validated['name']);
         $course = Course::create($validated);
         return [
             'success' => true,
@@ -96,9 +95,6 @@ class CourseController extends Controller
             ];
         }
         $validated = $request->validated();
-        if (isset($validated['name'])) {
-            $validated['slug'] = Str::slug($validated['name']);
-        }
         $course->update($validated);
         $course->save();
         return [
