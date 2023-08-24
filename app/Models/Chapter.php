@@ -11,7 +11,7 @@ class Chapter extends Model
     use HasFactory;
     use Sluggable;
 
-    protected $fillable=[
+    protected $fillable = [
         'name',
         'slug',
         'description',
@@ -19,10 +19,10 @@ class Chapter extends Model
         'active',
     ];
 
-    protected $casts=[
-        'created_at'=>'datetime',
-        'updated_at'=>'datetime',
-        'active'=>'boolean',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'active' => 'boolean',
     ];
 
     /**
@@ -43,6 +43,4 @@ class Chapter extends Model
     {
         return $this->belongsTo(Course::class);
     }
-
-
 }

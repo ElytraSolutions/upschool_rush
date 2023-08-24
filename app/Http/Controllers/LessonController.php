@@ -6,7 +6,6 @@ use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class LessonController extends Controller
 {
@@ -44,7 +43,6 @@ class LessonController extends Controller
             ], 403);
         }
         $validated = $request->validated();
-        $validated['slug'] = Str::slug($validated['title']);
         $lesson = Lesson::create($validated);
         return [
             'success' => true,
@@ -85,9 +83,6 @@ class LessonController extends Controller
             ], 403);
         }
         $validated = $request->validated();
-        if(isset($validated['title'])) {
-            $validated['slug'] = Str::slug($validated['title']);
-        }
         $lesson->update($validated);
         $lesson->save();
         return [

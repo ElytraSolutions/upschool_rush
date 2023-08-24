@@ -6,7 +6,6 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
