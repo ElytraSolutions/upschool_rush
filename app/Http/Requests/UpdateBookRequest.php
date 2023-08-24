@@ -11,7 +11,7 @@ class UpdateBookRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,15 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             //
+            'title' => ['string', 'max:255', 'unique:books'],
+            'description' => ['string'],
+            'teacher_email' => ['string', 'email', 'max:255'],
+            'first_name' => ['string', 'max:255'],
+            'last_name' => ['string'],
+            'school_name' => ['string', 'max:255'],
+            'country' => ['string', 'max:255'],
+            'age' => ['integer'],
+            'active' => ['boolean'],
         ];
     }
 }

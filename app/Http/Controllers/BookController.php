@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class BookController extends Controller
@@ -12,10 +13,19 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return Book::all();
+        if ($request->user()->cannot('viewAny', Book::class)) {
+            return [
+                'success' => false,
+                'message' => 'You are not authorized to view books.',
+            ];
+        }
+        return [
+            'success' => true,
+            'data' => Book::all()->where('active', true),
+        ];
     }
 
     /**
@@ -32,6 +42,12 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         //
+        if ($request->user()->cannot('create', Book::class)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to create books.',
+            ], 403);
+        }
         $validated = $request->validated();
         $validated['slug'] = Str::slug($validated['title']);
         $book = Book::create($validated);
@@ -44,10 +60,19 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show(Request $request, Book $book)
     {
         //
-        return $book;
+        if ($request->user()->cannot('view', $book)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to view book.',
+            ], 403);
+        }
+        return [
+            'success' => true,
+            'data' => $book,
+        ];
     }
 
     /**
@@ -64,6 +89,12 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         //
+        if ($request->user()->cannot('update', $book)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to update book.',
+            ], 403);
+        }
         $validated = $request->validated();
         $validated['slug'] = Str::slug($validated['title']);
         $book->update($validated);
@@ -76,9 +107,16 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book = null)
+    public function destroy(Request $request, Book $book = null)
     {
         //
-        return $book->delete();
+        return response([
+                'success' => false,
+                'message' => 'You are not authorized to delete books.',
+            ], 403);
+        return [
+            'success' => true,
+            'data' => $book,
+        ];
     }
 }
