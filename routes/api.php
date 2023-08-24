@@ -7,6 +7,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\ProjectController;
 use App\Models\User;
 
 /*
@@ -64,4 +65,12 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->missing('missing');
     Route::put('/lessons/{lesson}', [LessonController::class, 'update'])->missing('missing');
     Route::delete('/lessons/{lesson}', [LessonController::class, 'destroy'])->missing('missing');
+});
+
+Route::middleware(['auth:sanctum'])->group(function() {
+    Route::get('/projects', [ProjectController::class, 'index']);
+    Route::post('/projects', [ProjectController::class, 'store']);
+    Route::get('/projects/{project}', [ProjectController::class, 'show'])->missing('missing');
+    Route::put('/projects/{project}', [ProjectController::class, 'update'])->missing('missing');
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->missing('missing');
 });
