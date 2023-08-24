@@ -110,7 +110,7 @@ class ChapterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Chapter $chapter = null)
+    public function destroy(Request $request, Chapter $chapter)
     {
         //
         if ($request->user()->cannot('delete', $chapter)) {
@@ -121,7 +121,7 @@ class ChapterController extends Controller
         };
         return [
             'success' => true,
-            'data' => $chapter,
+            'data' => $chapter->delete(),
         ];
     }
 }

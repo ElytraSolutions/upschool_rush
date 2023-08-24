@@ -119,6 +119,9 @@ class CourseController extends Controller
                 'message' => 'You are not authorized to delete this course.',
             ];
         }
-        $course->delete();
+        return [
+            'success' => true,
+            'data' => $course->delete(),
+        ];
     }
 }

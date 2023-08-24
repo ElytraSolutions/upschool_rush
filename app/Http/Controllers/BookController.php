@@ -110,7 +110,7 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Book $book = null)
+    public function destroy(Request $request, Book $book)
     {
         //
         if ($request->user()->cannot('delete', $book)) {
@@ -121,7 +121,7 @@ class BookController extends Controller
         }
         return [
             'success' => true,
-            'data' => $book,
+            'data' => $book->delete(),
         ];
     }
 }
