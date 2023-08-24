@@ -49,7 +49,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'date_of_birth' => 'date',
+        'is_admin' => 'boolean',
     ];
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
 
     public function type(): BelongsTo
     {

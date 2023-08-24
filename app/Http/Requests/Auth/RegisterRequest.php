@@ -35,7 +35,8 @@ class RegisterRequest extends FormRequest
             'last_name' => ['required', 'string'],
             'country' => ['required', 'string'],
             'date_of_birth' => ['required', 'date'],
-            'user_type_id' => ['required', 'exists:user_types,id']
+            'user_type_id' => ['required', 'exists:user_types,id'],
+            'is_admin' => ['missing'],
         ];
     }
 }
