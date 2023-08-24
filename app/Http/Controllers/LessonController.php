@@ -16,12 +16,6 @@ class LessonController extends Controller
     public function index(Request $request)
     {
         //
-        if ($request->user()->cannot('viewAny', Lesson::class)) {
-            return [
-                'success' => false,
-                'message' => 'You are not authorized to view lessons.',
-            ];
-        }
         return [
             'success' => true,
             'data' => Lesson::all()->where('active', true),
@@ -64,12 +58,6 @@ class LessonController extends Controller
     public function show(request $request, Lesson $lesson)
     {
         //
-        if ($request->user()->cannot('view', $lesson)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view this lesson.',
-            ], 403);
-        }
         return [
             'success' => true,
             'data' => $lesson,

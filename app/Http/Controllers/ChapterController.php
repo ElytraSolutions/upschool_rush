@@ -16,12 +16,6 @@ class ChapterController extends Controller
     public function index(Request $request)
     {
         //
-        if ($request->user()->cannot('viewAny', Chapter::class)) {
-            return [
-                'success' => false,
-                'message' => 'You are not authorized to view chapters.',
-            ];
-        }
         return [
             'success' => true,
             'data' => Chapter::all()->where('active', true),
@@ -62,12 +56,6 @@ class ChapterController extends Controller
     public function show(Request $request, Chapter $chapter)
     {
         //
-        if ($request->user()->cannot('view', $chapter)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view chapter.',
-            ], 403);
-        }
         return [
             'success' => true,
             'data' => $chapter,

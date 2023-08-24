@@ -16,12 +16,6 @@ class BookController extends Controller
     public function index(Request $request)
     {
         //
-        if ($request->user()->cannot('viewAny', Book::class)) {
-            return [
-                'success' => false,
-                'message' => 'You are not authorized to view books.',
-            ];
-        }
         return [
             'success' => true,
             'data' => Book::all()->where('active', true),
@@ -62,12 +56,6 @@ class BookController extends Controller
     public function show(Request $request, Book $book)
     {
         //
-        if ($request->user()->cannot('view', $book)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view book.',
-            ], 403);
-        }
         return [
             'success' => true,
             'data' => $book,
