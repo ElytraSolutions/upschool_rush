@@ -44,7 +44,7 @@ class CoursePolicy
     public function create(User $user): bool
     {
         //
-        return true;
+        return false;
     }
 
     /**
@@ -53,7 +53,7 @@ class CoursePolicy
     public function update(User $user, Course $course): bool
     {
         //
-        return true;
+        return false;
     }
 
     /**
@@ -62,7 +62,7 @@ class CoursePolicy
     public function delete(User $user, Course $course): bool
     {
         //
-        return true;
+        return false;
     }
 
     /**
