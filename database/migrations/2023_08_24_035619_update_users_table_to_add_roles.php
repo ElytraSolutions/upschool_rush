@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->foreignIdFor(\App\Models\UserRole::class)->constrained();
+            $table->foreignIdFor(\App\Models\UserType::class)->constrained();
         });
     }
 
@@ -24,8 +24,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropForeign(['user_role_id']);
-            $table->dropColumn(['user_role_id']);
+            $table->dropForeign(['user_type_id']);
+            $table->dropColumn(['user_type_id']);
         });
     }
 };
