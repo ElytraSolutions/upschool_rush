@@ -100,6 +100,7 @@ class BookController extends Controller
             $validated['slug'] = Str::slug($validated['title']);
         }
         $book->update($validated);
+        $book->save();
         return [
             'success' => true,
             'data' => $book,
@@ -112,10 +113,12 @@ class BookController extends Controller
     public function destroy(Request $request, Book $book = null)
     {
         //
-        return response([
+        if ($request->user()->cannot('delete', $book)) {
+            return response([
                 'success' => false,
-                'message' => 'You are not authorized to delete books.',
+                'message' => 'You are not authorized to delete book.',
             ], 403);
+        }
         return [
             'success' => true,
             'data' => $book,
