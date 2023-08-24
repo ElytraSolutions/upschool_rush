@@ -14,6 +14,7 @@ class BookPolicy
     public function viewAny(User $user): bool
     {
         //
+        return true;
     }
 
     /**
@@ -22,6 +23,7 @@ class BookPolicy
     public function view(User $user, Book $book): bool
     {
         //
+        return true;
     }
 
     /**
@@ -30,6 +32,7 @@ class BookPolicy
     public function create(User $user): bool
     {
         //
+        return true;
     }
 
     /**
@@ -38,6 +41,7 @@ class BookPolicy
     public function update(User $user, Book $book): bool
     {
         //
+        return true;
     }
 
     /**
@@ -46,6 +50,7 @@ class BookPolicy
     public function delete(User $user, Book $book): bool
     {
         //
+        return true;
     }
 
     /**
@@ -54,6 +59,7 @@ class BookPolicy
     public function restore(User $user, Book $book): bool
     {
         //
+        return false;
     }
 
     /**
@@ -62,5 +68,6 @@ class BookPolicy
     public function forceDelete(User $user, Book $book): bool
     {
         //
+        return false;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -32,6 +33,7 @@ class BookController extends Controller
     {
         //
         $validated = $request->validated();
+        $validated['slug'] = Str::slug($validated['title']);
         $book = Book::create($validated);
         return [
             'success' => true,
@@ -63,6 +65,7 @@ class BookController extends Controller
     {
         //
         $validated = $request->validated();
+        $validated['slug'] = Str::slug($validated['title']);
         $book->update($validated);
         return [
             'success' => true,
