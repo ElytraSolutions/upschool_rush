@@ -25,6 +25,7 @@ class UpdateChapterRequest extends FormRequest
             'name' => ['sometimes', 'string', 'max:255'],
             'description' => ['sometimes', 'string', 'max:255'],
             'course_id' => ['sometimes', 'string', 'exists:courses,id'],
+            'active' => ['sometimes', 'boolean'],
         ];
     }
 }
