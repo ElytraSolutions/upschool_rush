@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+    <ruleset name="Upschool Standard" namespace="Upschool">
+    <rule ref="PSR2"/>
+    <file>./app</file>
+    <file>./database</file>
+    <file>./routes</file>
+    <ini name="memory_limit" value="4096M"/>
+</ruleset>
