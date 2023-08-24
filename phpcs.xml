@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
     <ruleset name="Upschool Standard" namespace="Upschool">
-    <rule ref="PSR2"/>
-    <file>./app</file>
+    <rule ref="PSR12"/>
+    <file>./app/Http/Controllers/Api</file>
+    <file>./app/Http/Requests</file>
+    <file>./app/Models</file>
     <file>./database</file>
-    <file>./routes</file>
+    <file>./routes/api.php</file>
     <ini name="memory_limit" value="4096M"/>
 </ruleset>
