@@ -27,7 +27,7 @@ class UpdateLessonRequest extends FormRequest
             'name' => ['sometimes', 'string', 'max:255'],
             'intro' => ['sometimes', 'string', 'max:255'],
             'content' => ['sometimes', 'string'],
-            'active' => ['sometimes', 'boolean'],
+            'active' => ['sometimes', 'in:0,1'],
         ];
     }
 }

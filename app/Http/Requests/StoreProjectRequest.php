@@ -26,7 +26,7 @@ class StoreProjectRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'intro' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'active' => ['boolean'],
+            'active' => ['required', 'in:0,1'],
         ];
     }
 }

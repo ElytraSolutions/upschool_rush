@@ -38,7 +38,7 @@ class StoreBookRequest extends FormRequest
             'school_name' => ['string', 'max:255'],
             'country' => ['required', 'string', 'max:255'],
             'age' => ['required', 'integer'],
-            'active' => ['required', 'boolean'],
+            'active' => ['required', 'in:0,1'],
             'path' => ['required_without:canva_link', 'string', 'max:255'],
             'canva_link' => ['required_without:path', 'string', 'max:255'],
         ];

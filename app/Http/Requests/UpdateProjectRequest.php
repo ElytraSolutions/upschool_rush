@@ -26,7 +26,7 @@ class UpdateProjectRequest extends FormRequest
             'name' => ['sometimes', 'string', 'max:255'],
             'intro' => ['sometimes', 'string', 'max:255'],
             'description' => ['sometimes', 'string'],
-            'active' => ['sometimes', 'boolean'],
+            'active' => ['sometimes', 'in:0,1'],
         ];
     }
 }

@@ -29,13 +29,13 @@ class UpdateCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255', 'unique:courses'],
+            'name' => ['sometimes', 'string', 'max:255'],
             'intro' => ['sometimes', 'string', 'max:255'],
             'starredText' => ['sometimes', 'string', 'max:255'],
             'image' => ['sometimes', 'string', 'max:255'],
             'theme' => ['sometimes', 'string', 'max:255'],
             'description' => ['sometimes', 'string', 'max:4294967295'],
-            'active' => ['sometimes', 'boolean'],
+            'active' => ['sometimes', 'in:0,1'],
         ];
     }
 }

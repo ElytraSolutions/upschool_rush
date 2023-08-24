@@ -29,13 +29,13 @@ class StoreCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:courses'],
+            'name' => ['required', 'string', 'max:255'],
             'intro' => ['required', 'string', 'max:255'],
             'starredText' => ['string', 'max:255'],
             'image' => ['string', 'max:255'],
             'theme' => ['string', 'max:255'],
             'description' => ['required', 'string', 'max:4294967295'],
-            'active' => ['boolean'],
+            'active' => ['in:0,1'],
         ];
     }
 }

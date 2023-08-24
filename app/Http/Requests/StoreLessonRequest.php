@@ -21,23 +21,13 @@ class StoreLessonRequest extends FormRequest
      */
     public function rules(): array
     {
-        // Schema::create('lessons', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        //     $table->foreignIdFor(\App\Models\Chapter::class)->constrained();
-        //     $table->string('name');
-        //     $table->string('slug');
-        //     $table->string('intro');
-        //     $table->longText('content');
-        //     $table->boolean('active')->default(true);
-        // });
         return [
             //
             'chapter_id' => ['required', 'exists:chapters,id'],
             'name' => ['required', 'string', 'max:255'],
             'intro' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
-            'active' => ['boolean'],
+            'active' => ['required', 'in:0,1'],
         ];
     }
 }
