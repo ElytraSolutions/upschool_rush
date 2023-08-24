@@ -30,15 +30,17 @@ class StoreBookRequest extends FormRequest
     {
         return [
             //
-            'title' => ['required', 'string', 'max:255', 'unique:books'],
+            'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'teacher_email' => ['string', 'email', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string'],
+            'last_name' => ['required', 'string', 'max:255'],
             'school_name' => ['string', 'max:255'],
             'country' => ['required', 'string', 'max:255'],
             'age' => ['required', 'integer'],
             'active' => ['required', 'boolean'],
+            'path' => ['required_without:canva_link', 'string', 'max:255'],
+            'canva_link' => ['required_without:path', 'string', 'max:255'],
         ];
     }
 }

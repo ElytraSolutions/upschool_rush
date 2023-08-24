@@ -30,15 +30,17 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             //
-            'title' => ['string', 'max:255', 'unique:books'],
-            'description' => ['string'],
+            'title' => ['sometimes', 'string', 'max:255'],
+            'description' => ['sometimes', 'string'],
             'teacher_email' => ['string', 'email', 'max:255'],
-            'first_name' => ['string', 'max:255'],
-            'last_name' => ['string'],
+            'first_name' => ['sometimes', 'string', 'max:255'],
+            'last_name' => ['sometimes', 'string', 'max:255'],
             'school_name' => ['string', 'max:255'],
-            'country' => ['string', 'max:255'],
-            'age' => ['integer'],
-            'active' => ['boolean'],
+            'country' => ['sometimes', 'string', 'max:255'],
+            'age' => ['sometimes', 'integer'],
+            'active' => ['sometimes', 'boolean'],
+            'path' => ['sometimes', 'string', 'max:255'],
+            'canva_link' => ['sometimes', 'string', 'max:255'],
         ];
     }
 }

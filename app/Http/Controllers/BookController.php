@@ -49,7 +49,6 @@ class BookController extends Controller
             ], 403);
         }
         $validated = $request->validated();
-        $validated['slug'] = Str::slug($validated['title']);
         $book = Book::create($validated);
         return [
             'success' => true,
@@ -96,9 +95,6 @@ class BookController extends Controller
             ], 403);
         }
         $validated = $request->validated();
-        if (isset($validated['title'])) {
-            $validated['slug'] = Str::slug($validated['title']);
-        }
         $book->update($validated);
         $book->save();
         return [
