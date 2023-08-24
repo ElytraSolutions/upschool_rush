@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CourseController;
 use App\Models\User;
 
 /*
@@ -37,4 +38,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/books/{book}', [BookController::class, 'show'])->missing('missing');
     Route::put('/books/{book}', [BookController::class, 'update'])->missing('missing');
     Route::delete('/books/{book}', [BookController::class, 'destroy'])->missing('missing');
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/courses', [CourseController::class, 'index']);
+    Route::post('/courses', [CourseController::class, 'store']);
+    Route::get('/courses/{course}', [CourseController::class, 'show'])->missing('missing');
+    Route::put('/courses/{course}', [CourseController::class, 'update'])->missing('missing');
+    Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->missing('missing');
 });
