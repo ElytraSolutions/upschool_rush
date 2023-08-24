@@ -37,7 +37,7 @@ class BookController extends Controller
         $book = Book::create($validated);
         return [
             'success' => true,
-            'book' => $book,
+            'data' => $book,
         ];
     }
 
@@ -69,14 +69,14 @@ class BookController extends Controller
         $book->update($validated);
         return [
             'success' => true,
-            'book' => $book,
+            'data' => $book,
         ];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy(Book $book = null)
     {
         //
         return $book->delete();

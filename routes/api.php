@@ -17,6 +17,13 @@ use App\Models\User;
 |
 */
 
+function missing() {
+        return response()->json([
+            'success' => false,
+            'data' => 'Could not find resource;'
+        ], 404);
+}
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -27,7 +34,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/books', [BookController::class, 'index']);
     Route::post('/books', [BookController::class, 'store']);
-    Route::get('/books/{book}', [BookController::class, 'show']);
-    Route::put('/books/{book}', [BookController::class, 'update']);
-    Route::delete('/books/{book}', [BookController::class, 'destroy']);
+    Route::get('/books/{book}', [BookController::class, 'show'])->missing('missing');
+    Route::put('/books/{book}', [BookController::class, 'update'])->missing('missing');
+    Route::delete('/books/{book}', [BookController::class, 'destroy'])->missing('missing');
 });
