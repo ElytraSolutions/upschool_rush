@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('projects');
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('name');
             $table->string('intro');
-            $table->fullText('description');
+            $table->longText('description');
             $table->boolean('active')->default(true);
         });
     }
