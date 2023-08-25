@@ -25,19 +25,19 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/books', [BookController::class, 'index']);
-Route::get('/books/{book}', [BookController::class, 'show'])->missing(Errors::missing('Could not find book'));
+Route::get('/books/{book}', [BookController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/courses', [CourseController::class, 'index']);
-Route::get('/courses/{course}', [CourseController::class, 'show'])->missing(Errors::missing('Could not find course'));
+Route::get('/courses/{course}', [CourseController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/chapters', [ChapterController::class, 'index']);
-Route::get('/chapters/{chapter}', [ChapterController::class, 'show'])->missing(Errors::missing('Could not find chapter'));
+Route::get('/chapters/{chapter}', [ChapterController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/lessons', [LessonController::class, 'index']);
-Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->missing(Errors::missing('Could not find lesson'));
+Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/projects', [ProjectController::class, 'index']);
-Route::get('/projects/{project}', [ProjectController::class, 'show'])->missing(Errors::missing('Could not find project'));
+Route::get('/projects/{project}', [ProjectController::class, 'show'])->missing(Errors::missing());
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user()->load('type');
@@ -45,30 +45,30 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/books', [BookController::class, 'store']);
-    Route::put('/books/{book}', [BookController::class, 'update'])->missing(Errors::missing('Could not find book'));
-    Route::delete('/books/{book}', [BookController::class, 'destroy'])->missing(Errors::missing('Could not find book'));
+    Route::put('/books/{book}', [BookController::class, 'update'])->missing(Errors::missing());
+    Route::delete('/books/{book}', [BookController::class, 'destroy'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/courses', [CourseController::class, 'store']);
-    Route::put('/courses/{course}', [CourseController::class, 'update'])->missing(Errors::missing('Could not find course'));
-    Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->missing(Errors::missing('Could not find course'));
+    Route::put('/courses/{course}', [CourseController::class, 'update'])->missing(Errors::missing());
+    Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/chapters', [ChapterController::class, 'store']);
-    Route::put('/chapters/{chapter}', [ChapterController::class, 'update'])->missing(Errors::missing('Could not find chapter'));
-    Route::delete('/chapters/{chapter}', [ChapterController::class, 'destroy'])->missing(Errors::missing('Could not find chapter'));
+    Route::put('/chapters/{chapter}', [ChapterController::class, 'update'])->missing(Errors::missing());
+    Route::delete('/chapters/{chapter}', [ChapterController::class, 'destroy'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/lessons', [LessonController::class, 'store']);
-    Route::put('/lessons/{lesson}', [LessonController::class, 'update'])->missing(Errors::missing('Could not find lesson'));
-    Route::delete('/lessons/{lesson}', [LessonController::class, 'destroy'])->missing(Errors::missing('Could not find lesson'));
+    Route::put('/lessons/{lesson}', [LessonController::class, 'update'])->missing(Errors::missing());
+    Route::delete('/lessons/{lesson}', [LessonController::class, 'destroy'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/projects', [ProjectController::class, 'store']);
-    Route::put('/projects/{project}', [ProjectController::class, 'update'])->missing(Errors::missing('Could not find project'));
-    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->missing(Errors::missing('Could not find project'));
+    Route::put('/projects/{project}', [ProjectController::class, 'update'])->missing(Errors::missing());
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->missing(Errors::missing());
 });

@@ -3,7 +3,7 @@
 namespace App\CustomErrors;
 
 class Errors {
-    public static function missing($missing) {
+    public static function missing($missing = 'Not Found') {
         return function ($exception) use ($missing) {
             return response()->json([
                 'success' => false,
