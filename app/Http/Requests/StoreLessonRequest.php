@@ -7,6 +7,13 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreLessonRequest extends FormRequest
 {
     /**
+     * Indicates if the validator should stop on the first rule failure.
+     *
+     * @var bool
+     */
+    protected $stopOnFirstFailure = false;
+
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
