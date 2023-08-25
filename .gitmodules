@@ -1,0 +1,3 @@
+[submodule "upschool_frontend"]
+	path = upschool_frontend
+	url = https://github.com/ElytraSolutions/upschool_frontend
