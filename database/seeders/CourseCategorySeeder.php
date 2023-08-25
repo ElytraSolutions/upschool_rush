@@ -32,7 +32,7 @@ class CourseCategorySeeder extends Seeder
                 'name' => 'Teacher Training',
             ],
         ];
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
             CourseCategory::firstOrCreate($category);
         }
     }

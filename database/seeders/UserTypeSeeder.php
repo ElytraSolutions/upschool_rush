@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\UserType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -27,6 +28,8 @@ class UserTypeSeeder extends Seeder
                 'name' => 'School Teacher',
             ],
         ];
-        DB::table('user_types')->insert($userTypes);
+        foreach ($userTypes as $userType) {
+            UserType::firstOrCreate($userType);
+        }
     }
 }
