@@ -35,7 +35,7 @@ class StoreCourseRequest extends FormRequest
             'image' => ['string', 'max:255'],
             'theme' => ['string', 'max:255'],
             'description' => ['required', 'string', 'max:4294967295'],
-            'active' => ['in:0,1'],
+            'active' => ['integer', 'in:0,1'],
         ];
     }
 }

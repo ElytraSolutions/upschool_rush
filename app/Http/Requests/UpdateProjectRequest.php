@@ -30,10 +30,10 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             //
-            'name' => ['sometimes', 'string', 'max:255'],
-            'intro' => ['sometimes', 'string', 'max:255'],
-            'description' => ['sometimes', 'string'],
-            'active' => ['sometimes', 'in:0,1'],
+            'name' => ['string', 'max:255'],
+            'intro' => ['string', 'max:255'],
+            'description' => ['string'],
+            'active' => ['integer', 'in:0,1'],
         ];
     }
 }

@@ -29,10 +29,10 @@ class UpdateChapterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255'],
-            'description' => ['sometimes', 'string', 'max:255'],
-            'course_id' => ['sometimes', 'string', 'exists:courses,id'],
-            'active' => ['sometimes', 'in:0,1'],
+            'name' => ['string', 'max:255'],
+            'description' => ['string', 'max:255'],
+            'course_id' => ['string', 'exists:courses,id'],
+            'active' => ['integer', 'in:0,1'],
         ];
     }
 }

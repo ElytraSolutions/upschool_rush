@@ -33,7 +33,7 @@ class StoreChapterRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'course_id' => ['required', 'string', 'exists:courses,id'],
-            'active' => ['required', 'in:0,1'],
+            'active' => ['integer', 'in:0,1'],
         ];
     }
 }
