@@ -15,7 +15,13 @@ class ChapterController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        // Public route
+        if ($request->showAll) {
+            return [
+                'success' => true,
+                'data' => Chapter::all(),
+            ];
+        }
         return [
             'success' => true,
             'data' => Chapter::all()->where('active', true),
@@ -35,7 +41,6 @@ class ChapterController extends Controller
      */
     public function store(StoreChapterRequest $request)
     {
-        //
         if ($request->user()->cannot('create', Chapter::class)) {
             return response([
                 'success' => false,
@@ -55,7 +60,7 @@ class ChapterController extends Controller
      */
     public function show(Request $request, Chapter $chapter)
     {
-        //
+        // Public route
         return [
             'success' => true,
             'data' => $chapter,
@@ -75,11 +80,10 @@ class ChapterController extends Controller
      */
     public function update(UpdateChapterRequest $request, Chapter $chapter)
     {
-        //
         if ($request->user()->cannot('update', $chapter)) {
             return response([
                 'success' => false,
-                'message' => 'You are not authorized to update chapter.',
+                'message' => 'You are not authorized to update this chapter.',
             ], 403);
         }
         $validated = $request->validated();
@@ -96,11 +100,10 @@ class ChapterController extends Controller
      */
     public function destroy(Request $request, Chapter $chapter)
     {
-        //
         if ($request->user()->cannot('delete', $chapter)) {
             return response([
                 'success' => false,
-                'message' => 'You are not authorized to delete chapter.',
+                'message' => 'You are not authorized to delete this chapter.',
             ], 403);
         };
         return [

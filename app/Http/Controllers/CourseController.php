@@ -14,7 +14,13 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        // Public route
+        if ($request->showAll) {
+            return [
+                'success' => true,
+                'data' => Course::all(),
+            ];
+        }
         return [
             'success' => true,
             'data' => Course::all()->where('active', true),
@@ -34,7 +40,6 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
         if ($request->user()->cannot('create', Course::class)) {
             return response([
                 'success' => false,
@@ -54,7 +59,12 @@ class CourseController extends Controller
      */
     public function show(Request $request, Course $course)
     {
-        //
+        if ($request->user()->cannot('view', $course)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to view this course.',
+            ], 403);
+        }
         return [
             'success' => true,
             'data' => $course,
@@ -74,12 +84,11 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
         if ($request->user()->cannot('update', $course)) {
-            return [
+            return response([
                 'success' => false,
                 'message' => 'You are not authorized to update this course.',
-            ];
+            ], 403);
         }
         $validated = $request->validated();
         $course->update($validated);

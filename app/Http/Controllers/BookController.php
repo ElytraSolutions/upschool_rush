@@ -14,7 +14,13 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        // Public route
+        if ($request->showAll) {
+            return [
+                'success' => true,
+                'data' => Book::all(),
+            ];
+        }
         return [
             'success' => true,
             'data' => Book::all()->where('active', true),
@@ -54,7 +60,12 @@ class BookController extends Controller
      */
     public function show(Request $request, Book $book)
     {
-        //
+        if ($request->user()->cannot('view', $book)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to view this book.',
+            ], 403);
+        }
         return [
             'success' => true,
             'data' => $book,
@@ -78,7 +89,7 @@ class BookController extends Controller
         if ($request->user()->cannot('update', $book)) {
             return response([
                 'success' => false,
-                'message' => 'You are not authorized to update book.',
+                'message' => 'You are not authorized to update this book.',
             ], 403);
         }
         $validated = $request->validated();
@@ -99,7 +110,7 @@ class BookController extends Controller
         if ($request->user()->cannot('delete', $book)) {
             return response([
                 'success' => false,
-                'message' => 'You are not authorized to delete book.',
+                'message' => 'You are not authorized to delete this book.',
             ], 403);
         }
         return [

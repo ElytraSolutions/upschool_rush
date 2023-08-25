@@ -14,6 +14,13 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+        // Public route
+        if ($request->showAll) {
+            return [
+                'success' => true,
+                'data' => Project::all(),
+            ];
+        }
         return [
             'success' => true,
             'data' => Project::all()->where('active', true),
@@ -33,7 +40,6 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
         if ($request->user()->cannot('create', Project::class)) {
             return response([
                 'success' => false,
@@ -53,7 +59,7 @@ class ProjectController extends Controller
      */
     public function show(Request $request, Project $project)
     {
-        //
+        // Public Route
         return [
             'success' => true,
             'data' => $project,
@@ -73,7 +79,6 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
         if ($request->user()->cannot('update', $project)) {
             return response([
                 'success' => false,
@@ -94,7 +99,6 @@ class ProjectController extends Controller
      */
     public function destroy(Request $request, Project $project)
     {
-        //
         if ($request->user()->cannot('delete', $project)) {
             return response([
                 'success' => false,

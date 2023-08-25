@@ -14,7 +14,13 @@ class LessonController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        // Public Route
+        if ($request->showAll) {
+            return [
+                'success' => true,
+                'data' => Lesson::all(),
+            ];
+        }
         return [
             'success' => true,
             'data' => Lesson::all()->where('active', true),
@@ -35,7 +41,6 @@ class LessonController extends Controller
      */
     public function store(StoreLessonRequest $request)
     {
-        //
         if ($request->user()->cannot('create', Lesson::class)) {
             return response([
                 'success' => false,
@@ -55,7 +60,7 @@ class LessonController extends Controller
      */
     public function show(request $request, Lesson $lesson)
     {
-        //
+        // Public Route
         return [
             'success' => true,
             'data' => $lesson,
@@ -75,7 +80,6 @@ class LessonController extends Controller
      */
     public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
-        //
         if ($request->user()->cannot('update', $lesson)) {
             return response([
                 'success' => false,
@@ -96,7 +100,6 @@ class LessonController extends Controller
      */
     public function destroy(Request $request, Lesson $lesson)
     {
-        //
         if ($request->user()->cannot('delete', $lesson)) {
             return response([
                 'success' => false,
