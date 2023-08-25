@@ -59,12 +59,7 @@ class CourseController extends Controller
      */
     public function show(Request $request, Course $course)
     {
-        if ($request->user()->cannot('view', $course)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view this course.',
-            ], 403);
-        }
+        // Public route
         return [
             'success' => true,
             'data' => $course,

@@ -60,12 +60,7 @@ class BookController extends Controller
      */
     public function show(Request $request, Book $book)
     {
-        if ($request->user()->cannot('view', $book)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view this book.',
-            ], 403);
-        }
+        // Public route
         return [
             'success' => true,
             'data' => $book,
