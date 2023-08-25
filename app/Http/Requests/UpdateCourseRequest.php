@@ -36,6 +36,7 @@ class UpdateCourseRequest extends FormRequest
             'theme' => ['string', 'max:255'],
             'description' => ['string', 'max:4294967295'],
             'active' => ['integer', 'in:0,1'],
+            'course_category_id' => ['integer', 'exists:course_categories,id'],
         ];
     }
 }

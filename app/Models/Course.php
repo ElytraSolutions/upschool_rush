@@ -20,6 +20,7 @@ class Course extends Model
         'theme',
         'description',
         'active',
+        'course_category_id',
     ];
 
     protected $casts = [

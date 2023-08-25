@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\LessonController;
@@ -26,6 +27,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/books', [BookController::class, 'index']);
 Route::get('/books/{book}', [BookController::class, 'show'])->missing(Errors::missing());
+
+Route::get('/courseCategories', [CourseCategoryController::class, 'index']);
+Route::get('/courseCategories/{courseCategory}/courses', [CourseCategoryController::class, 'courses'])->missing(Errors::missing());
 
 Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/courses/{course}', [CourseController::class, 'show'])->missing(Errors::missing());
