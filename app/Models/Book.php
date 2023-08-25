@@ -29,6 +29,12 @@ class Book extends Model
         'active',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'active' => 'boolean',
+    ];
+
     /**
      * Return the sluggable configuration array for this model.
      *

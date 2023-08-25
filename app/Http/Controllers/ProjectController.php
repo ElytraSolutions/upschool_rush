@@ -6,7 +6,6 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -15,12 +14,6 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->user()->cannot('viewAny', Project::class)) {
-            return [
-                'success' => false,
-                'message' => 'You are not authorized to view projects.',
-            ];
-        }
         return [
             'success' => true,
             'data' => Project::all()->where('active', true),
@@ -48,7 +41,6 @@ class ProjectController extends Controller
             ], 403);
         }
         $validated = $request->validated();
-        $validated['slug'] = Str::slug($validated['name']);
         $project = Project::create($validated);
         return [
             'success' => true,
@@ -62,12 +54,6 @@ class ProjectController extends Controller
     public function show(Request $request, Project $project)
     {
         //
-        if ($request->user()->cannot('view', $project)) {
-            return [
-                'success' => false,
-                'message' => 'You are not authorized to view this project.',
-            ];
-        }
         return [
             'success' => true,
             'data' => $project,
@@ -95,9 +81,6 @@ class ProjectController extends Controller
             ], 403);
         }
         $validated = $request->validated();
-        if (isset($validated['name'])) {
-            $validated['slug'] = Str::slug($validated['name']);
-        }
         $project->update($validated);
         $project->save();
         return [

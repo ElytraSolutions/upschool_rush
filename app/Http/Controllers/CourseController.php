@@ -6,7 +6,6 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
@@ -16,12 +15,6 @@ class CourseController extends Controller
     public function index(Request $request)
     {
         //
-        if ($request->user()->cannot('viewAny', Course::class)) {
-            return [
-                'success' => false,
-                'message' => 'You are not authorized to view courses.',
-            ];
-        }
         return [
             'success' => true,
             'data' => Course::all()->where('active', true),
@@ -62,12 +55,6 @@ class CourseController extends Controller
     public function show(Request $request, Course $course)
     {
         //
-        if ($request->user()->cannot('view', $course)) {
-            return [
-                'success' => false,
-                'message' => 'You are not authorized to view this course.',
-            ];
-        }
         return [
             'success' => true,
             'data' => $course,

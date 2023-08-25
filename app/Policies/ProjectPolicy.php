@@ -13,7 +13,7 @@ class ProjectPolicy
     */
     public function before(User $user, string $ability): bool|null
     {
-        if ($user->isAdmin()) {
+        if ($user && $user->isAdmin()) {
             return true;
         }
 
@@ -23,7 +23,7 @@ class ProjectPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
         //
         return true;
@@ -32,7 +32,7 @@ class ProjectPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Project $project): bool
+    public function view(?User $user, Project $project): bool
     {
         //
         return true;
