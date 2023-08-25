@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\CourseCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,13 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => $this->faker->sentence(3),
+            'slug' => $this->faker->slug(),
+            'intro' => $this->faker->paragraph(),
+            'image' => 'https://source.unsplash.com/random/800x600',
+            'theme' => $this->faker->colorName(),
+            'description' => $this->faker->paragraph(),
+            'course_category_id' => CourseCategory::all()->random()->id,
             //
         ];
     }
