@@ -31,7 +31,7 @@ class StoreChapterRequest extends FormRequest
         return [
             //
             'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:255'],
+            'description' => ['string', 'max:255'],
             'course_id' => ['required', 'string', 'exists:courses,id'],
             'active' => ['integer', 'in:0,1'],
         ];
