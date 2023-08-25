@@ -41,4 +41,14 @@ class Course extends Model
             ]
         ];
     }
+
+    public function courseCategory()
+    {
+        return $this->belongsTo(CourseCategory::class);
+    }
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
+    }
 }

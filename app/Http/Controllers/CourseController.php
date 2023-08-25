@@ -107,4 +107,15 @@ class CourseController extends Controller
             'data' => $course->delete(),
         ];
     }
+
+    /**
+     * Return a listing of the resource's lessons.
+     */
+    public function chapters(Request $request, Course $course)
+    {
+        return [
+            'success' => true,
+            'data' => $course->chapters,
+        ];
+    }
 }

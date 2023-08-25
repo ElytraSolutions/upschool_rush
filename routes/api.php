@@ -53,6 +53,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/courses', [CourseController::class, 'store']);
     Route::put('/courses/{course}', [CourseController::class, 'update'])->missing(Errors::missing());
     Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->missing(Errors::missing());
+    Route::get('/courses/{course}/chapters', [CourseController::class, 'chapters'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
