@@ -36,6 +36,9 @@ class StoreCourseRequest extends FormRequest
             'theme' => ['string', 'max:255'],
             'description' => ['required', 'string', 'max:4294967295'],
             'active' => ['integer', 'in:0,1'],
+            'course_category_id' => ['required', 'integer', 'exists:course_categories,id'],
+            'tagline' => ['string', 'max:255'],
+            'thumbnail' => ['string', 'max:255'],
         ];
     }
 }

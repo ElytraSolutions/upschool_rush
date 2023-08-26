@@ -21,6 +21,8 @@ class Course extends Model
         'description',
         'active',
         'course_category_id',
+        'tagline',
+        'thumbnail',
     ];
 
     protected $casts = [
