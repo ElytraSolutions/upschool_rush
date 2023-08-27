@@ -83,7 +83,7 @@ Route::post('/githubwebhook', function(Request $request) {
     $secret = env('GITHUB_WEBHOOK_SECRET');
     $hash = "sha1=" . hash_hmac('sha1', $request->getContent(), $secret);
     if ($request->ref != 'refs/heads/prod') {
-        Log::error('Invalid ref');
+        Log::error('Invalid ref' . $request->all());
         return 'Invalid ref';
     }
     if (strcmp($hash, $request->header('X-Hub-Signature')) == 0) {
