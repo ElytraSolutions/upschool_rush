@@ -90,8 +90,12 @@ Route::post('/githubwebhook', function(Request $request) {
         $root_path = base_path();
         $process = new \Symfony\Component\Process\Process(['git', 'pull'], $root_path);
         $process->run();
-        Log::info("Response from stdout: " . $process->getOutput());
-        return $process->getOutput();
+        if(!$process->isSuccessful()) {
+            Log::info("Response from stdout: " . $process->getOutput());
+            Log::info("Response from stderr: " . $process->getErrorOutput());
+            Log::info("Response from status: " . $process->getExitCode());
+        }
+        return 'Success';
     } else {
         Log::error('Invalid signature');
         return 'Invalid signature';
