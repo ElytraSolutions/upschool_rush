@@ -25,7 +25,7 @@ class CourseFactory extends Factory
             'theme' => $this->faker->colorName(),
             'description' => $this->faker->paragraph(),
             'course_category_id' => CourseCategory::all()->random()->id,
-            'tagline' => $this->faker->words(3),
+            'tagline' => $this->faker->words(3, true),
             'thumbnail' => 'https://random.imagecdn.app/800/601',
         ];
     }
