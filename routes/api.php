@@ -10,6 +10,7 @@ use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProjectController;
 use App\CustomErrors\Errors;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,4 +77,36 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{project}', [ProjectController::class, 'update'])->missing(Errors::missing());
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->missing(Errors::missing());
+});
+
+Route::post('/githubwebhook', function(Request $request) {
+    $secret = env('GITHUB_WEBHOOK_SECRET');
+    $hash = "sha1=" . hash_hmac('sha1', $request->getContent(), $secret);
+    if ($request->ref != 'refs/heads/prod') {
+        Log::error('Invalid ref');
+        return 'Invalid ref';
+    }
+    if (strcmp($hash, $request->header('X-Hub-Signature')) == 0) {
+        $root_path = base_path();
+        $process = new \Symfony\Component\Process\Process(['git', 'pull'], $root_path);
+        $process->run();
+        if(!$process->isSuccessful()) {
+            Log::error("Response from stdout: " . $process->getOutput());
+            Log::error("Response from stderr: " . $process->getErrorOutput());
+            Log::error("Response from status: " . $process->getExitCode());
+            return 'Pull failed';
+        }
+        $process = new \Symfony\Component\Process\Process(['php', 'artisan', 'migrate'], $root_path);
+        $process->run();
+        if(!$process->isSuccessful()) {
+            Log::error("Response from stdout: " . $process->getOutput());
+            Log::error("Response from stderr: " . $process->getErrorOutput());
+            Log::error("Response from status: " . $process->getExitCode());
+            return 'Migrate failed';
+        }
+        return 'Success';
+    } else {
+        Log::error('Invalid signature');
+        return 'Invalid signature';
+    }
 });
