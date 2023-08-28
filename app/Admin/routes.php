@@ -3,6 +3,10 @@
 use Encore\Admin\Facades\Admin;
 use Illuminate\Routing\Router;
 use App\Admin\Controllers\AdminUserController;
+use App\Admin\Controllers\AdminBookController;
+use App\Admin\Controllers\AdminChapterController;
+use App\Admin\Controllers\AdminCourseController;
+use App\Admin\Controllers\AdminCourseCategoryController;
 
 Admin::routes();
 
@@ -23,4 +27,11 @@ Route::group([
     $router->resource('users', AdminUserController::class);
     $router->resource('user-types', AdminUserTypeController::class);
 
+    $router->group(['prefix' => 'api'], function (Router $router) {
+        $router->get('/chapters', [AdminChapterController::class, 'chapters']);
+        $router->get('/courseCategories', [AdminCourseCategoryController::class, 'courseCategories']);
+        $router->get('/courses', [AdminCourseController::class, 'courses']);
+    });
+
 });
+

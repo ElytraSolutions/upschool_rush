@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Chapter;
 use App\Models\Lesson;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -27,14 +28,11 @@ class AdminLessonController extends AdminController
         $grid = new Grid(new Lesson());
 
         $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('chapter_id', __('Chapter id'));
         $grid->column('name', __('Name'));
-        $grid->column('slug', __('Slug'));
-        $grid->column('intro', __('Intro'));
-        $grid->column('content', __('Content'));
-        $grid->column('active', __('Active'));
+        $grid->column('chapter.name', __('Chapter'));
+        $grid->column('active', __('Active'))->display(function ($active) {
+            return ($active == 1) ? 'Yes' : 'No';
+        });
 
         return $grid;
     }
@@ -50,14 +48,16 @@ class AdminLessonController extends AdminController
         $show = new Show(Lesson::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('chapter_id', __('Chapter id'));
         $show->field('name', __('Name'));
         $show->field('slug', __('Slug'));
+        $show->field('chapter.name', __('Chapter'));
         $show->field('intro', __('Intro'));
         $show->field('content', __('Content'));
-        $show->field('active', __('Active'));
+        $show->field('active', __('Active'))->display(function ($active) {
+            return ($active == 1) ? 'Yes' : 'No';
+        });
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -71,9 +71,14 @@ class AdminLessonController extends AdminController
     {
         $form = new Form(new Lesson());
 
-        $form->number('chapter_id', __('Chapter id'));
         $form->text('name', __('Name'));
-        $form->text('slug', __('Slug'));
+        $form->select('chapter_id', __('Chapter'))->options(function ($id) {
+            $chapter = Chapter::find($id);
+
+            if ($chapter) {
+                return [$chapter->id => $chapter->name];
+            }
+        })->ajax('/admin/api/chapters');
         $form->text('intro', __('Intro'));
         $form->textarea('content', __('Content'));
         $form->switch('active', __('Active'))->default(1);
