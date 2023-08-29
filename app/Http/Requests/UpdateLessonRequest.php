@@ -34,6 +34,7 @@ class UpdateLessonRequest extends FormRequest
             'name' => ['string', 'max:255'],
             'intro' => ['string', 'max:255'],
             'content' => ['string'],
+            'content_json' => ['string'],
             'active' => ['integer', 'in:0,1'],
         ];
     }

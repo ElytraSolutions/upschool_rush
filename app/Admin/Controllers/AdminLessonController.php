@@ -8,6 +8,9 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Admin\Field\HTMLEditor;
+use Illuminate\Http\Request;
+use URL;
 
 class AdminLessonController extends AdminController
 {
@@ -67,12 +70,23 @@ class AdminLessonController extends AdminController
      *
      * @return Form
      */
-    protected function form()
+    protected function form($lessonId = null)
     {
         $form = new Form(new Lesson());
+        $form->extend('htmlEditor', HTMLEditor::class);
+
+        $currentURL = URL::current();
+        $exploded = explode('/lessons/', $currentURL);
+        if(str_ends_with($exploded[1], '/edit')) {
+            $currentLessonId = explode('/edit', $exploded[1])[0];
+            $currentLesson = Lesson::find($currentLessonId);
+        } else {
+            $currentLesson = null;
+        }
+
 
         $form->text('name', __('Name'));
-        $form->select('chapter_id', __('Chapter'))->options(function ($id) {
+        $form->select('chapter_id', __('Chapters'))->options(function ($id) {
             $chapter = Chapter::find($id);
 
             if ($chapter) {
@@ -80,9 +94,34 @@ class AdminLessonController extends AdminController
             }
         })->ajax('/admin/api/chapters');
         $form->text('intro', __('Intro'));
-        $form->textarea('content', __('Content'));
+        $form->htmleditor('contentBtn', __('Content'), $currentLesson);
+        $form->hidden('html');
+        $form->hidden('css');
+        $form->hidden('js');
+        $form->hidden('content_json', __('Content JSON'));
         $form->switch('active', __('Active'))->default(1);
+        $form->submitted(function (Form $form) {
+            $form->ignore('contentBtn');
+        });
 
         return $form;
+    }
+
+    public function tempLesson(Request $request)
+    {
+        $validated = $request->validate([
+            'html' => 'required',
+            'css' => 'required',
+            'js' => 'required',
+            'content_json' => 'required',
+        ]);
+        $lesson = Lesson::create([
+            'html' => $validated['html'],
+            'css' => $validated['css'],
+            'js' => $validated['js'],
+            'content_json' => $validated['content_json'],
+            'active' => false,
+        ]);
+        return ['lessonId' => $lesson->id];
     }
 }

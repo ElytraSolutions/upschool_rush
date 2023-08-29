@@ -34,6 +34,7 @@ class StoreLessonRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'intro' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
+            'content_json' => ['required', 'string'],
             'active' => ['integer', 'in:0,1'],
         ];
     }

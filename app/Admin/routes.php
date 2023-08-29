@@ -1,12 +1,15 @@
 <?php
 
+use App\Models\Lesson;
 use Encore\Admin\Facades\Admin;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use App\Admin\Controllers\AdminUserController;
 use App\Admin\Controllers\AdminBookController;
 use App\Admin\Controllers\AdminChapterController;
 use App\Admin\Controllers\AdminCourseController;
 use App\Admin\Controllers\AdminCourseCategoryController;
+
 
 Admin::routes();
 
@@ -17,6 +20,9 @@ Route::group([
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
 
+    $router->get('htmlEditor', function(Request $request) {
+        return view('htmlEditor');
+    });
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('books', AdminBookController::class);
     $router->resource('chapters', AdminChapterController::class);
@@ -32,6 +38,11 @@ Route::group([
         $router->get('/courseCategories', [AdminCourseCategoryController::class, 'courseCategories']);
         $router->get('/courses', [AdminCourseController::class, 'courses']);
     });
+
+    Route::get('/lessonEditor', function (Request $request) {
+        return view('htmlEditor');
+    });
+    Route::post('/tempLesson', [AdminLessonController::class, 'tempLesson']);
 
 });
 

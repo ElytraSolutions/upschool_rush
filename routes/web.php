@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Lesson;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
-
 
 require __DIR__.'/auth.php';
 require __DIR__.'/api.php';

@@ -18,6 +18,8 @@ class Lesson extends Model
         'content',
         'active',
         'chapter_id',
+        'content_json',
+        'active',
     ];
 
     protected $casts = [

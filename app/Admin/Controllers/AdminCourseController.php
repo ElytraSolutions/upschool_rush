@@ -83,7 +83,7 @@ class AdminCourseController extends AdminController
             }
         })->ajax('/admin/api/courseCategories');
         $form->text('intro', __('Intro'));
-        $form->textarea('description', __('Description'));
+        $form->htmleditor('contentBtn', __('Description'));
         $form->text('tagline', __('Tagline'));
         $form->text('starredText', __('StarredText'));
         $form->text('theme', __('Theme'))->default('#F0FFF0');

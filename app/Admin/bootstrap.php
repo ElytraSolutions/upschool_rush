@@ -1,4 +1,6 @@
 <?php
+use Encore\Admin\Form;
+use App\Admin\Extensions\HTMLEditor;
 
 /**
  * Laravel-admin - admin builder based on Laravel.
@@ -19,4 +21,5 @@
  */
 
 app('view')->prependNamespace('admin', resource_path('views/admin'));
+Form::extend('htmleditor', HTMLEditor::class);
 Encore\Admin\Form::forget(['map', 'editor']);
