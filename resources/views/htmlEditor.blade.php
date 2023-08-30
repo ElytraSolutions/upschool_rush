@@ -18,17 +18,12 @@
     <script src="https://unpkg.com/grapesjs-tabs"></script>
 
   </head>
-  <body>
-    <div class="{{$viewClass['form-group']}}">
-        <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{{$label}}
-            </label><br>
-        <div id="gjs" style="margin-top:10px"></div>
-    </div>
-
-
+  <body style="height:100vh; margin: 0">
+    <div id="gjs" style=""></div>
     <script type="text/javascript">
         window.addEventListener('load', function () {
             var editor = grapesjs.init({
+                height: "100vh",
                 container : '#gjs',
                 plugins: [
                     "gjs-blocks-basic",
@@ -66,16 +61,17 @@
                     const css = editor.getCss();
                     const js = editor.getJs();
                     const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
-                    fetch("/admin/tempLesson", {
+                    fetch("/admin/richText", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
                             "X-CSRF-Token": csrfToken,
                         },
-                        data: JSON.stringify({html, css, js, content_json: editor.getProjectData()}),
+                        body: JSON.stringify({html, css, js, project_data: JSON.stringify(editor.getProjectData())}),
                     }).then(data => data.json()).then(data => {
-                        window.location.href = '/admin/lessons/' + data.lessonId + '/edit';
+                        console.log(data);
+                        // window.location.href = '/admin/lessons/' + data.lessonId + '/edit';
                     })
                 },
                 attributes: {
