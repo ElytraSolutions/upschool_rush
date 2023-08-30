@@ -11,7 +11,6 @@ use App\Admin\Controllers\AdminChapterController;
 use App\Admin\Controllers\AdminCourseController;
 use App\Admin\Controllers\AdminCourseCategoryController;
 
-
 Admin::routes();
 
 Route::group([
