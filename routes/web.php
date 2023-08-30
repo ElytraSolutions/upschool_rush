@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return ['Laravel' => app()->version()];
-});
 
 require __DIR__.'/auth.php';
-require __DIR__.'/api.php';
+
+Route::get('/{any}', function ($any) {
+    $content = file_get_contents(__DIR__ . "/../public/root.html");
+    return \Response::make($content, 200, [
+        'Content-Type' => 'text/html',
+    ]);
+})->where('any', '.*');
