@@ -90,6 +90,13 @@ Route::post('/githubwebhook', function(Request $request) {
     }
     if (strcmp($hash, $request->header('X-Hub-Signature')) == 0) {
         $root_path = base_path();
+        $process = new Process(['whoami'], $root_path);
+        $process->run();
+        if($process->isSuccessful()) {
+            Log::error("Response from stdout: " . $process->getOutput());
+            Log::error("Response from stderr: " . $process->getErrorOutput());
+            Log::error("Response from status: " . $process->getExitCode());
+        }
         $process = new Process(['git', 'pull'], $root_path);
         $process->run();
         if(!$process->isSuccessful()) {
