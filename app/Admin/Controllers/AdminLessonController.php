@@ -79,7 +79,7 @@ class AdminLessonController extends AdminController
         $exploded = explode('/lessons/', $currentURL);
         if(str_ends_with($exploded[1], '/edit')) {
             $currentLessonId = explode('/edit', $exploded[1])[0];
-            $currentLesson = Lesson::find($currentLessonId);
+            $currentLesson = Lesson::find($currentLessonId)->create;
         } else {
             $currentLesson = null;
         }

@@ -9,6 +9,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AdminCourseController extends AdminController
 {
@@ -74,19 +75,14 @@ class AdminCourseController extends AdminController
     {
         $form = new Form(new Course());
 
+        $form->hidden('uuid')->default(Str::orderedUuid());
         $form->text('name', __('Name'));
-        $form->select('course_category_id', __('Course Category'))->options(function ($id) {
-            $courseCategory = CourseCategory::find($id);
-
-            if ($courseCategory) {
-                return [$courseCategory->id => $courseCategory->name];
-            }
-        })->ajax('/admin/api/courseCategories');
+        $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('intro', __('Intro'));
-        $form->htmleditor('contentBtn', __('Description'));
+        $form->htmleditor('contentBtn', __('Description'), ['form' => $form]);
         $form->text('tagline', __('Tagline'));
         $form->text('starredText', __('StarredText'));
-        $form->text('theme', __('Theme'))->default('#F0FFF0');
+        $form->color('theme', __('Theme'))->default('#F0FFF0');
         $form->image('image', __('Image'));
         $form->image('thubmnail', __('Thubmnail'));
         $form->switch('active', __('Active'))->default(1);

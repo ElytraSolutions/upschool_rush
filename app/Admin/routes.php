@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\Controllers\RichContentController;
 use App\Models\Lesson;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ Route::group([
         return view('htmlEditor');
     });
     $router->get('/', 'HomeController@index')->name('home');
+    $router->post('/richText', [RichContentController::class, 'store']);
     $router->resource('books', AdminBookController::class);
     $router->resource('chapters', AdminChapterController::class);
     $router->resource('courses', AdminCourseController::class);

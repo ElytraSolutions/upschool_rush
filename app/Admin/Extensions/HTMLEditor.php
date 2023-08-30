@@ -21,16 +21,16 @@ class HTMLEditor extends Field
     public static $css = [
         "https://unpkg.com/grapesjs/dist/css/grapes.min.css",
     ];
-    protected $view = 'htmlEditor';
+    protected $view = 'gjs';
 
     public function __construct($column = '', $arguments = [])
     {
         parent::__construct($column, $arguments);
         if(count($arguments) > 1) {
-            $lesson = $arguments[1];
-            $this->addVariables(['lesson' => $lesson]);
+            $customData = $arguments[1];
+            $this->addVariables(['customData' => $customData]);
         } else {
-            $this->addVariables(['lesson' => null]);
+            $this->addVariables(['customData' => null]);
         }
     }
 }
