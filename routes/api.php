@@ -92,7 +92,7 @@ Route::post('/githubwebhook', function(Request $request) {
         $root_path = base_path();
         $process = new Process(['whoami'], $root_path);
         $process->run();
-        if($process->isSuccessful()) {
+        if(true) {
             Log::error("Response from stdout: " . $process->getOutput());
             Log::error("Response from stderr: " . $process->getErrorOutput());
             Log::error("Response from status: " . $process->getExitCode());
