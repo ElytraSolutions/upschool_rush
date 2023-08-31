@@ -1,5 +1,7 @@
 <?php
 
+use App\Admin\Extensions\Form\HTMLEditor;
+use OpenAdmin\Admin\Form;
 /**
  * Open-admin - admin builder based on Laravel.
  * @author z-song <https://github.com/z-song>
@@ -18,4 +20,5 @@
  *
  */
 
-OpenAdmin\Admin\Form::forget(['editor']);
+Form::extend('htmleditor1', HTMLEditor::class);
+Form::forget(['map', 'editor']);
