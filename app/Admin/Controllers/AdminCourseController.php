@@ -2,15 +2,16 @@
 
 namespace App\Admin\Controllers;
 
+use \App\Models\Course;
 use App\Models\CourseCategory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
-use \App\Models\Course;
 
-class CourseController extends AdminController
+class AdminCourseController extends AdminController
 {
     /**
      * Title for current resource.
@@ -73,12 +74,13 @@ class CourseController extends AdminController
     protected function form()
     {
         $form = new Form(new Course());
+        // dd(Form::$availableFields['htmleditor1']);
 
         $form->hidden('uuid')->default(Str::orderedUuid());
         $form->text('name', __('Name'));
         $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('intro', __('Intro'));
-        $form->htmleditor('contentBtn', __('Description'), ['form' => $form]);
+        $form->htmleditor1('contentBtn', __('Description'), ['form' => $form]);
         $form->text('tagline', __('Tagline'));
         $form->text('starredText', __('StarredText'));
         $form->color('theme', __('Theme'))->default('#F0FFF0');
