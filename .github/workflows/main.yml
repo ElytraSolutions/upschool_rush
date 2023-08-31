@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+      - 'prod'
+  workflow_dispatch:
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: upschool_frontend
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: upschool_frontend/.nvmrc
+      - name: Install dependencies
+        run: npm install
+      - name: Build Package
+        run: npm run build
+      - name: Copy dist to backend
+        run: cp -r dist/* ../public && cp dist/index.html ../resources/views/reactApp.blade.php
+      - name: Push changes
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add -A
+          git diff-index --quiet HEAD ||  git commit -am "deploy frontend"  # commit to the repository (ignore if no modification)
+          git push origin prod
