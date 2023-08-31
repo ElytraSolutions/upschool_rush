@@ -1,16 +1,7 @@
 <?php
 
-use App\Admin\Controllers\RichContentController;
-use App\Models\Lesson;
-use Encore\Admin\Facades\Admin;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Router;
-use App\Admin\Controllers\AdminUserController;
-use App\Admin\Controllers\AdminBookController;
-use App\Admin\Controllers\AdminChapterController;
 use App\Admin\Controllers\AdminCourseController;
-use App\Admin\Controllers\AdminCourseCategoryController;
-
+use Illuminate\Routing\Router;
 
 Admin::routes();
 
@@ -47,4 +38,3 @@ Route::group([
     Route::post('/tempLesson', [AdminLessonController::class, 'tempLesson']);
 
 });
-

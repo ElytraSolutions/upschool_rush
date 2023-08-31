@@ -4,10 +4,10 @@ namespace App\Admin\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Lesson;
-use Encore\Admin\Controllers\AdminController;
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Show;
+use OpenAdmin\Admin\Controllers\AdminController;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Show;
 use App\Admin\Field\HTMLEditor;
 use Illuminate\Http\Request;
 use URL;
