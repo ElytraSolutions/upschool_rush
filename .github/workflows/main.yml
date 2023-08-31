@@ -22,6 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build Package
+        env:
+          VITE_APP_URL: localhost
         run: npm run build
       - name: Copy dist to backend
         run: cp -r dist/* ../public && cp dist/index.html ../resources/views/reactApp.blade.php
