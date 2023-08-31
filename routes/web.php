@@ -18,8 +18,5 @@ use Illuminate\Support\Facades\Route;
 require __DIR__.'/auth.php';
 
 Route::get('/{any?}', function (String $any = null) {
-    $content = file_get_contents(__DIR__ . "/../public/root.html");
-    return \Response::make($content, 200, [
-        'Content-Type' => 'text/html',
-    ]);
+    return view('reactApp');
 })->where('any', '.*');
