@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - 'prod'
+  workflow_dispatch:
 jobs:
   build-frontend:
     runs-on: ubuntu-latest
