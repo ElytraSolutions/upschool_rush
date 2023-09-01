@@ -35,8 +35,8 @@ Route::group([
         $router->get('/courseCategories', [AdminCourseCategoryController::class, 'courseCategories']);
         $router->get('/courses', [AdminCourseController::class, 'courses']);
 
-        $router->get('richContents', [RichContentController::class, 'index']);
-        $router->get('richContents/{richContent}', [RichContentController::class, 'show']);
+        $router->get('richContents', [APIRichContentsController::class, 'index']);
+        $router->get('richContents/{richContent}', [APIRichContentsController::class, 'show']);
         $router->post('/richContents', [APIRichContentsController::class, 'store']);
         $router->put('/richContents/{richContent}', [APIRichContentsController::class, 'update'])->missing(Errors::missing());
         $router->delete('/richContents/{richContent}', [APIRichContentsController::class, 'destroy'])->missing(Errors::missing());

@@ -24,6 +24,7 @@
         window.addEventListener('load', async function () {
             const searchParams = new URLSearchParams(window.location.search);
             const id = searchParams.get('id');
+            const queryParam = searchParams.get('queryParam');
             if(!id) {
                 alert('No lesson id provided');
                 return;
@@ -98,8 +99,13 @@
                         body: JSON.stringify({id, html, css, js, project_data: JSON.stringify(editor.getProjectData())}),
                     }).then(data => data.json()).then(data => {
                         console.log(data);
-                        // window.location.href = '/admin/lessons/' + data.lessonId + '/edit';
-                    })
+                        const query = new URLSearchParams();
+                        query.set(queryParam, id);
+                        window.location.href = ("{{ url()->previous() }}?" + query.toString());
+                    }).catch(err => {
+                        console.log(err);
+                        alert('Save failed')
+                    });
                 },
                 attributes: {
                     title: 'Save Template'

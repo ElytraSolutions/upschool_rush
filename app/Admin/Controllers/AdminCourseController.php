@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use \App\Models\Course;
 use App\Models\CourseCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
@@ -76,17 +77,36 @@ class AdminCourseController extends AdminController
         $form = new Form(new Course());
         // dd(Form::$availableFields['htmleditor1']);
 
-        $form->hidden('uuid')->default(Str::orderedUuid());
+        preg_match('/courses\/([^\/]*)\/edit$/', URL::current(), $matches);
+        $id = Str::orderedUuid()->toString();
+        $courseId = null;
+        if(count($matches) == 2) {
+            $courseId = $matches[1];
+        }
+        if($courseId != null) {
+            $course = Course::find($courseId);
+            if ($course->description) {
+                $id = $course->description;
+            }
+        }  else if (request()->has('richContentId')) {
+            $id = request()->input('richContentId');
+        }
+
         $form->text('name', __('Name'));
-        $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('intro', __('Intro'));
-        $form->htmleditor('contentBtn', __('Description'), ['form' => $form]);
-        $form->text('tagline', __('Tagline'));
         $form->text('starredText', __('StarredText'));
-        $form->color('theme', __('Theme'))->default('#F0FFF0');
         $form->image('image', __('Image'));
+        $form->color('theme', __('Theme'))->default('#F0FFF0');
+        $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
+        $form->text('tagline', __('Tagline'));
         $form->image('thubmnail', __('Thubmnail'));
+        $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $id, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
+
+        $form->saving(function (Form $form) use ($id) {
+            $form->ignore(['contentBtn']);
+            $form->description = $id;
+        });
 
         return $form;
     }
