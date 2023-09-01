@@ -80,7 +80,7 @@ class AdminCourseController extends AdminController
         $form->text('name', __('Name'));
         $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('intro', __('Intro'));
-        $form->htmleditor1('contentBtn', __('Description'), ['form' => $form]);
+        $form->htmleditor('contentBtn', __('Description'), ['form' => $form]);
         $form->text('tagline', __('Tagline'));
         $form->text('starredText', __('StarredText'));
         $form->color('theme', __('Theme'))->default('#F0FFF0');

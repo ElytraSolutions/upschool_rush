@@ -20,5 +20,5 @@ use OpenAdmin\Admin\Form;
  *
  */
 
-Form::extend('htmleditor1', HTMLEditor::class);
+Form::extend('htmleditor', HTMLEditor::class);
 Form::forget(['map', 'editor']);
