@@ -21,10 +21,41 @@
   <body style="height:100vh; margin: 0">
     <div id="gjs" style=""></div>
     <script type="text/javascript">
-        window.addEventListener('load', function () {
+        window.addEventListener('load', async function () {
+            const searchParams = new URLSearchParams(window.location.search);
+            const id = searchParams.get('id');
+            const queryParam = searchParams.get('queryParam');
+            if(!id) {
+                alert('No lesson id provided');
+                return;
+            }
+            let response = await fetch(`/admin/api/richContents/${id}`);
+            if(response.status === 404) {
+                console.log("Creating new rich content");
+                response = await fetch(`/admin/api/richContents`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        "X-CSRF-Token": document.head.querySelector("[name~=csrf-token][content]").content,
+                    },
+                    body: JSON.stringify({id, html: '', css: '', js: '', project_data: JSON.stringify({})}),
+                });
+                if (!response.ok) {
+                    alert('Error creating new rich content');
+                    return;
+                }
+            }
+            const data = await response.json();
+
             var editor = grapesjs.init({
                 height: "100vh",
                 container : '#gjs',
+                storageManager: {
+                    type: 'local', // Storage type. Available: local | remote
+                    autosave: false, // Store data automatically
+                    autoload: false, // Autoload stored data on init
+                },
                 plugins: [
                     "gjs-blocks-basic",
                     'grapesjs-plugin-forms',
@@ -42,11 +73,7 @@
                     },
                 }
             });
-            @if(isset($lesson))
-            {
-                editor.loadProjectData($lesson->content_json);
-            }
-            @endif
+            editor.loadProjectData(JSON.parse(data.data.project_data));
 
             var panels = editor.Panels;
             var cmdm = editor.Commands;
@@ -61,24 +88,29 @@
                     const css = editor.getCss();
                     const js = editor.getJs();
                     const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
-                    fetch("/admin/richText", {
-                        method: 'POST',
+
+                    fetch("/admin/api/richContents/" + id, {
+                        method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
                             "X-CSRF-Token": csrfToken,
                         },
-                        body: JSON.stringify({html, css, js, project_data: JSON.stringify(editor.getProjectData())}),
+                        body: JSON.stringify({id, html, css, js, project_data: JSON.stringify(editor.getProjectData())}),
                     }).then(data => data.json()).then(data => {
                         console.log(data);
-                        // window.location.href = '/admin/lessons/' + data.lessonId + '/edit';
-                    })
+                        const query = new URLSearchParams();
+                        query.set(queryParam, id);
+                        window.location.href = ("{{ url()->previous() }}?" + query.toString());
+                    }).catch(err => {
+                        console.log(err);
+                        alert('Save failed')
+                    });
                 },
                 attributes: {
                     title: 'Save Template'
                 },
             })
-            console.log(optPanel)
         }); // end of event listener
     </script>
   </body>

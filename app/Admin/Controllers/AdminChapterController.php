@@ -71,13 +71,7 @@ class AdminChapterController extends AdminController
 
         $form->text('name', __('Name'));
         $form->text('description', __('Description'));
-        $form->select('course_id', __('Course id'))->options(function ($id) {
-            $course = Course::find($id);
-
-            if ($course) {
-                return [$course->id => $course->name];
-            }
-        })->ajax('/admin/api/courses');
+        $form->select('course_id', __('Course'))->options(Course::all()->pluck('name', 'id'));
         $form->switch('active', __('Active'))->default(1);
 
         return $form;

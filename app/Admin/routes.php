@@ -2,6 +2,8 @@
 
 use App\Admin\Controllers\AdminCourseController;
 use App\Admin\Controllers\RichContentController;
+use App\Http\Controllers\RichContentsController as APIRichContentsController;
+use App\CustomErrors\Errors;
 use Illuminate\Routing\Router;
 
 Admin::routes();
@@ -32,6 +34,12 @@ Route::group([
         $router->get('/chapters', [AdminChapterController::class, 'chapters']);
         $router->get('/courseCategories', [AdminCourseCategoryController::class, 'courseCategories']);
         $router->get('/courses', [AdminCourseController::class, 'courses']);
+
+        $router->get('richContents', [APIRichContentsController::class, 'index']);
+        $router->get('richContents/{richContent}', [APIRichContentsController::class, 'show']);
+        $router->post('/richContents', [APIRichContentsController::class, 'store']);
+        $router->put('/richContents/{richContent}', [APIRichContentsController::class, 'update'])->missing(Errors::missing());
+        $router->delete('/richContents/{richContent}', [APIRichContentsController::class, 'destroy'])->missing(Errors::missing());
     });
 
     Route::get('/lessonEditor', function (Request $request) {
