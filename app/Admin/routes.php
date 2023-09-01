@@ -1,7 +1,7 @@
 <?php
 
 use App\Admin\Controllers\AdminCourseController;
-use App\Http\Controllers\RichContentController;
+use App\Admin\Controllers\RichContentController;
 use Illuminate\Routing\Router;
 
 Admin::routes();
