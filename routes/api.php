@@ -11,6 +11,8 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProjectController;
 use App\CustomErrors\Errors;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Process\Process;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -88,7 +90,14 @@ Route::post('/githubwebhook', function(Request $request) {
     }
     if (strcmp($hash, $request->header('X-Hub-Signature')) == 0) {
         $root_path = base_path();
-        $process = new \Symfony\Component\Process\Process(['git', 'pull'], $root_path);
+        $process = new Process(['whoami'], $root_path);
+        $process->run();
+        if(true) {
+            Log::error("Response from stdout: " . $process->getOutput());
+            Log::error("Response from stderr: " . $process->getErrorOutput());
+            Log::error("Response from status: " . $process->getExitCode());
+        }
+        $process = new Process(['git', 'pull'], $root_path);
         $process->run();
         if(!$process->isSuccessful()) {
             Log::error("Response from stdout: " . $process->getOutput());
@@ -96,7 +105,7 @@ Route::post('/githubwebhook', function(Request $request) {
             Log::error("Response from status: " . $process->getExitCode());
             return 'Pull failed';
         }
-        $process = new \Symfony\Component\Process\Process(['php', 'artisan', 'migrate'], $root_path);
+        $process = new Process(['php', 'artisan', 'migrate'], $root_path);
         $process->run();
         if(!$process->isSuccessful()) {
             Log::error("Response from stdout: " . $process->getOutput());
