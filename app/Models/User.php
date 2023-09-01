@@ -5,8 +5,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
@@ -62,5 +64,57 @@ class User extends Authenticatable
     public function type(): BelongsTo
     {
         return $this->belongsTo(UserType::class, 'user_type_id', 'id');
+    }
+
+    /**
+     * Get avatar attribute.
+     *
+     * @param string $avatar
+     *
+     * @return string
+     */
+    public function getAvatarAttribute($avatar)
+    {
+        if (url()->isValidUrl($avatar)) {
+            return $avatar;
+        }
+
+        $disk = config('admin.upload.disk');
+
+        if ($avatar && array_key_exists($disk, config('filesystems.disks'))) {
+            return Storage::disk(config('admin.upload.disk'))->url($avatar);
+        }
+
+        $default = config('admin.default_avatar') ?: '/vendor/open-admin/open-admin/gfx/user.svg';
+
+        return admin_asset($default);
+    }
+
+    /**
+     * A user has and belongs to many roles.
+     *
+     * @return BelongsToMany
+     */
+    public function roles(): BelongsToMany
+    {
+        $pivotTable = config('admin.database.role_users_table');
+
+        $relatedModel = config('admin.database.roles_model');
+
+        return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'role_id');
+    }
+
+    /**
+     * A User has and belongs to many permissions.
+     *
+     * @return BelongsToMany
+     */
+    public function permissions(): BelongsToMany
+    {
+        $pivotTable = config('admin.database.user_permissions_table');
+
+        $relatedModel = config('admin.database.permissions_model');
+
+        return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'permission_id');
     }
 }
