@@ -1,6 +1,7 @@
 <?php
 
 use App\Admin\Controllers\AdminCourseController;
+use App\Http\Controllers\RichContentController;
 use Illuminate\Routing\Router;
 
 Admin::routes();
@@ -25,6 +26,7 @@ Route::group([
     $router->resource('projects', AdminProjectController::class);
     $router->resource('users', AdminUserController::class);
     $router->resource('user-types', AdminUserTypeController::class);
+    $router->resource('rich-content', RichContentController::class);
 
     $router->group(['prefix' => 'api'], function (Router $router) {
         $router->get('/chapters', [AdminChapterController::class, 'chapters']);
