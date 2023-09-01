@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\RichContent;
+use Illuminate\Support\Facades\URL;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
@@ -68,23 +69,14 @@ class RichContentController extends AdminController
     protected function form()
     {
         $form = new Form(new RichContent());
+        preg_match('/rich-content\/([^\/]*)\/edit$/', URL::current(), $matches);
+        $id = Str::orderedUuid()->toString();
+        if(count($matches) == 2) {
+            $id = $matches[1];
+        }
 
-        $form->textarea('html', __('Html'));
-        $form->textarea('css', __('Css'));
-        $form->textarea('js', __('Js'));
-        $form->textarea('project_data', __('Project data'));
+        $form->htmleditor('contentBtn', __('Edit'), ['form' => $form, 'id' => $id]);
 
         return $form;
-    }
-
-    public function store()
-    {
-        return RichContent::create([
-            'id' => request()->uuid ?? Str::uuid(),
-            'html' => request()->html ?? '',
-            'css' => request()->css ?? '',
-            'js' => request()->js ?? '',
-            'project_data' => request()['project_data'] ?? '',
-        ]);
     }
 }
