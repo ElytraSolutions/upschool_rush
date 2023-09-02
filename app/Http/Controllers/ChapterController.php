@@ -111,4 +111,15 @@ class ChapterController extends Controller
             'data' => $chapter->delete(),
         ];
     }
+
+    /**
+     * Return a listing of the resource's lessons.
+     */
+    public function chapters(Request $request, Chapter $chapter)
+    {
+        return [
+            'success' => true,
+            'data' => $chapter->lessons,
+        ];
+    }
 }

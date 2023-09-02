@@ -46,10 +46,11 @@ function apiRoutes($mainRoute, $authMiddleware)
     $mainRoute->get('/courses/{course:slug}/chapters', [CourseController::class, 'chapters'])->missing(Errors::missing());
 
     $mainRoute->get('/chapters', [ChapterController::class, 'index']);
-    $mainRoute->get('/chapters/{chapter}', [ChapterController::class, 'show'])->missing(Errors::missing());
+    $mainRoute->get('/chapters/{chapter:slug}', [ChapterController::class, 'show'])->missing(Errors::missing());
+    $mainRoute->get('/chapters/{chapter:slug}/lessons', [ChapterController::class, 'show'])->missing(Errors::missing());
 
     $mainRoute->get('/lessons', [LessonController::class, 'index']);
-    $mainRoute->get('/lessons/{lesson}', [LessonController::class, 'show'])->missing(Errors::missing());
+    $mainRoute->get('/lessons/{lesson:slug}', [LessonController::class, 'show'])->missing(Errors::missing());
 
     $mainRoute->get('/projects', [ProjectController::class, 'index']);
     $mainRoute->get('/projects/{project}', [ProjectController::class, 'show'])->missing(Errors::missing());

@@ -113,7 +113,7 @@ class CourseController extends Controller
     }
 
     /**
-     * Return a listing of the resource's lessons.
+     * Return a listing of the resource's chapters.
      */
     public function chapters(Request $request, Course $course)
     {
