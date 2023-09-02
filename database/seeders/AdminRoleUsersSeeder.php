@@ -16,7 +16,7 @@ class AdminRoleUsersSeeder extends Seeder
         //
         $user = DB::table('users')->where('is_admin', 1)->first();
         DB::table('admin_role_users')->insert([
-            'admin_role_id' => 1,
+            'role_id' => 1,
             'user_id' => $user->id,
         ]);
     }
