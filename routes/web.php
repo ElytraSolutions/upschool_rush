@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['prefix' => 'auth'], function() {
+    require __DIR__.'/auth.php';
+});
 
-require __DIR__.'/auth.php';
+Route::group(['prefix' => 'data'], function() {
+    require __DIR__.'/data.php';
+});
 
 Route::get('/{any?}', function (String $any = null) {
     return view('reactApp');
