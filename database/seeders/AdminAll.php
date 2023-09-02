@@ -85,6 +85,7 @@ class AdminAll extends Seeder
                 'order'     => 2,
                 'title'     => 'Manage',
                 'icon'      => 'icon-bullseye',
+                'uri'       => null,
             ],
             ]);
         $manageMenu = DB::table('admin_menu')->where('title', 'Manage')->first(['id']);
@@ -159,6 +160,7 @@ class AdminAll extends Seeder
                 'order'     => 12,
                 'title'    => 'Admin',
                 'icon'     => 'icon-server',
+                'uri'      => null,
             ],
         ]);
         $adminMenu = DB::table('admin_menu')->where('title', 'Admin')->first(['id']);
@@ -205,6 +207,7 @@ class AdminAll extends Seeder
                 'order'     => 18,
                 'title'     => 'Helpers',
                 'icon'      => 'icon-cogs',
+                'uri'       => null,
             ],
         ]);
         $helpersMenu = DB::table('admin_menu')->where('title', 'Helpers')->first(['id']);
