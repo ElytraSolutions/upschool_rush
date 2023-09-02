@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Lesson;
+use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
@@ -75,32 +76,29 @@ class AdminLessonController extends AdminController
         $form = new Form(new Lesson());
         $form->extend('htmlEditor', HTMLEditor::class);
 
-        $currentURL = URL::current();
-        $exploded = explode('/lessons/', $currentURL);
-        if(str_ends_with($exploded[1], '/edit')) {
-            $currentLessonId = explode('/edit', $exploded[1])[0];
-            $currentLesson = Lesson::find($currentLessonId)->create;
-        } else {
-            $currentLesson = null;
+        preg_match('/lessons\/([^\/]*)\/edit$/', URL::current(), $matches);
+        $id = Str::orderedUuid()->toString();
+        $lessonId = null;
+        if(count($matches) == 2) {
+            $lessonId = $matches[1];
+        }
+        if($lessonId != null) {
+            $lesson = Lesson::find($lessonId);
+            if ($lesson->content) {
+                $id = $lesson->content;
+            }
+        } else if (request()->has('richContentId')) {
+            $id = request()->input('richContentId');
         }
 
-
+        $form->hidden('content', __('Content'))->default($id);
         $form->text('name', __('Name'));
-        $form->select('chapter_id', __('Chapters'))->options(function ($id) {
-            $chapter = Chapter::find($id);
-
-            if ($chapter) {
-                return [$chapter->id => $chapter->name];
-            }
-        })->ajax('/admin/api/chapters');
+        $form->select('chapter_id', __('Chapters'))->options(Chapter::all()->pluck('name', 'id'));
         $form->text('intro', __('Intro'));
-        $form->htmleditor('contentBtn', __('Content'), $currentLesson);
-        $form->hidden('html');
-        $form->hidden('css');
-        $form->hidden('js');
-        $form->hidden('content_json', __('Content JSON'));
+        $form->htmleditor('contentBtn', __('Content'),['form' => $form, 'id' => $id, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
-        $form->submitted(function (Form $form) {
+
+        $form->saving(function (Form $form) use ($id) {
             $form->ignore('contentBtn');
         });
 

@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 
 class Lesson extends Model
 {
     use HasFactory;
     use Sluggable;
+    use HasUuids;
 
     protected $fillable = [
         'name',
@@ -18,8 +20,6 @@ class Lesson extends Model
         'content',
         'active',
         'chapter_id',
-        'content_json',
-        'active',
     ];
 
     protected $casts = [
