@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use OpenAdmin\Admin\Controllers\AuthController as BaseAuthController;
 use OpenAdmin\Admin\Facades\Admin;
@@ -41,7 +42,7 @@ class AuthController extends BaseAuthController
         $credentials = array_merge($credentials, ['is_admin' => 1]);
         $remember    = $request->get('remember', false);
 
-        if ($this->guard()->attempt($credentials, $remember)) {
+        if ($this->guard()->attempt($credentials, $remember) && Auth::guard('web')->attempt($credentials, $remember)) {
             RateLimiter::clear($rate_limit_key);
             return $this->sendLoginResponse($request);
         }
