@@ -29,7 +29,11 @@
                 alert('No lesson id provided');
                 return;
             }
-            let response = await fetch(`/admin/api/richContents/${id}`);
+            let response = await fetch(`/admin/api/richContents/${id}`, {
+                headers: {
+                    'Accept': 'application/json',
+                },
+            });
             if(response.status === 404) {
                 console.log("Creating new rich content");
                 response = await fetch(`/admin/api/richContents`, {
