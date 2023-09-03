@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>upschool</title>
-    <script type="module" crossorigin src="/assets/index-dda92653.js"></script>
+    <script type="module" crossorigin src="/assets/index-210ff4c6.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/@babel-4ef42ede.js">
     <link rel="modulepreload" crossorigin href="/assets/react-18892649.js">
     <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -14,6 +14,7 @@
     <link rel="modulepreload" crossorigin href="/assets/@remix-run-46b80ddf.js">
     <link rel="modulepreload" crossorigin href="/assets/react-router-95a40500.js">
     <link rel="modulepreload" crossorigin href="/assets/react-router-dom-75729f0d.js">
+    <link rel="modulepreload" crossorigin href="/assets/axios-82afda87.js">
     <link rel="modulepreload" crossorigin href="/assets/react-is-a192e302.js">
     <link rel="modulepreload" crossorigin href="/assets/clsx-1229b3e0.js">
     <link rel="modulepreload" crossorigin href="/assets/hoist-non-react-statics-3f8ebaa8.js">
@@ -34,9 +35,8 @@
     <link rel="modulepreload" crossorigin href="/assets/tiny-case-d0726479.js">
     <link rel="modulepreload" crossorigin href="/assets/toposort-80543fdc.js">
     <link rel="modulepreload" crossorigin href="/assets/yup-a6b21bc8.js">
-    <link rel="modulepreload" crossorigin href="/assets/axios-82afda87.js">
     <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
-    <link rel="stylesheet" href="/assets/index-232b3347.css">
+    <link rel="stylesheet" href="/assets/index-ab30d947.css">
     <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
   </head>
   <body>
