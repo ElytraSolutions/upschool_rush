@@ -92,6 +92,7 @@ class AdminCourseController extends AdminController
             $id = request()->input('richContentId');
         }
 
+        $form->hidden('description', __('Description'))->default($id);
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
         $form->text('starredText', __('StarredText'));
@@ -105,7 +106,7 @@ class AdminCourseController extends AdminController
 
         $form->saving(function (Form $form) use ($id) {
             $form->ignore(['contentBtn']);
-            $form->description = $id;
+            // $form->description = $id;
         });
 
         return $form;
