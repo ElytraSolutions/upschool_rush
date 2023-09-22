@@ -88,9 +88,8 @@ class AdminCourseController extends AdminController
             if ($course->description) {
                 $id = $course->description;
             }
-        }  else if (request()->has('richContentId')) {
-            $id = request()->input('richContentId');
         }
+        $id = request()->query('richContentId', $id);
 
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
@@ -102,10 +101,9 @@ class AdminCourseController extends AdminController
         $form->image('thubmnail', __('Thubmnail'));
         $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $id, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
-
-        $form->saving(function (Form $form) use ($id) {
+        $form->hidden('description', __('Description'))->default($id);
+        $form->saving(function (Form $form) {
             $form->ignore(['contentBtn']);
-            $form->description = $id;
         });
 
         return $form;
