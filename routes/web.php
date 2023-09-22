@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Lesson;
+use App\Models\RichContent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,10 @@ Route::group(['prefix' => 'auth'], function() {
 
 Route::group(['prefix' => 'data'], function() {
     require __DIR__.'/data.php';
+});
+
+Route::get('/richContentView/{richContent}', function(RichContent $richContent) {
+    return view('richContentView', ['content' => $richContent]);
 });
 
 Route::get('/{any?}', function (String $any = null) {
