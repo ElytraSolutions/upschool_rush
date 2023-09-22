@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::drop('admin_users');
+        Schema::dropIfExists('admin_users');
         Schema::table('users', function (Blueprint $table) {
             $table->string('avatar')->nullable()->after('password');
         });
