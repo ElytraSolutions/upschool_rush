@@ -10,6 +10,13 @@ class CourseCategory extends Model
 {
     use HasFactory;
 
+    protected $table = 'course_categories';
+
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
     public function courses()
     {
         return $this->hasMany(Course::class);

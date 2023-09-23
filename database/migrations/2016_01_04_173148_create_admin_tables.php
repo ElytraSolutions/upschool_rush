@@ -106,7 +106,7 @@ class CreateAdminTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('admin.database.users_table'));
+        // Schema::dropIfExists(config('admin.database.users_table'));
         Schema::dropIfExists(config('admin.database.roles_table'));
         Schema::dropIfExists(config('admin.database.permissions_table'));
         Schema::dropIfExists(config('admin.database.menu_table'));

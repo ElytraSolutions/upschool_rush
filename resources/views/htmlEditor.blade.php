@@ -29,7 +29,11 @@
                 alert('No lesson id provided');
                 return;
             }
-            let response = await fetch(`/admin/api/richContents/${id}`);
+            let response = await fetch(`/admin/api/richContents/${id}`, {
+                headers: {
+                    'Accept': 'application/json',
+                },
+            });
             if(response.status === 404) {
                 console.log("Creating new rich content");
                 response = await fetch(`/admin/api/richContents`, {
@@ -55,6 +59,15 @@
                     type: 'local', // Storage type. Available: local | remote
                     autosave: false, // Store data automatically
                     autoload: false, // Autoload stored data on init
+                },
+                canvas: {
+                    styles: [
+                        "/css/richContent.css"
+                    ],
+                    scripts: [
+                        "https://cdn.tailwindcss.com",
+                        "/js/tailwindconfig.js"
+                    ],
                 },
                 plugins: [
                     "gjs-blocks-basic",

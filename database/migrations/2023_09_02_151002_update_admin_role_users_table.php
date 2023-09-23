@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::dropIfExists('admin_users');
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('avatar')->nullable()->after('password');
+        Schema::table('admin_role_users', function (Blueprint $table) {
+            $table->uuid('user_id')->change();
         });
     }
 
@@ -24,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         //
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('avatar');
+        Schema::table('admin_role_users', function (Blueprint $table) {
+            $table->integer('user_id')->change();
         });
     }
 };

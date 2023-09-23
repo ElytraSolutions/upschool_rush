@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
     {
         $validated = $request->validated();
 
-        $user = User::create($validated->all());
+        $user = User::create($validated);
 
         event(new Registered($user));
 

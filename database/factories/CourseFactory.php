@@ -23,7 +23,7 @@ class CourseFactory extends Factory
             'intro' => $this->faker->paragraph(),
             'image' => 'https://random.imagecdn.app/800/600',
             'theme' => $this->faker->colorName(),
-            'description' => $this->faker->paragraph(),
+            'description' => null,
             'course_category_id' => CourseCategory::all()->random()->id,
             'tagline' => $this->faker->words(3, true),
             'thumbnail' => 'https://random.imagecdn.app/800/601',

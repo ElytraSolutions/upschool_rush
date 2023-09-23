@@ -11,6 +11,8 @@ class RichContent extends Model
     use HasFactory;
     use HasUuids;
 
+    protected $table = 'rich_contents';
+
     protected $fillable = [
         'id',
         'html',

@@ -91,6 +91,7 @@ class AdminCourseController extends AdminController
         }
         $id = request()->query('richContentId', $id);
 
+        $form->hidden('description', __('Description'))->default($id);
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
         $form->text('starredText', __('StarredText'));
