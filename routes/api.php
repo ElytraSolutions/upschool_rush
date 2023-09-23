@@ -20,6 +20,7 @@ Route::post('/githubwebhook', function(Request $request) {
         Log::error('Invalid ref');
         return 'Invalid ref';
     }
+    $user = Process::run("whoami")->output();
     if (strcmp($hash, $request->header('X-Hub-Signature')) == 0) {
         $root_path = base_path();
         try {
@@ -35,7 +36,9 @@ Route::post('/githubwebhook', function(Request $request) {
                     "message" => 'Pull failed',
                     "output" => $output,
                     "error" => $error,
-                    "exitCode" => $exitCode
+                    "exitCode" => $exitCode,
+                    "root" => $root_path,
+                    "user" => $user,
                 ];
             }
         } catch (Exception $e) {
@@ -54,7 +57,9 @@ Route::post('/githubwebhook', function(Request $request) {
                     "message" => 'Migration failed',
                     "output" => $output,
                     "error" => $error,
-                    "exitCode" => $exitCode
+                    "exitCode" => $exitCode,
+                    "root" => $root_path,
+                    "user" => $user,
                 ];
             }
         } catch (Exception $e) {
