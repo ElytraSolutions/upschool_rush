@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Process;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,28 +22,27 @@ Route::post('/githubwebhook', function(Request $request) {
     }
     if (strcmp($hash, $request->header('X-Hub-Signature')) == 0) {
         $root_path = base_path();
-        $process = new Process(['whoami'], $root_path);
-        $process->run();
-        if(true) {
-            Log::error("Response from stdout: " . $process->getOutput());
-            Log::error("Response from stderr: " . $process->getErrorOutput());
-            Log::error("Response from status: " . $process->getExitCode());
+        try {
+            $gitResult = Process::path($root_path)->run('git pull');
+            if(!$gitResult->successful()) {
+                Log::error("Response from stdout: " . $gitResult->output());
+                Log::error("Response from stderr: " . $gitResult->errorOutput());
+                Log::error("Response from status: " . $gitResult->exitCode());
+                return 'Pull failed';
+            }
+        } catch (Exception $e) {
+            return "Exception on git pull";
         }
-        $process = new Process(['git', 'pull'], $root_path);
-        $process->run();
-        if(!$process->isSuccessful()) {
-            Log::error("Response from stdout: " . $process->getOutput());
-            Log::error("Response from stderr: " . $process->getErrorOutput());
-            Log::error("Response from status: " . $process->getExitCode());
-            return 'Pull failed';
-        }
-        $process = new Process(['sail', 'artisan', 'migrate'], $root_path);
-        $process->run();
-        if(!$process->isSuccessful()) {
-            Log::error("Response from stdout: " . $process->getOutput());
-            Log::error("Response from stderr: " . $process->getErrorOutput());
-            Log::error("Response from status: " . $process->getExitCode());
-            return 'Migrate failed';
+        try {
+            $gitResult = Process::path($root_path)->run('sail artisan migrate');
+            if(!$gitResult->successful()) {
+                Log::error("Response from stdout: " . $gitResult->output());
+                Log::error("Response from stderr: " . $gitResult->errorOutput());
+                Log::error("Response from status: " . $gitResult->exitCode());
+                return 'Migrate failed';
+            }
+        } catch (Exception $e) {
+            return "Exception on running migrations";
         }
         return 'Success';
     } else {
