@@ -60,6 +60,15 @@
                     autosave: false, // Store data automatically
                     autoload: false, // Autoload stored data on init
                 },
+                canvas: {
+                    styles: [
+                        "/css/richContent.css"
+                    ],
+                    scripts: [
+                        "https://cdn.tailwindcss.com",
+                        "/js/tailwindconfig.js"
+                    ],
+                },
                 plugins: [
                     "gjs-blocks-basic",
                     'grapesjs-plugin-forms',
