@@ -35,7 +35,7 @@ Route::post('/githubwebhook', function(Request $request) {
             Log::error("Response from status: " . $process->getExitCode());
             return 'Pull failed';
         }
-        $process = new Process(['php', 'artisan', 'migrate'], $root_path);
+        $process = new Process(['sail', 'artisan', 'migrate'], $root_path);
         $process->run();
         if(!$process->isSuccessful()) {
             Log::error("Response from stdout: " . $process->getOutput());
