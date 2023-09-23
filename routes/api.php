@@ -42,7 +42,7 @@ Route::post('/githubwebhook', function(Request $request) {
             return "Exception on git pull";
         }
         try {
-            $migrateResult = Process::path($root_path)->run('sail artisan migrate');
+            $migrateResult = Process::path($root_path)->run('./vendor/bin/sail artisan migrate');
             if(!$migrateResult->successful()) {
                 $output = $migrateResult->output();
                 $error = $migrateResult->errorOutput();
