@@ -25,21 +25,37 @@ Route::post('/githubwebhook', function(Request $request) {
         try {
             $gitResult = Process::path($root_path)->run('git pull');
             if(!$gitResult->successful()) {
-                Log::error("Response from stdout: " . $gitResult->output());
-                Log::error("Response from stderr: " . $gitResult->errorOutput());
-                Log::error("Response from status: " . $gitResult->exitCode());
-                return 'Pull failed';
+                $output = $gitResult->output();
+                $error = $gitResult->errorOutput();
+                $exitCode = $gitResult->exitCode();
+                Log::error("Response from stdout: " . $output);
+                Log::error("Response from stderr: " . $error);
+                Log::error("Response from status: " . $exitCode);
+                return [
+                    "message" => 'Pull failed',
+                    "output" => $output,
+                    "error" => $error,
+                    "exitCode" => $exitCode
+                ];
             }
         } catch (Exception $e) {
             return "Exception on git pull";
         }
         try {
-            $gitResult = Process::path($root_path)->run('sail artisan migrate');
-            if(!$gitResult->successful()) {
-                Log::error("Response from stdout: " . $gitResult->output());
-                Log::error("Response from stderr: " . $gitResult->errorOutput());
-                Log::error("Response from status: " . $gitResult->exitCode());
-                return 'Migrate failed';
+            $migrateResult = Process::path($root_path)->run('sail artisan migrate');
+            if(!$migrateResult->successful()) {
+                $output = $migrateResult->output();
+                $error = $migrateResult->errorOutput();
+                $exitCode = $migrateResult->exitCode();
+                Log::error("Response from stdout: " . $output);
+                Log::error("Response from stderr: " . $error);
+                Log::error("Response from status: " . $exitCode);
+                return [
+                    "message" => 'Migration failed',
+                    "output" => $output,
+                    "error" => $error,
+                    "exitCode" => $exitCode
+                ];
             }
         } catch (Exception $e) {
             return "Exception on running migrations";
