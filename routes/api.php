@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Process;
 
 /*
@@ -18,7 +19,7 @@ Route::post('/githubwebhook', function(Request $request) {
     $hash = "sha1=" . hash_hmac('sha1', $request->getContent(), $secret);
     if ($request->ref != 'refs/heads/prod') {
         Log::error('Invalid ref');
-        return 'Invalid ref';
+        return Response('Invalid ref', 200);
     }
     $user = Process::run("whoami")->output();
     if (strcmp($hash, $request->header('X-Hub-Signature')) == 0) {
@@ -32,17 +33,17 @@ Route::post('/githubwebhook', function(Request $request) {
                 Log::error("Response from stdout: " . $output);
                 Log::error("Response from stderr: " . $error);
                 Log::error("Response from status: " . $exitCode);
-                return [
+                return Response::json([
                     "message" => 'Pull failed',
                     "output" => $output,
                     "error" => $error,
                     "exitCode" => $exitCode,
                     "root" => $root_path,
                     "user" => $user,
-                ];
+                ], 500);
             }
         } catch (Exception $e) {
-            return "Exception on git pull";
+            return Response("Exception on git pull", 500);
         }
         try {
             $migrateResult = Process::path($root_path)->run('php artisan migrate');
@@ -53,21 +54,21 @@ Route::post('/githubwebhook', function(Request $request) {
                 Log::error("Response from stdout: " . $output);
                 Log::error("Response from stderr: " . $error);
                 Log::error("Response from status: " . $exitCode);
-                return [
+                return Response::json([
                     "message" => 'Migration failed',
                     "output" => $output,
                     "error" => $error,
                     "exitCode" => $exitCode,
                     "root" => $root_path,
                     "user" => $user,
-                ];
+                ], 500);
             }
         } catch (Exception $e) {
-            return "Exception on running migrations";
+            return Response("Exception on running migrations", 500);
         }
-        return 'Success';
+        return Response('Success', 200);
     } else {
         Log::error('Invalid signature');
-        return 'Invalid signature';
+        return Response('Invalid signature', 400);
     }
 });
