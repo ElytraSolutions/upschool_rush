@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-668baf7d.js"></script>
+  <script type="module" crossorigin src="/assets/index-867c209b.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-4ef42ede.js">
   <link rel="modulepreload" crossorigin href="/assets/react-18892649.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -23,7 +23,7 @@
   <link rel="modulepreload" crossorigin href="/assets/stylis-79144faa.js">
   <link rel="modulepreload" crossorigin href="/assets/@emotion-3b974713.js">
   <link rel="modulepreload" crossorigin href="/assets/react-transition-group-b40fb521.js">
-  <link rel="modulepreload" crossorigin href="/assets/@mui-10291432.js">
+  <link rel="modulepreload" crossorigin href="/assets/@mui-7b5d779c.js">
   <link rel="modulepreload" crossorigin href="/assets/prop-types-9683e67b.js">
   <link rel="modulepreload" crossorigin href="/assets/react-easy-swipe-7c525ec3.js">
   <link rel="modulepreload" crossorigin href="/assets/classnames-63c61219.js">
@@ -42,7 +42,7 @@
   <link rel="modulepreload" crossorigin href="/assets/attr-accept-6df8d728.js">
   <link rel="modulepreload" crossorigin href="/assets/react-dropzone-e3fff22c.js">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
-  <link rel="stylesheet" href="/assets/index-999310f5.css">
+  <link rel="stylesheet" href="/assets/index-f19eb0b2.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
