@@ -117,4 +117,14 @@ class User extends Authenticatable
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'permission_id');
     }
+
+    /**
+     * A user has many courses.
+     *
+     * @return BelongsToMany
+     */
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'course_enrollments');
+    }
 }

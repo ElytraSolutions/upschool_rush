@@ -2,6 +2,7 @@
 
 namespace App\Routes\Data;
 
+use App\Http\Controllers\CourseEnrollmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -41,8 +42,16 @@ Route::get('/richContents', [RichContentsController::class, 'index']);
 Route::get('/richContents/{richContent}', [RichContentsController::class, 'show'])->missing(Errors::missing());
 
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user()->load('type');
+Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->get('/user', function (Request $request) {
+        return $request->user()->load('type');
+    });
+    $route->get('/user/courses', function(Request $request) {
+        return [
+            'success' => true,
+            'data' => $request->user()->courses()->get(['courses.id', 'courses.slug', 'courses.name']),
+        ];
+    });
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
@@ -53,8 +62,12 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/courses', [CourseController::class, 'store']);
-    $route->put('/courses/{course}', [CourseController::class, 'update'])->missing(Errors::missing());
-    $route->delete('/courses/{course}', [CourseController::class, 'destroy'])->missing(Errors::missing());
+    $route->put('/courses/{course:slug}', [CourseController::class, 'update'])->missing(Errors::missing());
+    $route->delete('/courses/{course:slug}', [CourseController::class, 'destroy'])->missing(Errors::missing());
+
+    $route->get('/courses/{course:slug}/students', [CourseController::class, 'students'])->missing(Errors::missing());
+    $route->post('/courses/{course:slug}/enroll', [CourseController::class, 'enroll'])->missing(Errors::missing());
+    $route->delete('/courses/{course:slug}/enroll', [CourseController::class, 'unenroll'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
@@ -73,4 +86,10 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/projects', [ProjectController::class, 'store']);
     $route->put('/projects/{project}', [ProjectController::class, 'update'])->missing(Errors::missing());
     $route->delete('/projects/{project}', [ProjectController::class, 'destroy'])->missing(Errors::missing());
+});
+
+Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->post('/enrollments', [CourseEnrollmentController::class, 'store']);
+    $route->put('/enrollments/{enrollment}', [CourseEnrollmentController::class, 'update'])->missing(Errors::missing());
+    $route->delete('/enrollments/{enrollment}', [CourseEnrollmentController::class, 'destroy'])->missing(Errors::missing());
 });

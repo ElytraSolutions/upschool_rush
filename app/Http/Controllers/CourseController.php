@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCourseEnrollmentRequest;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
+use App\Models\CourseEnrollment;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -109,6 +111,63 @@ class CourseController extends Controller
         return [
             'success' => true,
             'data' => $course->delete(),
+        ];
+    }
+
+    /**
+     * Return a listing of the students enrolled in the course.
+    */
+    public function students(Course $course) {
+        return [
+            'success' => true,
+            'data' => $course->users,
+        ];
+    }
+
+    /**
+     * Enrolls the user in the course.
+    */
+    public function enroll(Request $request, Course $course)
+    {
+        $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
+            ->where('user_id', $request->user()->getAttribute('id'))
+            ->first();
+        if ($courseEnrollment !== null) {
+            return [
+                'success' => false,
+                'message' => 'You are already enrolled in this course.',
+            ];
+        }
+        $request->merge([
+            'course_id' => $course->getAttribute('id'),
+            'user_id' => $request->user()->getAttribute('id'),
+        ]);
+        $rules = (new StoreCourseEnrollmentRequest)->rules();
+        $validated = $request->validate($rules);
+        $courseEnrollment = CourseEnrollment::create($validated);
+        return [
+            'success' => true,
+            'data' => $courseEnrollment,
+        ];
+    }
+
+    /**
+     * Unenrolls the user from the course.
+    */
+    public function unenroll(Request $request, Course $course)
+    {
+        $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
+            ->where('user_id', $request->user()->getAttribute('id'))
+            ->first();
+        if ($courseEnrollment === null) {
+            return [
+                'success' => false,
+                'message' => 'You are not enrolled in this course.',
+            ];
+        }
+        return [
+            'success' => true,
+            'data' => $courseEnrollment->delete(),
         ];
     }
 
