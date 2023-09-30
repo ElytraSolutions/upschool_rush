@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Chapter;
+use App\Models\CourseEnrollment;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -81,5 +82,24 @@ class ChapterPolicy
     {
         //
         return false;
+    }
+
+    /**
+     * Determine whether the user can mark the chapter as complete.
+    */
+    public function complete(User $user, Chapter $chapter): bool
+    {
+        if ($user->cannot('view', $chapter))
+        {
+            return false;
+        }
+        $userEnrolled = CourseEnrollment::query()
+            ->where('user_id', $user->id)
+            ->where('course_id', $chapter->course->id)
+            ->exists();
+        if (!$userEnrolled) {
+            return false;
+        }
+        return true;
     }
 }

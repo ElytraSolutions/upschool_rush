@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreChapterRequest;
 use App\Http\Requests\UpdateChapterRequest;
 use App\Models\Chapter;
+use App\Models\ChapterCompletion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -109,6 +110,36 @@ class ChapterController extends Controller
         return [
             'success' => true,
             'data' => $chapter->delete(),
+        ];
+    }
+
+    /**
+     * Mark the specified chapter as completed.
+    */
+    public function complete(Request $request, Chapter $chapter)
+    {
+        if (!$request->user()->can('complete', $chapter)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to complete this chapter.',
+            ], 403);
+        }
+        $chapterCompleted = ChapterCompletion::where('user_id', $request->user()->id)
+            ->where('chapter_id', $chapter->id)
+            ->exists();
+        if ($chapterCompleted) {
+            return response([
+                'success' => false,
+                'message' => 'You have already completed this chapter.',
+            ], 400);
+        }
+        $chapterCompletion = new ChapterCompletion;
+        $chapterCompletion->user_id = $request->user()->id;
+        $chapterCompletion->chapter_id = $chapter->id;
+        $chapterCompletion->save();
+        return [
+            'success' => true,
+            'data' => $chapterCompletion,
         ];
     }
 

@@ -72,14 +72,16 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/chapters', [ChapterController::class, 'store']);
-    $route->put('/chapters/{chapter}', [ChapterController::class, 'update'])->missing(Errors::missing());
-    $route->delete('/chapters/{chapter}', [ChapterController::class, 'destroy'])->missing(Errors::missing());
+    $route->put('/chapters/{chapter:slug}', [ChapterController::class, 'update'])->missing(Errors::missing());
+    $route->delete('/chapters/{chapter:slug}', [ChapterController::class, 'destroy'])->missing(Errors::missing());
+
+    $route->post('/chapters/{chapter:slug}/complete', [ChapterController::class, 'complete'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/lessons', [LessonController::class, 'store']);
-    $route->put('/lessons/{lesson}', [LessonController::class, 'update'])->missing(Errors::missing());
-    $route->delete('/lessons/{lesson}', [LessonController::class, 'destroy'])->missing(Errors::missing());
+    $route->put('/lessons/{lesson:slug}', [LessonController::class, 'update'])->missing(Errors::missing());
+    $route->delete('/lessons/{lesson:slug}', [LessonController::class, 'destroy'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
