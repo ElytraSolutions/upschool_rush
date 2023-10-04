@@ -132,15 +132,29 @@ class CourseController extends Controller
         $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
             ->where('user_id', $request->user()->getAttribute('id'))
             ->first();
+        $firstChapter = $course->chapters->first();
+        $lastChapter = $course->chapters->last();
+        $lastCompletedChapter = $request->user()->lastCompletedChapter($course);
+        if ($lastCompletedChapter !== null) {
+            $course['lastCompletedChapter'] = $lastCompletedChapter;
+        }
         if ($courseEnrollment === null) {
             return [
                 'success' => true,
-                'data' => false,
+                'data' => [
+                    'enrolled' => false,
+                ],
             ];
         }
         return [
             'success' => true,
-            'data' => true,
+            'data' => [
+                'enrolled' => true,
+                'firstChapter' => $firstChapter,
+                'lastChapter' => $lastChapter,
+                'courseEnrollment' => $courseEnrollment,
+                'lastCompletedChapter' => $lastCompletedChapter,
+            ],
         ];
     }
 
