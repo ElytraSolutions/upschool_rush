@@ -77,6 +77,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->delete('/chapters/{chapter:slug}', [ChapterController::class, 'destroy'])->missing(Errors::missing());
 
     $route->post('/chapters/{chapter:slug}/complete', [ChapterController::class, 'complete'])->missing(Errors::missing());
+    $route->get('/chapters/{chapter:slug}/checkCompletion', [ChapterController::class, 'checkCompletion'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
