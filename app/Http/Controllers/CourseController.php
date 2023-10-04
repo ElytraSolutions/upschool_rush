@@ -144,10 +144,11 @@ class CourseController extends Controller
         ]);
         $rules = (new StoreCourseEnrollmentRequest)->rules();
         $validated = $request->validate($rules);
-        $courseEnrollment = CourseEnrollment::create($validated);
+        $data = CourseEnrollment::create($validated);
+        $data['chapter'] = $course->chapters->first();
         return [
             'success' => true,
-            'data' => $courseEnrollment,
+            'data' => $data,
         ];
     }
 
