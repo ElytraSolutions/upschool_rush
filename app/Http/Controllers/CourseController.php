@@ -125,6 +125,26 @@ class CourseController extends Controller
     }
 
     /**
+     * Check if user is enrolled in the course
+     */
+    public function checkEnrollment(Request $request, Course $course)
+    {
+        $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
+            ->where('user_id', $request->user()->getAttribute('id'))
+            ->first();
+        if ($courseEnrollment === null) {
+            return [
+                'success' => true,
+                'data' => false,
+            ];
+        }
+        return [
+            'success' => true,
+            'data' => true,
+        ];
+    }
+
+    /**
      * Enrolls the user in the course.
     */
     public function enroll(Request $request, Course $course)

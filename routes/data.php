@@ -65,6 +65,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->put('/courses/{course:slug}', [CourseController::class, 'update'])->missing(Errors::missing());
     $route->delete('/courses/{course:slug}', [CourseController::class, 'destroy'])->missing(Errors::missing());
 
+    $route->get('/courses/{course:slug}/checkEnrollment', [CourseController::class, 'checkEnrollment'])->missing(Errors::missing());
     $route->get('/courses/{course:slug}/students', [CourseController::class, 'students'])->missing(Errors::missing());
     $route->post('/courses/{course:slug}/enroll', [CourseController::class, 'enroll'])->missing(Errors::missing());
     $route->delete('/courses/{course:slug}/enroll', [CourseController::class, 'unenroll'])->missing(Errors::missing());
