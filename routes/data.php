@@ -19,6 +19,8 @@ use Symfony\Component\Process\Process;
 
 Route::get('/books', [BookController::class, 'index']);
 Route::get('/books/{book}', [BookController::class, 'show'])->missing(Errors::missing());
+Route::post('/books/validate', [BookController::class, 'validateData']);
+Route::post('/books/add-category', [BookController::class, 'addCategory']);
 
 Route::get('/courseCategories', [CourseCategoryController::class, 'index']);
 Route::get('/courseCategories/{courseCategory}/courses', [CourseCategoryController::class, 'courses'])->missing(Errors::missing());
