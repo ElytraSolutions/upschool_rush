@@ -114,6 +114,26 @@ class ChapterController extends Controller
     }
 
     /**
+     * Check if chapter is already completed
+     */
+    public function checkCompletion(Request $request, Chapter $chapter)
+    {
+        if (!$request->user()->can('complete', $chapter)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to complete this chapter.',
+            ], 403);
+        }
+        $chapterCompleted = ChapterCompletion::where('user_id', $request->user()->id)
+            ->where('chapter_id', $chapter->id)
+            ->exists();
+        return [
+            'success' => true,
+            'data' => $chapterCompleted,
+        ];
+    }
+
+    /**
      * Mark the specified chapter as completed.
     */
     public function complete(Request $request, Chapter $chapter)

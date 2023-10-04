@@ -125,6 +125,40 @@ class CourseController extends Controller
     }
 
     /**
+     * Check if user is enrolled in the course
+     */
+    public function checkEnrollment(Request $request, Course $course)
+    {
+        $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
+            ->where('user_id', $request->user()->getAttribute('id'))
+            ->first();
+        $firstChapter = $course->chapters->first();
+        $lastChapter = $course->chapters->last();
+        $lastCompletedChapter = $request->user()->lastCompletedChapter($course);
+        if ($lastCompletedChapter !== null) {
+            $course['lastCompletedChapter'] = $lastCompletedChapter;
+        }
+        if ($courseEnrollment === null) {
+            return [
+                'success' => true,
+                'data' => [
+                    'enrolled' => false,
+                ],
+            ];
+        }
+        return [
+            'success' => true,
+            'data' => [
+                'enrolled' => true,
+                'firstChapter' => $firstChapter,
+                'lastChapter' => $lastChapter,
+                'courseEnrollment' => $courseEnrollment,
+                'lastCompletedChapter' => $lastCompletedChapter,
+            ],
+        ];
+    }
+
+    /**
      * Enrolls the user in the course.
     */
     public function enroll(Request $request, Course $course)
@@ -144,10 +178,11 @@ class CourseController extends Controller
         ]);
         $rules = (new StoreCourseEnrollmentRequest)->rules();
         $validated = $request->validate($rules);
-        $courseEnrollment = CourseEnrollment::create($validated);
+        $data = CourseEnrollment::create($validated);
+        $data['chapter'] = $course->chapters->first();
         return [
             'success' => true,
-            'data' => $courseEnrollment,
+            'data' => $data,
         ];
     }
 
