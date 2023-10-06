@@ -22,6 +22,15 @@ Route::get('/books/{book}', [BookController::class, 'show'])->missing(Errors::mi
 Route::post('/books/validate', [BookController::class, 'validateData']);
 Route::post('/books/add-category', [BookController::class, 'addCategory']);
 
+
+
+//testing start
+//Note :: without validation of Book Page
+
+Route::post('/books/list',[BookController::class, 'list']);
+Route::post('/books/filter-by-category',[BookController::class, 'filterByCategory']);
+//testing end
+
 Route::get('/courseCategories', [CourseCategoryController::class, 'index']);
 Route::get('/courseCategories/{courseCategory}/courses', [CourseCategoryController::class, 'courses'])->missing(Errors::missing());
 
