@@ -48,4 +48,15 @@ class Book extends Model
             ]
         ];
     }
+
+
+    public function categories(){
+        return $this->belongsToMany(Category::class,'book_categories','book_id','category_id');
+    }
+
+    public function projects(){
+        return $this->belongsToMany(Project::class,'book_projects','book_id','project_id');
+    }
+
+
 }
