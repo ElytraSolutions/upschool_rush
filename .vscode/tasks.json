@@ -1,0 +1,122 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build app",
+			"dependsOn": [
+				"Start laravel",
+				"Start react"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Build app",
+			"presentation": {
+				"reveal": "always",
+				"echo": true,
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": true,
+				"group": "build_upschool"
+			},
+			"dependsOrder": "parallel",
+			"problemMatcher": []
+		},
+		{
+			"type": "process",
+			"label": "Start laravel",
+			"command": "./vendor/bin/sail",
+			"args": [
+				"up"
+			],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"isBackground": true,
+			"group": "build",
+			"detail": "Run laravel backend dev server",
+			"presentation": {
+				"reveal": "always",
+				"echo": true,
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": true,
+				"group": "build_upschool"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Start react",
+			"command": "npm",
+			"args": [
+				"run",
+				"dev"
+			],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/upschool_frontend"
+			},
+			"linux": {
+				"options": {
+					"shell": {
+						"executable": "/bin/bash",
+						"args": [
+							"-i",
+							"-c"
+						]
+					}
+				}
+			},
+			"isBackground": true,
+			"group": "build",
+			"detail": "Run react frontend dev server",
+			"presentation": {
+				"reveal": "always",
+				"echo": true,
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": true,
+				"group": "build_upschool"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Stop laravel",
+			"command": "sail",
+			"args": [
+				"down"
+			],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"linux": {
+				"options": {
+					"shell": {
+						"executable": "/bin/bash",
+						"args": [
+							"-i",
+							"-c"
+						]
+					}
+				}
+			},
+			"isBackground": true,
+			"group": "build",
+			"detail": "Stop running laravel backend dev server",
+			"presentation": {
+				"reveal": "always",
+				"echo": true,
+				"focus": false,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true,
+			}
+		}
+	]
+}
