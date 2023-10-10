@@ -27,8 +27,9 @@
 		{
 			"type": "process",
 			"label": "Start laravel",
-			"command": "./vendor/bin/sail",
+			"command": "bash",
 			"args": [
+				"./vendor/bin/sail",
 				"up"
 			],
 			"problemMatcher": [
@@ -45,6 +46,17 @@
 				"showReuseMessage": true,
 				"clear": true,
 				"group": "build_upschool"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"windows": {
+				"options": {
+					"shell": {
+						//use powershell
+						"executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+					}
+				}
 			}
 		},
 		{
@@ -60,6 +72,14 @@
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/upschool_frontend"
+			},
+			"windows": {
+				"options": {
+					"shell": {
+						//use powershell
+						"executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+					}
+				}
 			},
 			"linux": {
 				"options": {
@@ -95,6 +115,14 @@
 			"problemMatcher": [
 				"$tsc"
 			],
+			"windows": {
+				"options": {
+					"shell": {
+						//use powershell
+						"executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+					}
+				}
+			},
 			"linux": {
 				"options": {
 					"shell": {
