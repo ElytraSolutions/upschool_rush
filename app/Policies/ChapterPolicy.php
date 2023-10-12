@@ -36,7 +36,7 @@ class ChapterPolicy
     public function view(?User $user, Chapter $chapter): bool
     {
         //
-        return true;
+        return $user->can('view', $chapter->course);
     }
 
     /**

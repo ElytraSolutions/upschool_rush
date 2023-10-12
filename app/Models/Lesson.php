@@ -16,15 +16,15 @@ class Lesson extends Model
     protected $fillable = [
         'name',
         'slug',
-        'intro',
-        'content',
-        'active',
         'chapter_id',
+        'priority',
+        'active',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'priority' => 'integer',
         'active' => 'boolean',
     ];
 

@@ -34,7 +34,7 @@ class UpdateCourseRequest extends FormRequest
             'starredText' => ['string', 'max:255'],
             'image' => ['string', 'max:255'],
             'theme' => ['string', 'max:255'],
-            'description' => ['string', 'max:4294967295'],
+            'description' => ['string', 'exists:rich_contents,id'],
             'active' => ['integer', 'in:0,1'],
             'course_category_id' => ['integer', 'exists:course_categories,id'],
             'tagline' => ['string', 'max:255'],

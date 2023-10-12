@@ -30,11 +30,9 @@ class StoreLessonRequest extends FormRequest
     {
         return [
             //
-            'chapter_id' => ['required', 'exists:chapters,id'],
             'name' => ['required', 'string', 'max:255'],
-            'intro' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string'],
-            'content_json' => ['required', 'string'],
+            'chapter_id' => ['required', 'exists:chapters,id'],
+            'priority' => ['required', 'integer'],
             'active' => ['integer', 'in:0,1'],
         ];
     }
