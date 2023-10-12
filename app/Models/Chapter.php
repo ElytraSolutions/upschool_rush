@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -10,18 +11,20 @@ class Chapter extends Model
 {
     use HasFactory;
     use Sluggable;
+    use HasUuids;
 
     protected $fillable = [
         'name',
         'slug',
-        'description',
         'course_id',
+        'priority',
         'active',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'priority' => 'integer',
         'active' => 'boolean',
     ];
 

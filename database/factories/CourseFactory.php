@@ -21,6 +21,7 @@ class CourseFactory extends Factory
             'name' => $this->faker->sentence(3),
             'slug' => $this->faker->slug(),
             'intro' => $this->faker->paragraph(),
+            'starredText' => $this->faker->sentence(),
             'image' => 'https://random.imagecdn.app/800/600',
             'theme' => $this->faker->colorName(),
             'description' => null,

@@ -30,11 +30,8 @@ class UpdateLessonRequest extends FormRequest
     {
         return [
             //
-            'chapter_id' => ['integer', 'exists:chapters,id'],
             'name' => ['string', 'max:255'],
-            'intro' => ['string', 'max:255'],
-            'content' => ['string'],
-            'content_json' => ['string'],
+            'priority' => ['integer'],
             'active' => ['integer', 'in:0,1'],
         ];
     }

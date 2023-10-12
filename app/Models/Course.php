@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -10,6 +11,7 @@ class Course extends Model
 {
     use HasFactory;
     use Sluggable;
+    use HasUuids;
 
     protected $fillable = [
         'name',

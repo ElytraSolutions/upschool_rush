@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chapter>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Lesson>
  */
-class ChapterFactory extends Factory
+class LessonFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class ChapterFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(3),
-            'course_id' => \App\Models\Course::all()->random()->id,
+            'chapter_id' => \App\Models\Chapter::all()->random()->id,
             'priority' => $this->faker->numberBetween(1, 10),
         ];
     }

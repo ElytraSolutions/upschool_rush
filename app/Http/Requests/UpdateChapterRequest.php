@@ -30,8 +30,7 @@ class UpdateChapterRequest extends FormRequest
     {
         return [
             'name' => ['string', 'max:255'],
-            'description' => ['string', 'max:255'],
-            'course_id' => ['string', 'exists:courses,id'],
+            'priority' => ['integer'],
             'active' => ['integer', 'in:0,1'],
         ];
     }

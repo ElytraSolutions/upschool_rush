@@ -36,7 +36,7 @@ class LessonPolicy
     public function view(?User $user, Lesson $lesson): bool
     {
         //
-        return true;
+        return $user->can('view', $lesson->chapter->course);
     }
 
     /**
