@@ -75,7 +75,6 @@ class AdminCourseController extends AdminController
     protected function form()
     {
         $form = new Form(new Course());
-        // dd(Form::$availableFields['htmleditor1']);
 
         preg_match('/courses\/([^\/]*)\/edit$/', URL::current(), $matches);
         $id = Str::orderedUuid()->toString();
@@ -102,7 +101,6 @@ class AdminCourseController extends AdminController
         $form->image('thubmnail', __('Thubmnail'));
         $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $id, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
-        $form->hidden('description', __('Description'))->default($id);
         $form->saving(function (Form $form) {
             $form->ignore(['contentBtn']);
         });

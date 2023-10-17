@@ -52,7 +52,7 @@ class AdminChapterController extends AdminController
         $show->field('name', __('Name'));
         $show->field('slug', __('Slug'));
         $show->field('course.name', __('Course'));
-        $show->field('description', __('Description'));
+        $show->field('priority', __('Priority'));
         $show->field('active', __('Active'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -70,8 +70,8 @@ class AdminChapterController extends AdminController
         $form = new Form(new Chapter());
 
         $form->text('name', __('Name'));
-        $form->text('description', __('Description'));
         $form->select('course_id', __('Course'))->options(Course::all()->pluck('name', 'id'));
+        $form->number('priority', __('Priority'));
         $form->switch('active', __('Active'))->default(1);
 
         return $form;

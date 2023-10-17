@@ -15,6 +15,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RichContentsController;
 use App\CustomErrors\Errors;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 
 
@@ -38,6 +39,7 @@ Route::get('/courseCategories/{courseCategory}/courses', [CourseCategoryControll
 Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/courses/{course:slug}', [CourseController::class, 'show'])->missing(Errors::missing());
 Route::get('/courses/{course:slug}/chapters', [CourseController::class, 'chapters'])->missing(Errors::missing());
+Route::get('/courses/{course:slug}/chapters/{chapter:slug}/lessons', [CourseController::class, 'lessons'])->missing(Errors::missing());
 
 Route::get('/chapters', [ChapterController::class, 'index']);
 Route::get('/chapters/{chapter:slug}', [ChapterController::class, 'show'])->missing(Errors::missing());
@@ -60,7 +62,10 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->get('/user/courses', function(Request $request) {
         return [
             'success' => true,
-            'data' => $request->user()->courses()->get(['courses.id', 'courses.slug', 'courses.name']),
+            'data' => [
+                'enrolled' => $request->user()->courses()->get(['courses.id', 'courses.slug', 'courses.name']),
+                'completed' => $request->user()->courseCompletions()->get(['courses.id', 'courses.slug', 'courses.name']),
+            ],
         ];
     });
 });
@@ -69,6 +74,8 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/books', [BookController::class, 'store']);
     $route->put('/books/{book}', [BookController::class, 'update'])->missing(Errors::missing());
     $route->delete('/books/{book}', [BookController::class, 'destroy'])->missing(Errors::missing());
+
+    $route->post('/books/validate', [BookController::class, 'validateData'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
@@ -95,6 +102,9 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/lessons', [LessonController::class, 'store']);
     $route->put('/lessons/{lesson:slug}', [LessonController::class, 'update'])->missing(Errors::missing());
     $route->delete('/lessons/{lesson:slug}', [LessonController::class, 'destroy'])->missing(Errors::missing());
+
+     $route->post('/lessons/{lesson:slug}/complete', [LessonController::class, 'complete'])->missing(Errors::missing());
+    $route->get('/lessons/{lesson:slug}/checkCompletion', [LessonController::class, 'checkCompletion'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
@@ -107,4 +117,17 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/enrollments', [CourseEnrollmentController::class, 'store']);
     $route->put('/enrollments/{enrollment}', [CourseEnrollmentController::class, 'update'])->missing(Errors::missing());
     $route->delete('/enrollments/{enrollment}', [CourseEnrollmentController::class, 'destroy'])->missing(Errors::missing());
+});
+
+Route::get('/images/{path}', function (Request $request) {
+    $path = $request->query('path');
+    if (Storage::disk('s3')->missing('file.jpg')) {
+        return response()->json([
+            'success' => false,
+            'message' => 'File not found',
+        ], 404);
+    }
+    $file = Storage::disk('s3')->get($path);
+    $type = Storage::disk('s3')->mimeType($path);
+    return response($file, 200)->header('Content-Type', $type);
 });
