@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\Controllers\AdminChapterController;
 use App\Admin\Controllers\AdminCourseController;
 use App\Admin\Controllers\RichContentController;
 use App\Http\Controllers\RichContentsController as APIRichContentsController;
@@ -34,6 +35,8 @@ Route::group([
         $router->get('/chapters', [AdminChapterController::class, 'chapters']);
         $router->get('/courseCategories', [AdminCourseCategoryController::class, 'courseCategories']);
         $router->get('/courses', [AdminCourseController::class, 'courses']);
+        $router->get('/courses/chapters/id', [AdminCourseController::class, 'chaptersById']);
+        $router->post('/courses/chapters/id', [AdminCourseController::class, 'chaptersById']);
 
         $router->get('richContents', [APIRichContentsController::class, 'index']);
         $router->get('richContents/{richContent}', [APIRichContentsController::class, 'show']);

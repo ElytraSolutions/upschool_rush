@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Lesson Page Builder</title>
     <meta content="Best Free Open Source Responsive Websites Builder" name="description">
@@ -17,15 +18,16 @@
     <script src="https://unpkg.com/grapesjs-tooltip"></script>
     <script src="https://unpkg.com/grapesjs-tabs"></script>
 
-  </head>
-  <body style="height:100vh; margin: 0">
+</head>
+
+<body style="height:100vh; margin: 0">
     <div id="gjs" style=""></div>
     <script type="text/javascript">
-        window.addEventListener('load', async function () {
+        window.addEventListener('load', async function() {
             const searchParams = new URLSearchParams(window.location.search);
             const id = searchParams.get('id');
             const queryParam = searchParams.get('queryParam');
-            if(!id) {
+            if (!id) {
                 alert('No lesson id provided');
                 return;
             }
@@ -34,7 +36,7 @@
                     'Accept': 'application/json',
                 },
             });
-            if(response.status === 404) {
+            if (response.status === 404) {
                 console.log("Creating new rich content");
                 response = await fetch(`/admin/api/richContents`, {
                     method: 'POST',
@@ -43,7 +45,13 @@
                         'Accept': 'application/json',
                         "X-CSRF-Token": document.head.querySelector("[name~=csrf-token][content]").content,
                     },
-                    body: JSON.stringify({id, html: '', css: '', js: '', project_data: JSON.stringify({})}),
+                    body: JSON.stringify({
+                        id,
+                        html: '',
+                        css: '',
+                        js: '',
+                        project_data: JSON.stringify({})
+                    }),
                 });
                 if (!response.ok) {
                     alert('Error creating new rich content');
@@ -54,7 +62,7 @@
 
             var editor = grapesjs.init({
                 height: "100vh",
-                container : '#gjs',
+                container: '#gjs',
                 storageManager: {
                     type: 'local', // Storage type. Available: local | remote
                     autosave: false, // Store data automatically
@@ -87,6 +95,7 @@
                 }
             });
             editor.loadProjectData(JSON.parse(data.data.project_data));
+            editor.Layers.getRoot()
 
             var panels = editor.Panels;
             var cmdm = editor.Commands;
@@ -109,7 +118,13 @@
                             'Accept': 'application/json',
                             "X-CSRF-Token": csrfToken,
                         },
-                        body: JSON.stringify({id, html, css, js, project_data: JSON.stringify(editor.getProjectData())}),
+                        body: JSON.stringify({
+                            id,
+                            html,
+                            css,
+                            js,
+                            project_data: JSON.stringify(editor.getProjectData())
+                        }),
                     }).then(data => data.json()).then(data => {
                         console.log(data);
                         const query = new URLSearchParams();
@@ -126,5 +141,6 @@
             })
         }); // end of event listener
     </script>
-  </body>
+</body>
+
 </html>

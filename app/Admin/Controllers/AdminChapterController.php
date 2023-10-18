@@ -4,11 +4,14 @@ namespace App\Admin\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Course;
+use App\Models\Lesson;
+use Illuminate\Support\Facades\DB;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AdminChapterController extends AdminController
 {
@@ -81,5 +84,13 @@ class AdminChapterController extends AdminController
     {
         $q = $request->get('q');
         return Chapter::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
+    }
+
+    public function chaptersById(Request $request)
+    {
+        $course_id = $request->get('query');
+        $lessons = Lesson::where('course_id', $course_id);
+        dd($lessons);
+        return Response::json($lessons);
     }
 }
