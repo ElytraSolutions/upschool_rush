@@ -29,8 +29,8 @@ Route::post('/books/add-category', [BookController::class, 'addCategory']);
 //testing start
 //Note :: without validation of Book Page
 
-Route::post('/books/list',[BookController::class, 'list']);
-Route::post('/books/filter-by-category',[BookController::class, 'filterByCategory']);
+Route::post('/books/list', [BookController::class, 'list']);
+Route::post('/books/filter-by-category', [BookController::class, 'filterByCategory']);
 //testing end
 
 Route::get('/courseCategories', [CourseCategoryController::class, 'index']);
@@ -59,7 +59,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->get('/user', function (Request $request) {
         return $request->user()->load('type');
     });
-    $route->get('/user/courses', function(Request $request) {
+    $route->get('/user/courses', function (Request $request) {
         return [
             'success' => true,
             'data' => [
@@ -83,6 +83,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->put('/courses/{course:slug}', [CourseController::class, 'update'])->missing(Errors::missing());
     $route->delete('/courses/{course:slug}', [CourseController::class, 'destroy'])->missing(Errors::missing());
 
+    $route->get('/courses/{course:slug}/lessons', [CourseController::class, 'lessons'])->missing(Errors::missing());
     $route->get('/courses/{course:slug}/checkEnrollment', [CourseController::class, 'checkEnrollment'])->missing(Errors::missing());
     $route->get('/courses/{course:slug}/students', [CourseController::class, 'students'])->missing(Errors::missing());
     $route->post('/courses/{course:slug}/enroll', [CourseController::class, 'enroll'])->missing(Errors::missing());
@@ -94,8 +95,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->put('/chapters/{chapter:slug}', [ChapterController::class, 'update'])->missing(Errors::missing());
     $route->delete('/chapters/{chapter:slug}', [ChapterController::class, 'destroy'])->missing(Errors::missing());
 
-    $route->post('/chapters/{chapter:slug}/complete', [ChapterController::class, 'complete'])->missing(Errors::missing());
-    $route->get('/chapters/{chapter:slug}/checkCompletion', [ChapterController::class, 'checkCompletion'])->missing(Errors::missing());
+    $route->post('/chapters/{chapter:slug}/lessons', [ChapterController::class, 'lessons'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
@@ -103,7 +103,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->put('/lessons/{lesson:slug}', [LessonController::class, 'update'])->missing(Errors::missing());
     $route->delete('/lessons/{lesson:slug}', [LessonController::class, 'destroy'])->missing(Errors::missing());
 
-     $route->post('/lessons/{lesson:slug}/complete', [LessonController::class, 'complete'])->missing(Errors::missing());
+    $route->post('/lessons/{lesson:slug}/complete', [LessonController::class, 'complete'])->missing(Errors::missing());
     $route->get('/lessons/{lesson:slug}/checkCompletion', [LessonController::class, 'checkCompletion'])->missing(Errors::missing());
 });
 

@@ -95,12 +95,15 @@ class AdminLessonController extends AdminController
 
         // $form->hidden('content', __('Content'))->default($id);
         $form->text('name', __('Name'));
-        $form->select('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'));
-        $form->select('chapter_id', __('Chapters'))->options(Chapter::where('course_id', $form->course_id)->pluck('name', 'id'));
+        $form->select('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/courses/chapters/id');
+        $form->select('chapter_id', __('Chapters'));
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
 
         $form->saving(function (Form $form) {
+            $form->ignore('course_id');
+        });
+        $form->submitted(function (Form $form) {
             $form->ignore('course_id');
         });
 

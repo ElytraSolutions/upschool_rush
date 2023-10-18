@@ -2,9 +2,11 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Chapter;
 use \App\Models\Course;
 use App\Models\CourseCategory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
@@ -112,5 +114,13 @@ class AdminCourseController extends AdminController
     {
         $q = $request->get('q');
         return Course::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
+    }
+
+    public function chaptersById(Request $request)
+    {
+        $course_id = $request->get('query');
+        $lessons = Chapter::where('course_id', $course_id)->get(['id', 'name as text']);
+        // dd($lessons);
+        return (new Response($lessons))->header('Content-Type', 'application/json');
     }
 }
