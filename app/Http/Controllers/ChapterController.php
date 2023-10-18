@@ -135,7 +135,7 @@ class ChapterController extends Controller
 
     /**
      * Mark the specified chapter as completed.
-    */
+     */
     public function complete(Request $request, Chapter $chapter)
     {
         if (!$request->user()->can('complete', $chapter)) {
@@ -166,7 +166,7 @@ class ChapterController extends Controller
     /**
      * Return a listing of the resource's lessons.
      */
-    public function chapters(Request $request, Chapter $chapter)
+    public function lessons(Request $request, Chapter $chapter)
     {
         return [
             'success' => true,
