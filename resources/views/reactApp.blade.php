@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-c7e2a087.js"></script>
+  <script type="module" crossorigin src="/assets/index-bf8630bd.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-4ef42ede.js">
   <link rel="modulepreload" crossorigin href="/assets/react-18892649.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -46,7 +46,7 @@
   <link rel="modulepreload" crossorigin href="/assets/react-pageflip-6535be54.js">
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
-  <link rel="stylesheet" href="/assets/index-9e28f991.css">
+  <link rel="stylesheet" href="/assets/index-78e5ea6a.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
