@@ -21,7 +21,7 @@
 </head>
 
 <body style="height:100vh; margin: 0">
-    <div id="gjs" style=""></div>
+    <div id="gjs"></div>
     <script type="text/javascript">
         window.addEventListener('load', async function() {
             const searchParams = new URLSearchParams(window.location.search);

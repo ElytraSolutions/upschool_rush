@@ -170,6 +170,7 @@ class ChapterController extends Controller
     {
         return [
             'success' => true,
+            'type' => 'lesson',
             'data' => $chapter->lessons,
         ];
     }
