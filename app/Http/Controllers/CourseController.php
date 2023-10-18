@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\CourseEnrollment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -132,11 +133,16 @@ class CourseController extends Controller
         $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
             ->where('user_id', $request->user()->getAttribute('id'))
             ->first();
-        $firstChapter = $course->chapters->first();
-        $lastChapter = $course->chapters->last();
-        $lastCompletedChapter = $request->user()->lastCompletedChapter($course);
-        if ($lastCompletedChapter !== null) {
-            $course['lastCompletedChapter'] = $lastCompletedChapter;
+        $lastCompletedLesson = $request->user()->lastCompletedLesson($course);
+        $totalLessons = $course->lessons->count();
+        $totalCompletedLessonCount = DB::table('lesson_completions')->where('user_id', '=', $request->user()->getAttribute('id'))
+            ->join('lessons', 'lesson_completions.lesson_id', '=', 'lessons.id')
+            ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id')
+            ->join('courses', 'chapters.course_id', '=', 'courses.id')
+            ->where('courses.id', '=', $course->getAttribute('id'))
+            ->count();
+        if ($lastCompletedLesson !== null) {
+            $course['lastCompletedLesson'] = $lastCompletedLesson;
         }
         if ($courseEnrollment === null) {
             return [
@@ -150,10 +156,10 @@ class CourseController extends Controller
             'success' => true,
             'data' => [
                 'enrolled' => true,
-                'firstChapter' => $firstChapter,
-                'lastChapter' => $lastChapter,
                 'courseEnrollment' => $courseEnrollment,
-                'lastCompletedChapter' => $lastCompletedChapter,
+                'lastCompletedLesson' => $lastCompletedLesson,
+                'totalLessons' => $totalLessons,
+                'totalCompletedLessonCount' => $totalCompletedLessonCount,
             ],
         ];
     }
@@ -214,6 +220,17 @@ class CourseController extends Controller
         return [
             'success' => true,
             'data' => $course->chapters,
+        ];
+    }
+
+    /**
+     * Return a listing of the resource's lessons.
+     */
+    public function lessons(Request $request, Course $course)
+    {
+        return [
+            'success' => true,
+            'data' => $course->lessons,
         ];
     }
 }
