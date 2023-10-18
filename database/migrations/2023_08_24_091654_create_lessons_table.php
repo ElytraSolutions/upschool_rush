@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(\App\Models\Chapter::class)->constrained();
+            $table->foreignId('chapter_id')->constrained('chapters');
             $table->string('name');
             $table->string('slug');
             $table->string('intro');
