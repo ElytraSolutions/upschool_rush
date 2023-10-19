@@ -7,6 +7,7 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Smalot\PdfParser\Parser;
 
 class BookController extends Controller
@@ -122,8 +123,6 @@ class BookController extends Controller
     public function validateData(Request $request)
     {
         try {
-
-
             $parser = new Parser();
             $book = $request->file('pdfFile');
             $pdf = $parser->parseFile($book);
@@ -179,6 +178,9 @@ class BookController extends Controller
             "label" => "Book has blank page after the front cover and another before the back cover.",
             "value" => $blank_page
         );
+
+        $filename = uuid_create();
+        Storage::disk('s3')->put('books/' . $filename, $book);
 
 
         return [

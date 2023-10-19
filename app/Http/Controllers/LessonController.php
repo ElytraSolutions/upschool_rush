@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Models\Lesson;
+use App\Models\LessonCompletion;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
@@ -109,6 +110,56 @@ class LessonController extends Controller
         return [
             'success' => true,
             'data' => $lesson->delete(),
+        ];
+    }
+
+    /**
+     * Check if lesson is already completed
+     */
+    public function checkCompletion(Request $request, Lesson $lesson)
+    {
+        if (!$request->user()->can('complete', $lesson)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to complete this lesson.',
+            ], 403);
+        }
+        $lessonCompleted = LessonCompletion::where('user_id', $request->user()->id)
+            ->where('lesson_id', $lesson->id)
+            ->exists();
+        return [
+            'success' => true,
+            'data' => $lessonCompleted,
+        ];
+    }
+
+    /**
+     * Mark the specified lesson as completed.
+    */
+    public function complete(Request $request, Lesson $lesson)
+    {
+        if (!$request->user()->can('complete', $lesson)) {
+            return response([
+                'success' => false,
+                'message' => 'You are not authorized to complete this lesson.',
+            ], 403);
+        }
+        $lessonCompleted = LessonCompletion::where('user_id', $request->user()->id)
+            ->where('lesson_id', $lesson->id)
+            ->exists();
+        if ($lessonCompleted) {
+            return response([
+                'success' => false,
+                'message' => 'You have already completed this lesson.',
+            ], 400);
+        }
+        $lessonCompletion = new LessonCompletion;
+        $lessonCompletion->user_id = $request->user()->id;
+        $lessonCompletion->lesson_id = $lesson->id;
+        $lessonCompletion->save();
+        return [
+            'success' => true,
+            'data' => $lessonCompletion,
         ];
     }
 }

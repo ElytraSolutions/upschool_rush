@@ -129,22 +129,32 @@ class User extends Authenticatable
     }
 
     /**
+     * A user has many course completions.
+     *
+     * @return BelongsToMany
+     */
+    public function courseCompletions(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'course_completions');
+    }
+
+    /**
      * Get last chapter completed by user for a specific course
      */
-    public function lastCompletedChapter(Course $course)
+    public function lastCompletedLesson(Course $course)
     {
-        $lastCompletedChapter = null;
-        foreach($course->chapters as $chapter) {
-            $chapterCompletion = ChapterCompletion::where('user_id', $this->getAttribute('id'))
-                ->where('chapter_id', $chapter->getAttribute('id'))
-                ->first();
-            if ($chapterCompletion !== null) {
-                $lastCompletedChapter = $chapter;
+        $lastLesson = null;
+        foreach($course->lessons as $lesson) {
+            $lessonCompleted = LessonCompletion::where('user_id', $this->getAttribute('id'))
+                ->where('lesson_id', $lesson->getAttribute('id'))
+                ->exists();
+            if ($lessonCompleted) {
+                $lastLesson = $lesson;
             }
             else {
                 break;
             }
         }
-        return $lastCompletedChapter;
+        return $lastLesson;
     }
 }

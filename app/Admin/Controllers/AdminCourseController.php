@@ -2,9 +2,11 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Chapter;
 use \App\Models\Course;
 use App\Models\CourseCategory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
@@ -75,7 +77,6 @@ class AdminCourseController extends AdminController
     protected function form()
     {
         $form = new Form(new Course());
-        // dd(Form::$availableFields['htmleditor1']);
 
         preg_match('/courses\/([^\/]*)\/edit$/', URL::current(), $matches);
         $id = Str::orderedUuid()->toString();
@@ -102,7 +103,6 @@ class AdminCourseController extends AdminController
         $form->image('thubmnail', __('Thubmnail'));
         $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $id, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
-        $form->hidden('description', __('Description'))->default($id);
         $form->saving(function (Form $form) {
             $form->ignore(['contentBtn']);
         });
@@ -114,5 +114,13 @@ class AdminCourseController extends AdminController
     {
         $q = $request->get('q');
         return Course::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
+    }
+
+    public function chaptersById(Request $request)
+    {
+        $course_id = $request->get('query');
+        $lessons = Chapter::where('course_id', $course_id)->get(['id', 'name as text']);
+        // dd($lessons);
+        return (new Response($lessons))->header('Content-Type', 'application/json');
     }
 }

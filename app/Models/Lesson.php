@@ -28,6 +28,11 @@ class Lesson extends Model
         'active' => 'boolean',
     ];
 
+    public function course()
+    {
+        return $this->chapter->course;
+    }
+
     public function chapter()
     {
         return $this->belongsTo(Chapter::class);

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\CourseEnrollment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -116,8 +117,9 @@ class CourseController extends Controller
 
     /**
      * Return a listing of the students enrolled in the course.
-    */
-    public function students(Course $course) {
+     */
+    public function students(Course $course)
+    {
         return [
             'success' => true,
             'data' => $course->users,
@@ -132,11 +134,18 @@ class CourseController extends Controller
         $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
             ->where('user_id', $request->user()->getAttribute('id'))
             ->first();
-        $firstChapter = $course->chapters->first();
-        $lastChapter = $course->chapters->last();
-        $lastCompletedChapter = $request->user()->lastCompletedChapter($course);
-        if ($lastCompletedChapter !== null) {
-            $course['lastCompletedChapter'] = $lastCompletedChapter;
+        $firstChapter = $course->chapters->sortBy('priority')->first();
+        $firstLesson = $firstChapter->lessons->sortBy('priority')->first();
+        $lastCompletedLesson = $request->user()->lastCompletedLesson($course);
+        $totalLessons = $course->lessons->count();
+        $totalCompletedLessonCount = DB::table('lesson_completions')->where('user_id', '=', $request->user()->getAttribute('id'))
+            ->join('lessons', 'lesson_completions.lesson_id', '=', 'lessons.id')
+            ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id')
+            ->join('courses', 'chapters.course_id', '=', 'courses.id')
+            ->where('courses.id', '=', $course->getAttribute('id'))
+            ->count();
+        if ($lastCompletedLesson !== null) {
+            $course['lastCompletedLesson'] = $lastCompletedLesson;
         }
         if ($courseEnrollment === null) {
             return [
@@ -150,17 +159,19 @@ class CourseController extends Controller
             'success' => true,
             'data' => [
                 'enrolled' => true,
-                'firstChapter' => $firstChapter,
-                'lastChapter' => $lastChapter,
                 'courseEnrollment' => $courseEnrollment,
-                'lastCompletedChapter' => $lastCompletedChapter,
+                'firstChapter' => $firstChapter,
+                'firstLesson' => $firstLesson,
+                'lastCompletedLesson' => $lastCompletedLesson,
+                'totalLessons' => $totalLessons,
+                'totalCompletedLessonCount' => $totalCompletedLessonCount,
             ],
         ];
     }
 
     /**
      * Enrolls the user in the course.
-    */
+     */
     public function enroll(Request $request, Course $course)
     {
         $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
@@ -179,16 +190,22 @@ class CourseController extends Controller
         $rules = (new StoreCourseEnrollmentRequest)->rules();
         $validated = $request->validate($rules);
         $data = CourseEnrollment::create($validated);
-        $data['chapter'] = $course->chapters->first();
+        $firstChapter = $course->chapters->first();
+        $firstLesson = $firstChapter->lessons->first();
         return [
             'success' => true,
-            'data' => $data,
+            'data' => [
+                'enrolled' => true,
+                'courseEnrollment' => $data,
+                'firstChapter' => $firstChapter,
+                'firstLesson' => $firstLesson,
+            ],
         ];
     }
 
     /**
      * Unenrolls the user from the course.
-    */
+     */
     public function unenroll(Request $request, Course $course)
     {
         $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
@@ -214,6 +231,17 @@ class CourseController extends Controller
         return [
             'success' => true,
             'data' => $course->chapters,
+        ];
+    }
+
+    /**
+     * Return a listing of the resource's lessons.
+     */
+    public function lessons(Request $request, Course $course)
+    {
+        return [
+            'success' => true,
+            'data' => $course->chapters->lessons,
         ];
     }
 }
