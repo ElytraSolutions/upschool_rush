@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-5d09dff5.js"></script>
+  <script type="module" crossorigin src="/assets/index-37ac7b19.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
   <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
