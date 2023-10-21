@@ -43,7 +43,7 @@ Route::get('/courses/{course:slug}/chapters/{chapter:slug}/lessons', [CourseCont
 
 Route::get('/chapters', [ChapterController::class, 'index']);
 Route::get('/chapters/{chapter:slug}', [ChapterController::class, 'show'])->missing(Errors::missing());
-Route::get('/chapters/{chapter:slug}/lessons', [ChapterController::class, 'show'])->missing(Errors::missing());
+Route::get('/chapters/{chapter:slug}/lessons', [ChapterController::class, 'lessons'])->missing(Errors::missing());
 
 Route::get('/lessons', [LessonController::class, 'index']);
 Route::get('/lessons/{lesson:slug}', [LessonController::class, 'show'])->missing(Errors::missing());

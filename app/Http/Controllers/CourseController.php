@@ -117,8 +117,9 @@ class CourseController extends Controller
 
     /**
      * Return a listing of the students enrolled in the course.
-    */
-    public function students(Course $course) {
+     */
+    public function students(Course $course)
+    {
         return [
             'success' => true,
             'data' => $course->users,
@@ -133,6 +134,8 @@ class CourseController extends Controller
         $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
             ->where('user_id', $request->user()->getAttribute('id'))
             ->first();
+        $firstChapter = $course->chapters->sortBy('priority')->first();
+        $firstLesson = $firstChapter->lessons->sortBy('priority')->first();
         $lastCompletedLesson = $request->user()->lastCompletedLesson($course);
         $totalLessons = $course->lessons->count();
         $totalCompletedLessonCount = DB::table('lesson_completions')->where('user_id', '=', $request->user()->getAttribute('id'))
@@ -157,6 +160,8 @@ class CourseController extends Controller
             'data' => [
                 'enrolled' => true,
                 'courseEnrollment' => $courseEnrollment,
+                'firstChapter' => $firstChapter,
+                'firstLesson' => $firstLesson,
                 'lastCompletedLesson' => $lastCompletedLesson,
                 'totalLessons' => $totalLessons,
                 'totalCompletedLessonCount' => $totalCompletedLessonCount,
@@ -166,7 +171,7 @@ class CourseController extends Controller
 
     /**
      * Enrolls the user in the course.
-    */
+     */
     public function enroll(Request $request, Course $course)
     {
         $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
@@ -185,16 +190,22 @@ class CourseController extends Controller
         $rules = (new StoreCourseEnrollmentRequest)->rules();
         $validated = $request->validate($rules);
         $data = CourseEnrollment::create($validated);
-        $data['chapter'] = $course->chapters->first();
+        $firstChapter = $course->chapters->first();
+        $firstLesson = $firstChapter->lessons->first();
         return [
             'success' => true,
-            'data' => $data,
+            'data' => [
+                'enrolled' => true,
+                'courseEnrollment' => $data,
+                'firstChapter' => $firstChapter,
+                'firstLesson' => $firstLesson,
+            ],
         ];
     }
 
     /**
      * Unenrolls the user from the course.
-    */
+     */
     public function unenroll(Request $request, Course $course)
     {
         $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
@@ -230,7 +241,7 @@ class CourseController extends Controller
     {
         return [
             'success' => true,
-            'data' => $course->lessons,
+            'data' => $course->chapters->lessons,
         ];
     }
 }
