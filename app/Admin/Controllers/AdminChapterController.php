@@ -86,11 +86,10 @@ class AdminChapterController extends AdminController
         return Chapter::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
     }
 
-    public function chaptersById(Request $request)
+    public function byCourseId(Request $request)
     {
         $course_id = $request->get('query');
-        $lessons = Lesson::where('course_id', $course_id);
-        dd($lessons);
-        return Response::json($lessons);
+        $lessons = Chapter::where('course_id', $course_id)->get(['id', DB::raw('name as text')]);
+        return $lessons;
     }
 }

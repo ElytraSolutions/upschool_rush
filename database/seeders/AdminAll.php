@@ -87,166 +87,178 @@ class AdminAll extends Seeder
                 'icon'      => 'icon-bullseye',
                 'uri'       => null,
             ],
-            ]);
+            [
+                'parent_id' => 0,
+                'order'     => 3,
+                'title'    => 'Admin',
+                'icon'     => 'icon-server',
+                'uri'      => null,
+            ],
+            [
+                'parent_id' => 0,
+                'order'     => 4,
+                'title'     => 'Helpers',
+                'icon'      => 'icon-cogs',
+                'uri'       => null,
+            ],
+        ]);
         $manageMenu = DB::table('admin_menu')->where('title', 'Manage')->first(['id']);
         DB::table('admin_menu')->insert([
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 3,
+                'order'     => 10,
                 'title'     => 'Rich Content',
                 'icon'      => 'icon-edit',
                 'uri'       => '/rich-content',
             ],
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 4,
+                'order'     => 15,
                 'title'     => 'Courses',
                 'icon'      => 'icon-edit',
                 'uri'       => '/courses',
             ],
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 5,
+                'order'     => 20,
                 'title'     => 'Chapters',
                 'icon'      => 'icon-edit',
                 'uri'       => '/chapters',
             ],
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 6,
+                'order'     => 25,
                 'title'     => 'Lessons',
                 'icon'      => 'icon-edit',
                 'uri'       => '/lessons',
             ],
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 7,
+                'order'     => 30,
+                'title'     => 'Lesson Sections',
+                'icon'      => 'icon-edit',
+                'uri'       => '/lesson-sections',
+            ],
+            [
+                'parent_id' => $manageMenu->id,
+                'order'     => 32,
+                'title'     => 'Lesson Section Contents',
+                'icon'      => 'icon-edit',
+                'uri'       => '/lesson-section-contents',
+            ],
+            [
+                'parent_id' => $manageMenu->id,
+                'order'     => 35,
                 'title'     => 'Course Categories',
                 'icon'      => 'icon-edit',
                 'uri'       => '/course-categories',
             ],
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 8,
+                'order'     => 40,
                 'title'     => 'Books',
                 'icon'      => 'icon-edit',
                 'uri'       => '/books',
             ],
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 9,
+                'order'     => 45,
                 'title'     => 'Projects',
                 'icon'      => 'icon-edit',
                 'uri'       => '/projects',
             ],
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 10,
+                'order'     => 50,
                 'title'     => 'users',
                 'icon'      => 'icon-edit',
                 'uri'       => '/users',
             ],
             [
                 'parent_id' => $manageMenu->id,
-                'order'     => 11,
+                'order'     => 55,
                 'title'     => 'User Types',
                 'icon'      => 'icon-edit',
                 'uri'       => '/user-types',
             ],
         ]);
-        DB::table('admin_menu')->insert([
-            [
-                'parent_id' => 0,
-                'order'     => 12,
-                'title'    => 'Admin',
-                'icon'     => 'icon-server',
-                'uri'      => null,
-            ],
-        ]);
+
         $adminMenu = DB::table('admin_menu')->where('title', 'Admin')->first(['id']);
         DB::table('admin_menu')->insert([
             [
                 'parent_id' => $adminMenu->id,
-                'order'     => 13,
+                'order'     => 10,
                 'title'     => 'Users',
                 'icon'      => 'icon-users',
                 'uri'       => '/auth/users',
             ],
             [
                 'parent_id' => $adminMenu->id,
-                'order'     => 14,
+                'order'     => 15,
                 'title'     => 'Roles',
                 'icon'      => 'icon-user',
                 'uri'       => '/auth/roles',
             ],
             [
                 'parent_id' => $adminMenu->id,
-                'order'     => 15,
+                'order'     => 20,
                 'title'     => 'Permission',
                 'icon'      => 'icon-ban',
                 'uri'       => '/auth/permissions',
             ],
             [
                 'parent_id' => $adminMenu->id,
-                'order'     => 16,
+                'order'     => 25,
                 'title'     => 'Menu',
                 'icon'      => 'icon-bars',
                 'uri'       => '/auth/menu',
             ],
             [
                 'parent_id' => $adminMenu->id,
-                'order'     => 17,
+                'order'     => 30,
                 'title'     => 'Operation log',
                 'icon'      => 'icon-history',
                 'uri'       => '/auth/logs',
             ],
         ]);
-        DB::table('admin_menu')->insert([
-            [
-                'parent_id' => 0,
-                'order'     => 18,
-                'title'     => 'Helpers',
-                'icon'      => 'icon-cogs',
-                'uri'       => null,
-            ],
-        ]);
+
         $helpersMenu = DB::table('admin_menu')->where('title', 'Helpers')->first(['id']);
         DB::table('admin_menu')->insert([
             [
                 'parent_id' => $helpersMenu->id,
-                'order'     => 19,
+                'order'     => 10,
                 'title'     => 'Logs',
                 'icon'      => 'icon-font-awesome-logo-full',
                 'uri'       => '/helpers/scaffold',
             ],
             [
                 'parent_id' => $helpersMenu->id,
-                'order'     => 20,
+                'order'     => 15,
                 'title'     => 'Scaffold',
                 'icon'      => 'icon-keyboard',
                 'uri'       => '/helpers/scaffold',
             ],
             [
                 'parent_id' => $helpersMenu->id,
-                'order'     => 21,
+                'order'     => 20,
                 'title'     => 'Database terminal',
                 'icon'      => 'icon-database',
                 'uri'       => '/helpers/terminal/database',
             ],
             [
                 'parent_id' => $helpersMenu->id,
-                'order'     => 22,
+                'order'     => 25,
                 'title'     => 'Laravel artisan',
                 'icon'      => 'icon-terminal',
                 'uri'       => '/helpers/terminal/artisan',
             ],
             [
                 'parent_id' => $helpersMenu->id,
-                'order'     => 23,
+                'order'     => 30,
                 'title'     => 'Routes',
                 'icon'      => 'icon-list-alt',
                 'uri'       => '/helpers/routes',
             ]
-            ]);
+        ]);
     }
 }

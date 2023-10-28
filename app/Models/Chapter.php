@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use PhpOption\Option;
 
 class Chapter extends Model
 {
@@ -14,6 +17,7 @@ class Chapter extends Model
     use HasUuids;
 
     protected $fillable = [
+        'id',
         'name',
         'slug',
         'course_id',
@@ -42,12 +46,12 @@ class Chapter extends Model
         ];
     }
 
-    public function course()
+    public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }
 
-    public function lessons()
+    public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'chapter_id');
     }

@@ -2,31 +2,30 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Course extends Model
+class LessonSection extends Model
 {
     use HasFactory;
-    use Sluggable;
     use HasUuids;
+    use Sluggable;
+
+    protected $table = 'lesson_sections';
 
     protected $fillable = [
         'id',
         'name',
         'slug',
-        'intro',
-        'starredText',
-        'image',
-        'theme',
-        'description',
+        'lesson_id',
+        'priority',
         'active',
-        'course_category_id',
-        'tagline',
-        'thumbnail',
+        'text',
+        'teachers_note',
     ];
 
     protected $casts = [
@@ -49,28 +48,13 @@ class Course extends Model
         ];
     }
 
-    public function courseCategory()
+    public function lessons(): BelongsTo
     {
-        return $this->belongsTo(CourseCategory::class);
+        return $this->belongsTo(Lesson::class);
     }
 
-    public function chapters(): HasMany
+    public function lessonSectionContents(): HasMany
     {
-        return $this->hasMany(Chapter::class);
-    }
-
-    public function lessons()
-    {
-        return $this->hasManyThrough(Lesson::class, Chapter::class);
-    }
-
-    public function courseCompletions()
-    {
-        return $this->hasMany(CourseCompletion::class);
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'course_enrollments');
+        return $this->hasMany(LessonSectionContent::class);
     }
 }
