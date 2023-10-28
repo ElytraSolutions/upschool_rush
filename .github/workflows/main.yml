@@ -10,6 +10,8 @@ jobs:
       run:
         shell: bash
         working-directory: upschool_frontend
+    env:
+      VITE_IMG_ROOT_URL: "https://d1bpxl2yzyk1zq.cloudfront.net"
     steps:
       - name: Pull repository
         uses: actions/checkout@v3
