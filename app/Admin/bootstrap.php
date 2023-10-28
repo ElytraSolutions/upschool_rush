@@ -1,7 +1,14 @@
 <?php
 
+use App\Admin\Extensions\Form\CustomFile;
+use App\Admin\Extensions\Form\CustomHasMany;
+use App\Admin\Extensions\Form\CustomImage;
 use App\Admin\Extensions\Form\HTMLEditor;
+use App\Admin\Extensions\Form\Select;
 use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Form\Field\File;
+use OpenAdmin\Admin\Form\Field\Select as FieldSelect;
+
 /**
  * Open-admin - admin builder based on Laravel.
  * @author z-song <https://github.com/z-song>
@@ -21,4 +28,8 @@ use OpenAdmin\Admin\Form;
  */
 
 Form::extend('htmleditor', HTMLEditor::class);
+Form::extend('customSelect', Select::class);
+Form::extend('customHasMany', CustomHasMany::class);
+Form::extend('customFile', CustomFile::class);
+Form::extend('customImage', CustomImage::class);
 Form::forget(['map', 'editor']);

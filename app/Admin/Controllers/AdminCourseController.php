@@ -5,8 +5,11 @@ namespace App\Admin\Controllers;
 use App\Models\Chapter;
 use \App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\Lesson;
+use Database\Seeders\ChapterSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
@@ -58,7 +61,10 @@ class AdminCourseController extends AdminController
         $show->field('intro', __('Intro'));
         $show->field('tagline', __('Tagline'));
         $show->field('starredText', __('StarredText'));
-        $show->field('description', __('Description'));
+        $show->field('description', __('Description'))->unescape()->as(function ($description) {
+            $baseUrl = URL::to('/richContentView/' . $description);
+            return '<a href="' . $baseUrl . '" target="_blank">View Description</a>';
+        });
         $show->field('image', __('Image'))->image();
         $show->field('thubmnail', __('Thubmnail'));
         $show->field('theme', __('Theme'));
@@ -79,32 +85,50 @@ class AdminCourseController extends AdminController
         $form = new Form(new Course());
 
         preg_match('/courses\/([^\/]*)\/edit$/', URL::current(), $matches);
-        $id = Str::orderedUuid()->toString();
+        $descriptionId = Str::orderedUuid()->toString();
+
         $courseId = null;
-        if(count($matches) == 2) {
+        if (count($matches) == 2) {
             $courseId = $matches[1];
         }
-        if($courseId != null) {
+        if ($courseId != null) {
             $course = Course::find($courseId);
             if ($course->description) {
-                $id = $course->description;
+                $descriptionId = $course->description;
             }
+        } else {
+            $courseId = 'test';
         }
-        $id = request()->query('richContentId', $id);
+        $descriptionId = request()->query('richContentId', $descriptionId);
 
-        $form->hidden('description', __('Description'))->default($id);
+        $form->hidden('description', __('Description'))->default($descriptionId);
+        $form->text('id', __('Id'))->default($courseId)->readonly();
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
         $form->text('starredText', __('StarredText'));
-        $form->image('image', __('Image'));
+        $form->customImage('image', __('Image'))->uniqueName()->move('courseImages');
         $form->color('theme', __('Theme'))->default('#F0FFF0');
         $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('tagline', __('Tagline'));
-        $form->image('thubmnail', __('Thubmnail'));
-        $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $id, 'queryParam' => 'richContentId']);
+        $form->customImage('thumbnail', __('Thumbnail'))->uniqueName()->move('courseThumbnails');
+        $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $descriptionId, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
+
+        // $form->customHasMany('chapters', function (Form\NestedForm $nestedForm) {
+        //     $nestedForm->text('name', __('Chapter Name'));
+        //     $nestedForm->hidden('priority', __('Priority'));
+        // })->mode('table');
+
         $form->saving(function (Form $form) {
             $form->ignore(['contentBtn']);
+            // $chapters = [];
+            // $priority = 1;
+            // foreach ($form->chapters as $key => $chapter) {
+            //     $chapter['priority'] = $priority;
+            //     $chapters[$key] = $chapter;
+            //     $priority += 5;
+            // }
+            // $form->chapters = $chapters;
         });
 
         return $form;
@@ -114,13 +138,5 @@ class AdminCourseController extends AdminController
     {
         $q = $request->get('q');
         return Course::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
-    }
-
-    public function chaptersById(Request $request)
-    {
-        $course_id = $request->get('query');
-        $lessons = Chapter::where('course_id', $course_id)->get(['id', 'name as text']);
-        // dd($lessons);
-        return (new Response($lessons))->header('Content-Type', 'application/json');
     }
 }

@@ -5,6 +5,8 @@ namespace App\Admin\Controllers;
 use App\Models\Chapter;
 use App\Models\Course;
 use App\Models\Lesson;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
@@ -76,29 +78,23 @@ class AdminLessonController extends AdminController
     protected function form($lessonId = null)
     {
         $form = new Form(new Lesson());
-        // $form->extend('htmlEditor', HTMLEditor::class);
 
-        // preg_match('/lessons\/([^\/]*)\/edit$/', URL::current(), $matches);
-        // $id = Str::orderedUuid()->toString();
-        // $lessonId = null;
-        // if(count($matches) == 2) {
-        //     $lessonId = $matches[1];
-        // }
-        // if($lessonId != null) {
-        //     $lesson = Lesson::find($lessonId);
-        //     if ($lesson->content) {
-        //         $id = $lesson->content;
-        //     }
-        // } else if (request()->has('richContentId')) {
-        //     $id = request()->input('richContentId');
-        // }
+        $form->tab('Lesson Data', function (Form $form) {
+            $form->text('name', __('Name'));
+            $form->select('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
+            $form->select('chapter_id', __('Chapters'));
+            $form->number('priority', __('Priority'))->default(1);
+            $form->switch('active', __('Active'))->default(1);
+        });
 
-        // $form->hidden('content', __('Content'))->default($id);
-        $form->text('name', __('Name'));
-        $form->select('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/courses/chapters/id');
-        $form->select('chapter_id', __('Chapters'));
-        $form->number('priority', __('Priority'))->default(1);
-        $form->switch('active', __('Active'))->default(1);
+        // $form->tab('Lesson Contents', function (Form $form) {
+        //     $form->hasMany('lessonSections', __('Sections'), function (Form\NestedForm $nestedForm) {
+        //         $nestedForm->text('name', __('Name'));
+        //         $nestedForm->textarea('text', __('Text'));
+        //         $nestedForm->number('priority', __('Priority'))->default(1);
+        //         $nestedForm->switch('active', __('Active'))->default(1);
+        //     });
+        // });
 
         $form->saving(function (Form $form) {
             $form->ignore('course_id');
@@ -126,5 +122,25 @@ class AdminLessonController extends AdminController
             'active' => false,
         ]);
         return ['lessonId' => $lesson->id];
+    }
+
+    public function byChapterId(Request $request)
+    {
+        $chapter_id = $request->get('query');
+        $lessons = Lesson::where('chapter_id', $chapter_id)->get(['id', DB::raw('name as text')]);
+        // dd($lessons);
+        return (new Response($lessons))->header('Content-Type', 'application/json');
+    }
+
+    public function byCourseId(Request $request)
+    {
+        $course_id = $request->get('query');
+        $lessons = DB::table('lessons')
+            ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id')
+            ->where('chapters.course_id', '=', $course_id)
+            ->select(DB::raw('lessons.id as id'), DB::raw('lessons.name as text'))
+            ->get();
+        // dd($lessons);
+        return (new Response($lessons))->header('Content-Type', 'application/json');
     }
 }
