@@ -20,7 +20,7 @@ jobs:
         with:
           node-version-file: upschool_frontend/.nvmrc
       - name: Install dependencies
-        run: npm install
+        run: npm install --force
       - name: Build Package
         env:
           VITE_APP_URL: https://upschool.voidcu.co/
