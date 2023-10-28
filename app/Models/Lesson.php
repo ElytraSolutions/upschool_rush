@@ -13,7 +13,10 @@ class Lesson extends Model
     use Sluggable;
     use HasUuids;
 
+    protected $table = 'lessons';
+
     protected $fillable = [
+        'id',
         'name',
         'slug',
         'chapter_id',
@@ -36,6 +39,11 @@ class Lesson extends Model
     public function chapter()
     {
         return $this->belongsTo(Chapter::class);
+    }
+
+    public function lessonSections()
+    {
+        return $this->hasMany(LessonSection::class);
     }
 
     /**
