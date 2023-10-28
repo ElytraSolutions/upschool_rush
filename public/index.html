@@ -6,8 +6,9 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-3a682cce.js"></script>
+  <script type="module" crossorigin src="/assets/index-54ccbcdd.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
   <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -23,7 +24,7 @@
   <link rel="modulepreload" crossorigin href="/assets/stylis-79144faa.js">
   <link rel="modulepreload" crossorigin href="/assets/@emotion-d9b89c41.js">
   <link rel="modulepreload" crossorigin href="/assets/react-transition-group-31fbb9fa.js">
-  <link rel="modulepreload" crossorigin href="/assets/@mui-1203a055.js">
+  <link rel="modulepreload" crossorigin href="/assets/@mui-f8de01fa.js">
   <link rel="modulepreload" crossorigin href="/assets/react-multi-carousel-1a4c8644.js">
   <link rel="modulepreload" crossorigin href="/assets/prop-types-a9b871a2.js">
   <link rel="modulepreload" crossorigin href="/assets/react-easy-swipe-a9d6ab05.js">
@@ -47,9 +48,13 @@
   <link rel="modulepreload" crossorigin href="/assets/html2canvas-e0a7d97b.js">
   <link rel="modulepreload" crossorigin href="/assets/fflate-8981c52c.js">
   <link rel="modulepreload" crossorigin href="/assets/jspdf-5f6210a0.js">
+  <link rel="modulepreload" crossorigin href="/assets/@svg-maps-e08e3392.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-svg-map-60d3d75a.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-icons-2b362a7e.js">
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
-  <link rel="stylesheet" href="/assets/index-0da16406.css">
+  <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
+  <link rel="stylesheet" href="/assets/index-6f30d1ac.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
