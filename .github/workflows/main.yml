@@ -10,6 +10,8 @@ jobs:
       run:
         shell: bash
         working-directory: upschool_frontend
+    env:
+      VITE_IMG_ROOT_URL: "https://d1bpxl2yzyk1zq.cloudfront.net"
     steps:
       - name: Pull repository
         uses: actions/checkout@v3
@@ -20,7 +22,7 @@ jobs:
         with:
           node-version-file: upschool_frontend/.nvmrc
       - name: Install dependencies
-        run: npm install
+        run: npm install --force
       - name: Build Package
         env:
           VITE_APP_URL: https://upschool.voidcu.co/
