@@ -8,14 +8,14 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-5e3e3edf.js"></script>
+  <script type="module" crossorigin src="/assets/index-016708d4.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
   <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
   <link rel="modulepreload" crossorigin href="/assets/react-dom-80dba45a.js">
   <link rel="modulepreload" crossorigin href="/assets/@remix-run-46b80ddf.js">
   <link rel="modulepreload" crossorigin href="/assets/react-router-cab8e21f.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-router-dom-4105d033.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-router-dom-7506b684.js">
   <link rel="modulepreload" crossorigin href="/assets/axios-82afda87.js">
   <link rel="modulepreload" crossorigin href="/assets/react-hotkeys-hook-f7c151b8.js">
   <link rel="modulepreload" crossorigin href="/assets/react-is-a192e302.js">
@@ -50,11 +50,11 @@
   <link rel="modulepreload" crossorigin href="/assets/jspdf-5f6210a0.js">
   <link rel="modulepreload" crossorigin href="/assets/@svg-maps-e08e3392.js">
   <link rel="modulepreload" crossorigin href="/assets/react-svg-map-60d3d75a.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-icons-2b362a7e.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-icons-da860f05.js">
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-1942986e.css">
+  <link rel="stylesheet" href="/assets/index-0198ddbd.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
