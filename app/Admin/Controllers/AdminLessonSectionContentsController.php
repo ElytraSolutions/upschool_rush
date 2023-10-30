@@ -94,7 +94,7 @@ class AdminLessonSectionContentsController extends AdminController
             'local' => 'Local',
             'url' => 'URL',
         ]);
-        $form->file('content', __('Content File'));
+        $form->customFile('content', __('Content File'));
         // ->when('=', 'image', function (Form $form) {
         //     $form->select('source', __('Source'))->options([
         //         'local' => 'Local',
