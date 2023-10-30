@@ -46,6 +46,11 @@ class Lesson extends Model
         return $this->hasMany(LessonSection::class);
     }
 
+    public function lessonSectionContents()
+    {
+        return $this->hasManyThrough(LessonSectionContent::class, LessonSection::class, 'lesson_id', 'lesson_section_id');
+    }
+
     /**
      * Return the sluggable configuration array for this model.
      *
