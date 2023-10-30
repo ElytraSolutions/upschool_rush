@@ -8,7 +8,7 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-e611c937.js"></script>
+  <script type="module" crossorigin src="/assets/index-a3d558c6.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
   <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -24,7 +24,7 @@
   <link rel="modulepreload" crossorigin href="/assets/stylis-79144faa.js">
   <link rel="modulepreload" crossorigin href="/assets/@emotion-d9b89c41.js">
   <link rel="modulepreload" crossorigin href="/assets/react-transition-group-31fbb9fa.js">
-  <link rel="modulepreload" crossorigin href="/assets/@mui-88a4f01d.js">
+  <link rel="modulepreload" crossorigin href="/assets/@mui-a7371b00.js">
   <link rel="modulepreload" crossorigin href="/assets/react-multi-carousel-1a4c8644.js">
   <link rel="modulepreload" crossorigin href="/assets/prop-types-a9b871a2.js">
   <link rel="modulepreload" crossorigin href="/assets/react-easy-swipe-a9d6ab05.js">
@@ -54,7 +54,7 @@
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-355c7c1b.css">
+  <link rel="stylesheet" href="/assets/index-262660ee.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
