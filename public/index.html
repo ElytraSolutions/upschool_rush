@@ -8,7 +8,7 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-dcc49765.js"></script>
+  <script type="module" crossorigin src="/assets/index-7865f944.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
   <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -54,7 +54,7 @@
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-4cfdbe99.css">
+  <link rel="stylesheet" href="/assets/index-44db1e50.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
