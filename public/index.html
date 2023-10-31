@@ -8,7 +8,7 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-f267b9bd.js"></script>
+  <script type="module" crossorigin src="/assets/index-12f3a96d.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
   <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
