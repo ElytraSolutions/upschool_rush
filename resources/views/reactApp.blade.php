@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="!scroll-smooth">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-cb0cefcb.js"></script>
+  <script type="module" crossorigin src="/assets/index-214ed0f2.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
   <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -39,12 +39,12 @@
   <link rel="modulepreload" crossorigin href="/assets/tiny-case-d0726479.js">
   <link rel="modulepreload" crossorigin href="/assets/toposort-46a39a60.js">
   <link rel="modulepreload" crossorigin href="/assets/yup-5f4c0547.js">
+  <link rel="modulepreload" crossorigin href="/assets/page-flip-904e8808.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-pageflip-ce0625d2.js">
   <link rel="modulepreload" crossorigin href="/assets/tslib-515cc0eb.js">
   <link rel="modulepreload" crossorigin href="/assets/file-selector-bdf450a1.js">
   <link rel="modulepreload" crossorigin href="/assets/attr-accept-6df8d728.js">
   <link rel="modulepreload" crossorigin href="/assets/react-dropzone-4814d38f.js">
-  <link rel="modulepreload" crossorigin href="/assets/page-flip-904e8808.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-pageflip-ce0625d2.js">
   <link rel="modulepreload" crossorigin href="/assets/html2canvas-e0a7d97b.js">
   <link rel="modulepreload" crossorigin href="/assets/fflate-8981c52c.js">
   <link rel="modulepreload" crossorigin href="/assets/jspdf-5f6210a0.js">
@@ -54,7 +54,7 @@
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-6c92e743.css">
+  <link rel="stylesheet" href="/assets/index-58a1df3d.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
