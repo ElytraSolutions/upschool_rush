@@ -64,7 +64,7 @@ class LessonController extends Controller
         // Public Route
         return [
             'success' => true,
-            'data' => $lesson,
+            'data' => $lesson->load('lessonSections.lessonSectionContents'),
         ];
     }
 
@@ -135,7 +135,7 @@ class LessonController extends Controller
 
     /**
      * Mark the specified lesson as completed.
-    */
+     */
     public function complete(Request $request, Lesson $lesson)
     {
         if (!$request->user()->can('complete', $lesson)) {
