@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="!scroll-smooth">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,14 +8,14 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-12f3a96d.js"></script>
+  <script type="module" crossorigin src="/assets/index-de27d601.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
   <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
   <link rel="modulepreload" crossorigin href="/assets/react-dom-80dba45a.js">
   <link rel="modulepreload" crossorigin href="/assets/@remix-run-46b80ddf.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-router-cab8e21f.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-router-dom-7506b684.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-router-195ddd15.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-router-dom-923e59a6.js">
   <link rel="modulepreload" crossorigin href="/assets/axios-82afda87.js">
   <link rel="modulepreload" crossorigin href="/assets/react-hotkeys-hook-f7c151b8.js">
   <link rel="modulepreload" crossorigin href="/assets/react-is-a192e302.js">
@@ -39,6 +39,7 @@
   <link rel="modulepreload" crossorigin href="/assets/tiny-case-d0726479.js">
   <link rel="modulepreload" crossorigin href="/assets/toposort-46a39a60.js">
   <link rel="modulepreload" crossorigin href="/assets/yup-5f4c0547.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-toastify-13e40b2b.js">
   <link rel="modulepreload" crossorigin href="/assets/tslib-515cc0eb.js">
   <link rel="modulepreload" crossorigin href="/assets/file-selector-bdf450a1.js">
   <link rel="modulepreload" crossorigin href="/assets/attr-accept-6df8d728.js">
@@ -53,8 +54,9 @@
   <link rel="modulepreload" crossorigin href="/assets/react-icons-da860f05.js">
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
+  <link rel="stylesheet" href="/assets/react-toastify-93d8b085.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-1f24aa00.css">
+  <link rel="stylesheet" href="/assets/index-3307fc7b.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
