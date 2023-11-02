@@ -100,9 +100,9 @@ class UserController extends Controller
                 LEFT JOIN lesson_completions lc ON lc.lesson_id = l.id
                 WHERE c.id IN (
                     SELECT course_id FROM course_enrollments
-                        WHERE user_id = "9a669843-e83b-45c9-ae0e-8c1035640b5e"
+                        WHERE user_id = "{$request->user()->id}"
                 )
-                GROUP BY c.id, c.name;
+                GROUP BY c.id, c.name, c.slug, c.image;
         SQL;
         $enrolledCourses = DB::select('' . $dbQuery . '');
 
