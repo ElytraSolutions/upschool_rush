@@ -5,8 +5,8 @@ namespace App\Routes\Data;
 use App\Http\Controllers\CourseEnrollmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ChapterController;
@@ -14,6 +14,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RichContentsController;
 use App\CustomErrors\Errors;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
@@ -56,18 +57,13 @@ Route::get('/richContents/{richContent}', [RichContentsController::class, 'show'
 
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->get('/users/{user}', [UserController::class, 'show'])->missing(Errors::missing());
+    $route->put('/users/{user}', [UserController::class, 'update'])->missing(Errors::missing());
+
     $route->get('/user', function (Request $request) {
         return $request->user()->load('type');
     });
-    $route->get('/user/courses', function (Request $request) {
-        return [
-            'success' => true,
-            'data' => [
-                'enrolled' => $request->user()->courses()->get(['courses.id', 'courses.slug', 'courses.name']),
-                'completed' => $request->user()->courseCompletions()->get(['courses.id', 'courses.slug', 'courses.name']),
-            ],
-        ];
-    });
+    $route->get('/user/courses', [UserController::class, 'myCourses']);
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {

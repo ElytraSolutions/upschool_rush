@@ -64,11 +64,6 @@ class Course extends Model
         return $this->hasManyThrough(Lesson::class, Chapter::class);
     }
 
-    public function courseCompletions()
-    {
-        return $this->hasMany(CourseCompletion::class);
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class, 'course_enrollments');
