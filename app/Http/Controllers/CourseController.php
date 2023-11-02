@@ -143,10 +143,9 @@ class CourseController extends Controller
             ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id')
             ->join('courses', 'chapters.course_id', '=', 'courses.id')
             ->where('courses.id', '=', $course->getAttribute('id'))
+            ->where('lesson_completions.user_id', '=', $request->user()->getAttribute('id'))
             ->count();
-        if ($lastCompletedLesson !== null) {
-            $course['lastCompletedLesson'] = $lastCompletedLesson;
-        }
+        $course['lastCompletedLesson'] = $lastCompletedLesson;
         if ($courseEnrollment === null) {
             return [
                 'success' => true,
