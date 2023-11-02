@@ -8,55 +8,56 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-592792b7.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/@babel-029bab3e.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-cae9b7b8.js">
+  <script type="module" crossorigin src="/assets/index-ec400026.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/@babel-a222d563.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-f4831f7c.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-dom-80dba45a.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-dom-0831e024.js">
   <link rel="modulepreload" crossorigin href="/assets/@remix-run-46b80ddf.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-router-195ddd15.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-router-dom-923e59a6.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-router-2bd5f159.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-router-dom-4aca905e.js">
   <link rel="modulepreload" crossorigin href="/assets/axios-82afda87.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-hotkeys-hook-f7c151b8.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-hotkeys-hook-b6ee38ab.js">
   <link rel="modulepreload" crossorigin href="/assets/react-is-a192e302.js">
   <link rel="modulepreload" crossorigin href="/assets/clsx-1229b3e0.js">
-  <link rel="modulepreload" crossorigin href="/assets/hoist-non-react-statics-d2e87333.js">
+  <link rel="modulepreload" crossorigin href="/assets/hoist-non-react-statics-571774b0.js">
   <link rel="modulepreload" crossorigin href="/assets/stylis-79144faa.js">
-  <link rel="modulepreload" crossorigin href="/assets/@emotion-d9b89c41.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-transition-group-31fbb9fa.js">
-  <link rel="modulepreload" crossorigin href="/assets/@mui-a7371b00.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-multi-carousel-1a4c8644.js">
-  <link rel="modulepreload" crossorigin href="/assets/prop-types-a9b871a2.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-easy-swipe-a9d6ab05.js">
-  <link rel="modulepreload" crossorigin href="/assets/classnames-63c61219.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-responsive-carousel-a187ab95.js">
+  <link rel="modulepreload" crossorigin href="/assets/@emotion-00b492a8.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-transition-group-d316e552.js">
+  <link rel="modulepreload" crossorigin href="/assets/@mui-ab14f015.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-multi-carousel-bd78dd3d.js">
+  <link rel="modulepreload" crossorigin href="/assets/prop-types-8f4a5b05.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-easy-swipe-df549a88.js">
+  <link rel="modulepreload" crossorigin href="/assets/classnames-2a232770.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-responsive-carousel-ea8462f8.js">
   <link rel="modulepreload" crossorigin href="/assets/deepmerge-15f827de.js">
   <link rel="modulepreload" crossorigin href="/assets/lodash-es-062508fc.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-fast-compare-d29c9f72.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-fast-compare-7a99964f.js">
   <link rel="modulepreload" crossorigin href="/assets/tiny-warning-c932d744.js">
-  <link rel="modulepreload" crossorigin href="/assets/formik-8d9cac0e.js">
+  <link rel="modulepreload" crossorigin href="/assets/formik-644e6282.js">
   <link rel="modulepreload" crossorigin href="/assets/property-expr-38205fa5.js">
   <link rel="modulepreload" crossorigin href="/assets/tiny-case-d0726479.js">
-  <link rel="modulepreload" crossorigin href="/assets/toposort-46a39a60.js">
-  <link rel="modulepreload" crossorigin href="/assets/yup-5f4c0547.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-toastify-13e40b2b.js">
+  <link rel="modulepreload" crossorigin href="/assets/toposort-9cddb164.js">
+  <link rel="modulepreload" crossorigin href="/assets/yup-7c6aa1cf.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-toastify-ae7d9bcd.js">
   <link rel="modulepreload" crossorigin href="/assets/tslib-515cc0eb.js">
   <link rel="modulepreload" crossorigin href="/assets/file-selector-bdf450a1.js">
   <link rel="modulepreload" crossorigin href="/assets/attr-accept-6df8d728.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-dropzone-4814d38f.js">
-  <link rel="modulepreload" crossorigin href="/assets/page-flip-904e8808.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-pageflip-ce0625d2.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-dropzone-ec7deeb0.js">
+  <link rel="modulepreload" crossorigin href="/assets/page-flip-1af2e518.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-pageflip-8a19aabe.js">
   <link rel="modulepreload" crossorigin href="/assets/html2canvas-e0a7d97b.js">
   <link rel="modulepreload" crossorigin href="/assets/fflate-8981c52c.js">
-  <link rel="modulepreload" crossorigin href="/assets/jspdf-5f6210a0.js">
+  <link rel="modulepreload" crossorigin href="/assets/jspdf-3d222c54.js">
   <link rel="modulepreload" crossorigin href="/assets/@svg-maps-e08e3392.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-svg-map-60d3d75a.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-icons-da860f05.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-svg-map-2878d202.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-icons-6ffb6e55.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-share-0fce3d21.js">
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
   <link rel="stylesheet" href="/assets/react-toastify-93d8b085.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-3307fc7b.css">
+  <link rel="stylesheet" href="/assets/index-1ac13474.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
