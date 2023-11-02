@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -131,11 +132,19 @@ class User extends Authenticatable
     /**
      * A user has many course completions.
      *
-     * @return BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function courseCompletions(): BelongsToMany
+    public function courseCompletions()
     {
-        return $this->belongsToMany(Course::class, 'course_completions');
+        return DB::table('courses')
+            ->selectRaw('courses.id, courses.name, courses.slug, courses.image')
+            ->join('course_enrollments', 'course_enrollments.course_id', '=', 'courses.id')
+            ->leftJoin('chapters', 'chapters.course_id', '=', 'courses.id')
+            ->leftJoin('lessons', 'lessons.chapter_id', '=', 'chapters.id')
+            ->leftJoin('lesson_completions', 'lesson_completions.lesson_id', '=', 'lessons.id')
+            ->groupBy('courses.id', 'courses.name', 'courses.slug', 'courses.image')
+            ->havingRaw('count(lessons.id) = count(lesson_completions.id)')
+            ->get();
     }
 
     /**
@@ -143,18 +152,15 @@ class User extends Authenticatable
      */
     public function lastCompletedLesson(Course $course)
     {
-        $lastLesson = null;
-        foreach($course->lessons as $lesson) {
-            $lessonCompleted = LessonCompletion::where('user_id', $this->getAttribute('id'))
-                ->where('lesson_id', $lesson->getAttribute('id'))
-                ->exists();
-            if ($lessonCompleted) {
-                $lastLesson = $lesson;
-            }
-            else {
-                break;
-            }
-        }
-        return $lastLesson;
+        $result = DB::table('courses')
+            ->selectRaw('lessons.id, lessons.name, lessons.slug, lessons.chapter_id, lesson_completions.created_at')
+            ->leftJoin('chapters', 'chapters.course_id', '=', 'courses.id')
+            ->leftJoin('lessons', 'lessons.chapter_id', '=', 'chapters.id')
+            ->join('lesson_completions', 'lesson_completions.lesson_id', '=', 'lessons.id')
+            ->orderByRaw('chapters.priority DESC, lessons.priority DESC')
+            ->where('courses.id', $course->getAttribute('id'))
+            ->where('lesson_completions.user_id', $this->getAttribute('id'))
+            ->first();
+        return $result;
     }
 }
