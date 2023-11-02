@@ -111,7 +111,7 @@ class UserController extends Controller
             'data' => [
                 'enrolled' => $enrolledCourses,
                 // 'enrolled' => $request->user()->courses()->get(['courses.id', 'courses.slug', 'courses.name']),
-                'completed' => $request->user()->courseCompletions()->get(['courses.id', 'courses.slug', 'courses.name']),
+                'completed' => $request->user()->courseCompletions(),
             ],
         ];
     }
