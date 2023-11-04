@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -90,11 +92,26 @@ class UserController extends Controller
 
     public function myCourses(Request $request)
     {
+        $dbQuery = <<<SQL
+            SELECT c.name, c.slug, c.image, count(l.id) TotalLessons, count(lc.id) CompletedLessons
+                FROM courses c
+                LEFT JOIN chapters ch ON ch.course_id = c.id
+                LEFT JOIN lessons l ON l.chapter_id = ch.id
+                LEFT JOIN lesson_completions lc ON lc.lesson_id = l.id
+                WHERE c.id IN (
+                    SELECT course_id FROM course_enrollments
+                        WHERE user_id = "{$request->user()->id}"
+                )
+                GROUP BY c.id, c.name, c.slug, c.image;
+        SQL;
+        $enrolledCourses = DB::select('' . $dbQuery . '');
+
         return [
             'success' => true,
             'data' => [
-                'enrolled' => $request->user()->courses()->get(['courses.id', 'courses.slug', 'courses.name']),
-                'completed' => $request->user()->courseCompletions()->get(['courses.id', 'courses.slug', 'courses.name']),
+                'enrolled' => $enrolledCourses,
+                // 'enrolled' => $request->user()->courses()->get(['courses.id', 'courses.slug', 'courses.name']),
+                'completed' => $request->user()->courseCompletions(),
             ],
         ];
     }
