@@ -62,6 +62,12 @@ class User extends Authenticatable
         return $this->is_admin;
     }
 
+    public function isTeacher(): bool
+    {
+        $teacherId = UserType::where('name', 'School Teacher')->first()->id;
+        return $this->user_type_id === $teacherId;
+    }
+
     public function type(): BelongsTo
     {
         return $this->belongsTo(UserType::class, 'user_type_id', 'id');
