@@ -2,6 +2,7 @@
 
 namespace App\Routes\Data;
 
+use App\Http\Controllers\BulkRegistrationController;
 use App\Http\Controllers\CourseEnrollmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -134,4 +135,9 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->get('/teacher/students', [TeacherStudentsController::class, 'index']);
     $route->post('/teacher/addStudent', [TeacherStudentsController::class, 'store']);
     $route->post('/teacher/inviteStudent', [TeacherStudentsController::class, 'inviteStudent']);
+});
+
+Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->get('/bulkRegistrations/{bulkRegistration}', [BulkRegistrationController::class, 'show']);
+    $route->post('/bulkRegistrations', [BulkRegistrationController::class, 'store']);
 });

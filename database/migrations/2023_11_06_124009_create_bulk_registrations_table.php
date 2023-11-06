@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('teacher_students');
-        Schema::create('teacher_students', function (Blueprint $table) {
-            $table->uuid();
-            $table->foreignUuid('teacher_id')->constrainted('users');
-            $table->foreignUuid('student_id')->constrainted('users');
+        Schema::dropIfExists('bulk_registrations');
+        Schema::create('bulk_registrations', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->string('teacher_id');
+            $table->string('csv_path');
+            $table->enum('status', ['pending', 'processing', 'completed', 'failed']);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teacher_students');
+        Schema::dropIfExists('bulk_registrations');
     }
 };
