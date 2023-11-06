@@ -21,6 +21,7 @@
         "open-admin-ext/log-viewer": "^1.0",
         "open-admin-ext/media-manager": "^1.0",
         "open-admin-org/open-admin": "^1.0",
+        "predis/predis": "~1.0",
         "rakutentech/laravel-request-docs": "^2.25",
         "smalot/pdfparser": "^2.7"
     },
