@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InviteStudentRequest;
 use App\Http\Requests\StoreTeacherStudentsRequest;
 use App\Http\Requests\UpdateTeacherStudentsRequest;
+use App\Mail\InviteStudent;
 use App\Models\TeacherStudents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TeacherStudentsController extends Controller
 {
@@ -14,7 +17,16 @@ class TeacherStudentsController extends Controller
      */
     public function index()
     {
-        // Not required
+        if (request()->user()->cannot('viewAny', TeacherStudents::class)) {
+            return [
+                'success' => false,
+                'message' => 'You are not authorized to view students.',
+            ];
+        }
+        return [
+            'success' => true,
+            'data' => TeacherStudents::where('teacher_id', request()->user()->id)->get(),
+        ];
     }
 
     /**
@@ -76,5 +88,15 @@ class TeacherStudentsController extends Controller
     public function destroy(TeacherStudents $teacherStudents)
     {
         // Not required
+    }
+
+    public function inviteStudent(InviteStudentRequest $request)
+    {
+        $validated = $request->validated();
+        Mail::to($validated['email'])->send(new InviteStudent($validated['inviteLink']));
+        return [
+            'success' => true,
+            'message' => 'Student invited successfully.',
+        ];
     }
 }

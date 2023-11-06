@@ -131,5 +131,7 @@ Route::get('/images/{path}', function (Request $request) {
 
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->get('/teacher/students', [TeacherStudentsController::class, 'index']);
     $route->post('/teacher/addStudent', [TeacherStudentsController::class, 'store']);
+    $route->post('/teacher/inviteStudent', [TeacherStudentsController::class, 'inviteStudent']);
 });
