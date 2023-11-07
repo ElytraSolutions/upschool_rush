@@ -45,17 +45,17 @@ class AdminCharityController extends AdminController
     {
         $show = new Show(Charity::findOrFail($id));
 
-        $show->column('id', __('ID'));
-        $show->column('name', 'Name');
-        $show->column('slug', 'slug');
-        $show->column('image', 'Image`');
-        $show->column('website', 'Website');
-        $show->column('facebook', 'Facebook');
-        $show->column('instagram', 'Instagram');
-        $show->column('linkedin', 'Linkedin');
-        $show->column('description', 'Description');
-        $show->column('created_at', __('Created at'));
-        $show->column('updated_at', __('Updated at'));
+        $show->field('id', __('ID'));
+        $show->field('name', 'Name');
+        $show->field('slug', 'slug');
+        $show->field('image', 'Image`');
+        $show->field('website', 'Website');
+        $show->field('facebook', 'Facebook');
+        $show->field('instagram', 'Instagram');
+        $show->field('linkedin', 'Linkedin');
+        $show->field('description', 'Description');
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
 
         return $show;
     }
