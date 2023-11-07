@@ -13,10 +13,12 @@ class UserTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('user_types')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $userTypes = [
             [
-                'name' => 'Parent of Student',
+                'name' => 'Parent',
             ],
             [
                 'name' => 'Student (Over 18)',
@@ -25,7 +27,7 @@ class UserTypeSeeder extends Seeder
                 'name' => 'Student (Under 18)',
             ],
             [
-                'name' => 'School Teacher',
+                'name' => 'Teacher',
             ],
         ];
         foreach ($userTypes as $userType) {
