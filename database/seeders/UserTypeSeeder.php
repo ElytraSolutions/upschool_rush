@@ -19,15 +19,19 @@ class UserTypeSeeder extends Seeder
         $userTypes = [
             [
                 'name' => 'Parent',
+                'image' => '/images/Dashboard/ParentIcon.png'
             ],
             [
                 'name' => 'Student (Over 18)',
+                'image' => '/images/Dashboard/StudentIcon.png',
             ],
             [
                 'name' => 'Student (Under 18)',
+                'image' => '/images/Dashboard/StudentIcon.png',
             ],
             [
                 'name' => 'Teacher',
+                'image' => '/images/Dashboard/TeacherIcon.png',
             ],
         ];
         foreach ($userTypes as $userType) {
