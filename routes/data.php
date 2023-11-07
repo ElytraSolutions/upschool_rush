@@ -2,6 +2,7 @@
 
 namespace App\Routes\Data;
 
+use App\Http\Controllers\BulkRegistrationController;
 use App\Http\Controllers\CourseEnrollmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RichContentsController;
 use App\CustomErrors\Errors;
+use App\Http\Controllers\TeacherStudentsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -126,4 +128,16 @@ Route::get('/images/{path}', function (Request $request) {
     $file = Storage::disk('s3')->get($path);
     $type = Storage::disk('s3')->mimeType($path);
     return response($file, 200)->header('Content-Type', $type);
+});
+
+
+Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->get('/teacher/students', [TeacherStudentsController::class, 'index']);
+    $route->post('/teacher/addStudent', [TeacherStudentsController::class, 'store']);
+    $route->post('/teacher/inviteStudent', [TeacherStudentsController::class, 'inviteStudent']);
+});
+
+Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->get('/bulkRegistrations/{bulkRegistration}', [BulkRegistrationController::class, 'show']);
+    $route->post('/bulkRegistrations', [BulkRegistrationController::class, 'store']);
 });

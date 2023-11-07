@@ -26,6 +26,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'email',
         'password',
         'first_name',
@@ -60,6 +61,12 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->is_admin;
+    }
+
+    public function isTeacher(): bool
+    {
+        $teacherId = UserType::where('name', 'School Teacher')->first()->id;
+        return $this->user_type_id === $teacherId;
     }
 
     public function type(): BelongsTo
