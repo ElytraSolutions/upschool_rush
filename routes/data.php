@@ -62,6 +62,13 @@ Route::get('/richContents', [RichContentsController::class, 'index']);
 Route::get('/richContents/{richContent}', [RichContentsController::class, 'show'])->missing(Errors::missing());
 
 
+Route::get('/userTypes', function () {
+    return [
+        'success' => true,
+        'data' => \App\Models\UserType::all(),
+    ];
+});
+
 Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->get('/users/{user}', [UserController::class, 'show'])->missing(Errors::missing());
     $route->put('/users/{user}', [UserController::class, 'update'])->missing(Errors::missing());
