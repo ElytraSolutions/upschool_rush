@@ -56,9 +56,9 @@ class CharityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Charity $charity)
+    public function show(Request $request, Charity $charity)
     {
-        if (auth()->user()->cannot('view', $charity)) {
+        if ($request->user()->cannot('view', $charity)) {
             return response([
                 'success' => false,
                 'message' => 'You are not authorized to view this charity.',
@@ -101,9 +101,9 @@ class CharityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Charity $charity)
+    public function destroy(Request $request, Charity $charity)
     {
-        if (auth()->user()->cannot('delete', $charity)) {
+        if ($request->user()->cannot('delete', $charity)) {
             return response([
                 'success' => false,
                 'message' => 'You are not authorized to delete this charity.',

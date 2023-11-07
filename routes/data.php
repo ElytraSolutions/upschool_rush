@@ -15,6 +15,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RichContentsController;
 use App\CustomErrors\Errors;
+use App\Http\Controllers\CharityController;
 use App\Http\Controllers\TeacherStudentsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Log;
@@ -51,12 +52,22 @@ Route::get('/chapters/{chapter:slug}/lessons', [ChapterController::class, 'lesso
 Route::get('/lessons', [LessonController::class, 'index']);
 Route::get('/lessons/{lesson:slug}', [LessonController::class, 'show'])->missing(Errors::missing());
 
+Route::get('/charities', [CharityController::class, 'index']);
+Route::get('/charities/{charity}', [CharityController::class, 'show'])->missing(Errors::missing());
+
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project}', [ProjectController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/richContents', [RichContentsController::class, 'index']);
 Route::get('/richContents/{richContent}', [RichContentsController::class, 'show'])->missing(Errors::missing());
 
+
+Route::get('/userTypes', function () {
+    return [
+        'success' => true,
+        'data' => \App\Models\UserType::all(),
+    ];
+});
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->get('/users/{user}', [UserController::class, 'show'])->missing(Errors::missing());
