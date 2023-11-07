@@ -14,12 +14,6 @@ class CharityController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->user()->cannot('viewAny', Charity::class)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view charities.',
-            ], 403);
-        }
         return [
             'success' => true,
             'data' => Charity::all(),
@@ -58,12 +52,6 @@ class CharityController extends Controller
      */
     public function show(Request $request, Charity $charity)
     {
-        if ($request->user()->cannot('view', $charity)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view this charity.',
-            ], 403);
-        }
         return [
             'success' => true,
             'data' => $charity,
