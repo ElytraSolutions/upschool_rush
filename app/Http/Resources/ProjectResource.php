@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-class CategoryResource extends JsonResource
+class ProjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,6 +22,11 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'intro' =>  $this->intro,
+            'description' => $this->description,
+            'active' => $this->active,
+//            'created_at' => $this->created_at,
+//            'updated_at' => $this->updated_at,
         ];
     }
 
