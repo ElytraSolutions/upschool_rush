@@ -275,7 +275,7 @@ class BookController extends Controller
                 $books = $query->where('is_best_seller','=','YES')->paginate($per_page);
             $response['data'] = BookResource::collection($books)->map(
                 function($resource){
-                    return $resource->only(['id','title','description','country','first_name']);
+                    return $resource->only(['id','slug','title','description','country','first_name','categories',]);
                 }
             );
             if ($request->page > 1) {
