@@ -97,6 +97,7 @@ class AdminBookController extends AdminController
         $form->text('school_name', __('School name'));
         $form->text('country', __('Country'));
         $form->number('age', __('Age'));
+        $form->select('source', __('Source'))->options(['upload' => 'Upload File', 'canva' => 'Canva']);
         $form->text('path', __('Path'));
         $form->text('canva_link', __('Canva link'));
         $form->image('thumbnail', __('Thumbnail'));
