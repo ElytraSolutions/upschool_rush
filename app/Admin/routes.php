@@ -2,6 +2,7 @@
 
 use App\Admin\Controllers\AdminBookController;
 use App\Admin\Controllers\AdminChapterController;
+use App\Admin\Controllers\AdminCharityController;
 use App\Admin\Controllers\AdminCourseCategoryController;
 use App\Admin\Controllers\AdminCourseController;
 use App\Admin\Controllers\AdminLessonController;
@@ -31,7 +32,9 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
     $router->post('/richText', [RichContentController::class, 'store']);
     $router->resource('books', AdminBookController::class);
+    $router->resource('book-categories',AdminBookCategoryController::class);
     $router->resource('chapters', AdminChapterController::class);
+    $router->resource('charities', AdminCharityController::class);
     $router->resource('courses', AdminCourseController::class);
     $router->resource('course-categories', AdminCourseCategoryController::class);
     $router->resource('lessons', AdminLessonController::class);

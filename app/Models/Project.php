@@ -39,7 +39,4 @@ class Project extends Model
     }
 
 
-    public function books(){
-        return $this->belongsToMany(Book::class,'book_projects','project_id','book_id');
-    }
 }
