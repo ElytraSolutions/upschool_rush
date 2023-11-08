@@ -277,7 +277,7 @@ class BookController extends Controller
             $response['data'] = BookResource::collection($books)->map(
 
                 function($resource){
-                    return $resource->only(['id','slug','title','description','country','first_name','categories',]);
+                    return $resource->only(['id','slug','title','description','country','first_name','categories','thumbnail']);
                 }
             );
             if ($request->page > 1) {
@@ -310,7 +310,7 @@ class BookController extends Controller
             $books = $query->where('is_featured', '=', 'YES')->paginate($per_page);
             $response['data'] = BookResource::collection($books)->map(
                 function ($resource) {
-                    return $resource->only(['id', 'title', 'description', 'country', 'first_name']);
+                    return $resource->only(['id','slug','title','description','country','first_name','categories','thumbnail']);
                 }
             );
             if ($request->page > 1) {

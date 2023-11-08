@@ -34,6 +34,7 @@ class BookResource extends JsonResource
             'active' => $this->active,
             'categories'=>CategoryResource::collection($this->categories),
             'project'=>new ProjectResource($this->project),
+            'thumbnail' =>$this->thumbnail,
 //            'created_at' => $this->created_at,
 //            'updated_at' => $this->updated_at,
         ];
