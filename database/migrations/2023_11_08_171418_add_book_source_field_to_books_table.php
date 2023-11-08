@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->enum('source', ['upload', 'canva'])->default('self')->after('description');
+            $table->enum('source', ['upload', 'canva'])->default('upload')->after('description');
         });
     }
 
