@@ -71,6 +71,7 @@ class AdminBookController extends AdminController
         $show->field('age', __('Age'));
         $show->field('path', __('Path'));
         $show->field('canva_link', __('Canva link'));
+        $show->field('thumbnail', __('Thumbnail'));
         $show->field('is_featured', __('Featured'));
         $show->field('is_best_seller', __('Best Seller'));
         $show->field('active', __('Active'));
@@ -96,8 +97,10 @@ class AdminBookController extends AdminController
         $form->text('school_name', __('School name'));
         $form->text('country', __('Country'));
         $form->number('age', __('Age'));
+        $form->select('source', __('Source'))->options(['upload' => 'Upload File', 'canva' => 'Canva']);
         $form->text('path', __('Path'));
         $form->text('canva_link', __('Canva link'));
+        $form->image('thumbnail', __('Thumbnail'));
         $form->radio('is_featured', __('Featured'))->options(['YES' => 'YES', 'NO' => 'NO'])->default('NO');
         $form->radio('is_best_seller', __('Best Seller'))->options(['YES' => 'YES', 'NO' => 'NO'])->default('NO');;
         $form->switch('active', __('Active'));
