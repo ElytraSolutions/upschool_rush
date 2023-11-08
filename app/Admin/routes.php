@@ -31,6 +31,7 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
     $router->post('/richText', [RichContentController::class, 'store']);
     $router->resource('books', AdminBookController::class);
+    $router->resource('book-categories',AdminBookCategoryController::class);
     $router->resource('chapters', AdminChapterController::class);
     $router->resource('courses', AdminCourseController::class);
     $router->resource('course-categories', AdminCourseCategoryController::class);
