@@ -8,7 +8,7 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-1981598a.js"></script>
+  <script type="module" crossorigin src="/assets/index-b116d9b8.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-a222d563.js">
   <link rel="modulepreload" crossorigin href="/assets/react-f4831f7c.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -38,7 +38,7 @@
   <link rel="modulepreload" crossorigin href="/assets/property-expr-38205fa5.js">
   <link rel="modulepreload" crossorigin href="/assets/tiny-case-d0726479.js">
   <link rel="modulepreload" crossorigin href="/assets/toposort-9cddb164.js">
-  <link rel="modulepreload" crossorigin href="/assets/yup-c4aaba64.js">
+  <link rel="modulepreload" crossorigin href="/assets/yup-7c6aa1cf.js">
   <link rel="modulepreload" crossorigin href="/assets/react-toastify-ae7d9bcd.js">
   <link rel="modulepreload" crossorigin href="/assets/tslib-515cc0eb.js">
   <link rel="modulepreload" crossorigin href="/assets/file-selector-bdf450a1.js">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
   <link rel="stylesheet" href="/assets/react-toastify-93d8b085.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-9daf3691.css">
+  <link rel="stylesheet" href="/assets/index-81d7a8e7.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
