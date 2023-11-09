@@ -56,10 +56,10 @@ Route::get('/lessons', [LessonController::class, 'index']);
 Route::get('/lessons/{lesson:slug}', [LessonController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/charities', [CharityController::class, 'index']);
-Route::get('/charities/{charity}', [CharityController::class, 'show'])->missing(Errors::missing());
+Route::get('/charities/{charity:slug}', [CharityController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/projects', [ProjectController::class, 'index']);
-Route::get('/projects/{project}', [ProjectController::class, 'show'])->missing(Errors::missing());
+Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/richContents', [RichContentsController::class, 'index']);
 Route::get('/richContents/{richContent}', [RichContentsController::class, 'show'])->missing(Errors::missing());

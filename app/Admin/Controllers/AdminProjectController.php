@@ -48,11 +48,7 @@ class AdminProjectController extends AdminController
         $show = new Show(Project::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
         $show->field('name', __('Name'));
-        $show->field('intro', __('Intro'));
-        $show->field('description', __('Description'));
         $show->field('active', __('Active'));
 
         return $show;
@@ -70,6 +66,14 @@ class AdminProjectController extends AdminController
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
         $form->textarea('description', __('Description'));
+        $form->text('location', __('Location'));
+        $form->text('genre', __('Genre'));
+        $form->image('image', __('Image'));
+        $form->image('thumbnail', __('Thumbnail'));
+        $form->table('sustainability_details', __('Sustainability details'), function ($form) {
+            $form->file('Image');
+            $form->number('Priority');
+        });
         $form->switch('active', __('Active'))->default(1);
 
         return $form;
