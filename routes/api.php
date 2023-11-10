@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Process;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Process;
 |
 */
 
-Route::post('/githubwebhook', function(Request $request) {
+Route::post('/githubwebhook', function (Request $request) {
     $secret = env('GITHUB_WEBHOOK_SECRET');
     $hash = "sha1=" . hash_hmac('sha1', $request->getContent(), $secret);
     if ($request->ref != 'refs/heads/prod') {
@@ -26,7 +27,7 @@ Route::post('/githubwebhook', function(Request $request) {
         $root_path = base_path();
         try {
             $gitResult = Process::path($root_path)->run('git pull');
-            if(!$gitResult->successful()) {
+            if (!$gitResult->successful()) {
                 $output = $gitResult->output();
                 $error = $gitResult->errorOutput();
                 $exitCode = $gitResult->exitCode();
@@ -43,11 +44,11 @@ Route::post('/githubwebhook', function(Request $request) {
                 ], 500);
             }
         } catch (Exception $e) {
-            return Response("Exception on git pull", 500);
+            return Response(["message" => "Exception on git pull", "details" => $e], 500);
         }
         try {
             $migrateResult = Process::path($root_path)->run('php artisan migrate');
-            if(!$migrateResult->successful()) {
+            if (!$migrateResult->successful()) {
                 $output = $migrateResult->output();
                 $error = $migrateResult->errorOutput();
                 $exitCode = $migrateResult->exitCode();

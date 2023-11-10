@@ -86,8 +86,8 @@ class AdminLessonSectionController extends AdminController
         $form->customSelect('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
         $form->customSelect('chapter_id', __('Chapters'))->load('lesson_id', '/admin/api/lessons/byChapterId');
         $form->customSelect('lesson_id', __('Lessons'));
-        $form->textarea('text', __('Text'));
         $form->textarea('teachers_note', __('Teachers Notes'));
+        $form->ckeditor('text', __('Text'));
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
 

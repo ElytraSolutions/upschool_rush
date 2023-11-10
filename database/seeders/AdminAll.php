@@ -120,6 +120,13 @@ class AdminAll extends Seeder
             ],
             [
                 'parent_id' => $manageMenu->id,
+                'order'     => 17,
+                'title'     => 'Course Descriptions',
+                'icon'      => 'icon-edit',
+                'uri'       => '/course-descriptions',
+            ],
+            [
+                'parent_id' => $manageMenu->id,
                 'order'     => 20,
                 'title'     => 'Chapters',
                 'icon'      => 'icon-edit',
