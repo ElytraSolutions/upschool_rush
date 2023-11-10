@@ -25,7 +25,13 @@ return new class extends Migration
             $table->integer('age');
             $table->string('path')->nullable();
             $table->string('canva_link')->nullable();
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->enum('is_featured', ['YES', 'NO'])->default('NO')->nullable();
+            $table->enum('is_best_seller', ['YES', 'NO'])->default('NO')->nullable();
             $table->boolean('active');
+            $table->foreign('project_id')->references('id')->on('projects');
+
+
         });
     }
 

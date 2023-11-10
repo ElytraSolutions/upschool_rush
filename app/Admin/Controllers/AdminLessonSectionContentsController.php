@@ -90,6 +90,10 @@ class AdminLessonSectionContentsController extends AdminController
             'video' => 'Video',
             'flipbook' => 'Flipbook',
         ]);
+        $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
+        $form->image('image_content', __('Image Content'));
+        $form->url('video_content', __('Video Content'));
+        $form->file('flipbook_content', __('Flipbook Content'));
         // ->when('image', function (Form $form) {
         //     $form->select('image_source', __('Source'))->options([
         //         'local' => 'Local',

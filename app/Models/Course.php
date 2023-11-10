@@ -23,6 +23,7 @@ class Course extends Model
         'image',
         'theme',
         'description',
+        'text_description',
         'active',
         'course_category_id',
         'tagline',
