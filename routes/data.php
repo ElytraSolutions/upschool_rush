@@ -33,9 +33,9 @@ Route::post('/books/add-category', [BookController::class, 'addCategory']);
 //testing start
 //Note :: without validation of Book Page
 
-Route::post('/books/list', [BookController::class, 'list']);
-Route::post('/books/best-sellers', [BookController::class, 'bestSeller']);
-Route::post('/books/featured', [BookController::class, 'featured']);
+Route::get('/books/list', [BookController::class, 'list']);
+Route::get('/books/best-sellers', [BookController::class, 'bestSeller']);
+Route::get('/books/featured', [BookController::class, 'featured']);
 Route::get('/books/detail/{id}', [BookController::class, 'detail']);
 //Route::post('/books/filter-by-category', [BookController::class, 'filterByCategory']);
 //testing end
