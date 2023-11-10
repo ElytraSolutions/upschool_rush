@@ -32,4 +32,4 @@ Form::extend('customSelect', Select::class);
 Form::extend('customHasMany', CustomHasMany::class);
 Form::extend('customFile', CustomFile::class);
 Form::extend('customImage', CustomImage::class);
-Form::forget(['map', 'editor']);
+Form::forget(['map']);

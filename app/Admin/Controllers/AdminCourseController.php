@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Form\NestedForm;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 
@@ -85,7 +86,7 @@ class AdminCourseController extends AdminController
         $form = new Form(new Course());
 
         preg_match('/courses\/([^\/]*)\/edit$/', URL::current(), $matches);
-        $descriptionId = Str::orderedUuid()->toString();
+        // $descriptionId = Str::orderedUuid()->toString();
 
         $courseId = null;
         if (count($matches) == 2) {
@@ -99,9 +100,9 @@ class AdminCourseController extends AdminController
         } else {
             $courseId = 'test';
         }
-        $descriptionId = request()->query('richContentId', $descriptionId);
+        // $descriptionId = request()->query('richContentId', $descriptionId);
 
-        $form->hidden('description', __('Description'))->default($descriptionId);
+        // $form->hidden('description', __('Description'))->default($descriptionId);
         $form->text('id', __('Id'))->default($courseId)->readonly();
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
