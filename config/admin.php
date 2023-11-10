@@ -410,7 +410,10 @@ return [
     'extensions' => [
         'ckeditor' => [
             'enable' => true,
-            'config' => [],
+            'config' => [
+                'filebrowserBrowseUrl' => '/file-manager/ckeditor',
+                'filebrowserImageBrowseUrl' => '/file-manager/ckeditor',
+            ],
         ],
     ],
 ];

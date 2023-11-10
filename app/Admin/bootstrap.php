@@ -6,8 +6,6 @@ use App\Admin\Extensions\Form\CustomImage;
 use App\Admin\Extensions\Form\HTMLEditor;
 use App\Admin\Extensions\Form\Select;
 use OpenAdmin\Admin\Form;
-use OpenAdmin\Admin\Form\Field\File;
-use OpenAdmin\Admin\Form\Field\Select as FieldSelect;
 
 /**
  * Open-admin - admin builder based on Laravel.
