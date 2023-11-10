@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Resources\BookResource;
 use Illuminate\Http\UploadedFile;
 use App\Http\Requests\StoreBookRequest;
@@ -51,6 +52,7 @@ class BookController extends Controller
             ], 403);
         }
         $validated = $request->validated();
+        $validated['book_author'] = $request->user()->id;
         $book = Book::create($validated);
 
         return [
@@ -163,9 +165,7 @@ class BookController extends Controller
                     $a4_test = false;
                 }
             }
-
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
 
@@ -197,12 +197,11 @@ class BookController extends Controller
     public function addCategory(Request $request)
     {
         try {
-                $categories = $request['categories'];
-                $book = Book::find($request['book']);
-                $book->categories()->sync($categories);
-                $book_categories = Book::find($request['book'])->categories;
-        }
-        catch (\Exception $e) {
+            $categories = $request['categories'];
+            $book = Book::find($request['book']);
+            $book->categories()->sync($categories);
+            $book_categories = Book::find($request['book'])->categories;
+        } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
 
@@ -215,67 +214,70 @@ class BookController extends Controller
     }
 
 
-    public function list(Request $request) {
+    public function list(Request $request)
+    {
         $per_page = intval($request->per_page) ?? 10;
         $books = Book::select('*');
-            try {
-                if ($request->search) {
-                    $search = $request->search;
-                    $books = $books->where(function ($query) use ($search) {
-                        $query->where('title', 'LIKE', '%' . $search . '%')
-                            ->orWhere('first_name', 'LIKE', '%' . $search . '%')
-                            ->orWhere('country', 'LIKE', '%' . $search . '%');
-                    });
-                }
-
-                if ($request->categories) {
-                    $categories = $request->categories;
-                    $books = $books->whereHas('categories', function ($query) use ($categories) {
-                        $query->whereIn('categories.id', $categories);
-                    });
-                }
-                $books = $books->paginate($per_page);
-
-
-
-                $response['data'] = BookResource::collection($books)->map(
-                    function($resource){
-                        return $resource->only(['id','title','description','country','first_name','categories']);
-                    }
-                );
-
-                if ($request->page > 1) {
-                    $count = $per_page * $request->page - $per_page + 1;
-                } else {
-                    $count = 1;
-                }
-
-                $response['pagination'] = [
-                    'total_number' => $books->total(),
-                    'count' => $count,
-                    'per_page' => $per_page,
-                    'current_page' => $books->currentPage(),
-                    'last_page' => $books->lastPage(),
-                ];
-
-                $response['message'] = "Data fetched.";
-                $response['error'] = null;
-                $response['status'] = 200;
-                return response()->json($response, $response['status']);
-            } catch (\Exception $e) {
-                return response()->json(['error' => $e->getMessage()], 400);
+        try {
+            if ($request->search) {
+                $search = $request->search;
+                $books = $books->where(function ($query) use ($search) {
+                    $query->where('title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('first_name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('country', 'LIKE', '%' . $search . '%');
+                });
             }
+
+            if ($request->categories) {
+                $categories = $request->categories;
+                $books = $books->whereHas('categories', function ($query) use ($categories) {
+                    $query->whereIn('categories.id', $categories);
+                });
+            }
+            $books = $books->paginate($per_page);
+
+
+
+            $response['data'] = BookResource::collection($books)->map(
+                function ($resource) {
+                    return $resource->only(['id', 'title', 'description', 'country', 'first_name', 'categories']);
+                }
+            );
+
+            if ($request->page > 1) {
+                $count = $per_page * $request->page - $per_page + 1;
+            } else {
+                $count = 1;
+            }
+
+            $response['pagination'] = [
+                'total_number' => $books->total(),
+                'count' => $count,
+                'per_page' => $per_page,
+                'current_page' => $books->currentPage(),
+                'last_page' => $books->lastPage(),
+            ];
+
+            $response['message'] = "Data fetched.";
+            $response['error'] = null;
+            $response['status'] = 200;
+            return response()->json($response, $response['status']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
         }
+    }
 
 
-    public function bestSeller(Request $request){
+    public function bestSeller(Request $request)
+    {
         $per_page = $request->per_page ?? 10;
         $query = Book::select('*');
         try {
-                $books = $query->where('is_best_seller','=','YES')->paginate($per_page);
+            $books = $query->where('is_best_seller', '=', 'YES')->paginate($per_page);
             $response['data'] = BookResource::collection($books)->map(
+
                 function($resource){
-                    return $resource->only(['id','title','description','country','first_name']);
+                    return $resource->only(['id','slug','title','description','country','first_name','categories','thumbnail']);
                 }
             );
             if ($request->page > 1) {
@@ -300,14 +302,15 @@ class BookController extends Controller
         }
     }
 
-    public function featured(Request $request){
+    public function featured(Request $request)
+    {
         $per_page = $request->per_page ?? 10;
         $query = Book::select('*');
         try {
-            $books = $query->where('is_featured','=','YES')->paginate($per_page);
+            $books = $query->where('is_featured', '=', 'YES')->paginate($per_page);
             $response['data'] = BookResource::collection($books)->map(
-                function($resource){
-                    return $resource->only(['id','title','description','country','first_name']);
+                function ($resource) {
+                    return $resource->only(['id','slug','title','description','country','first_name','categories','thumbnail']);
                 }
             );
             if ($request->page > 1) {
@@ -332,35 +335,25 @@ class BookController extends Controller
         }
     }
 
-    public function detail($id){
-        try{
-            $book = Book::where('id',$id)->first();
-            if($book){
+    public function detail($id)
+    {
+        try {
+            $book = Book::where('id', $id)->first();
+            if ($book) {
                 $response['data'] = new BookResource($book);
                 $response['message'] = 'Data Fetched';
                 $response['error'] = null;
                 $response['status'] = 200;
                 return response()->json($response, $response['status']);
-            }
-            else{
+            } else {
                 $response['data'] = null;
                 $response['message'] = null;
                 $response['error'] = 'Invalid id';
                 $response['status'] = 400;
                 return response()->json($response, $response['status']);
             }
-        }
-        catch(\Exception $e){
-            return response()->json(['error'=>$e->getMessage()],400);
-
-
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
-
-
-
 }
-
-
-
-
