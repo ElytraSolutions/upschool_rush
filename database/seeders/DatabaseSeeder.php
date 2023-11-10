@@ -29,11 +29,5 @@ class DatabaseSeeder extends Seeder
         Project::factory(30)->create();
         Book::factory(200)->create();
         $this->call(CategorySeeder::class);
-
-
-
     }
-
-
-
 }
