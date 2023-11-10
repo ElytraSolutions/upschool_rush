@@ -26,7 +26,7 @@ Route::post('/githubwebhook', function (Request $request) {
     if (strcmp($hash, $request->header('X-Hub-Signature')) == 0) {
         $root_path = base_path();
         try {
-            $gitResult = Process::path($root_path)->run('git pull');
+            $gitResult = Process::path($root_path)->run('git config --global --add safe.directory /var/www/html && git pull');
             if (!$gitResult->successful()) {
                 $output = $gitResult->output();
                 $error = $gitResult->errorOutput();
