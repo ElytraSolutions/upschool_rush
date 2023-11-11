@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Form\NestedForm;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 
@@ -85,7 +86,7 @@ class AdminCourseController extends AdminController
         $form = new Form(new Course());
 
         preg_match('/courses\/([^\/]*)\/edit$/', URL::current(), $matches);
-        $descriptionId = Str::orderedUuid()->toString();
+        // $descriptionId = Str::orderedUuid()->toString();
 
         $courseId = null;
         if (count($matches) == 2) {
@@ -93,15 +94,15 @@ class AdminCourseController extends AdminController
         }
         if ($courseId != null) {
             $course = Course::find($courseId);
-            if ($course->description) {
-                $descriptionId = $course->description;
-            }
+            // if ($course->description) {
+            //     $descriptionId = $course->description;
+            // }
         } else {
             $courseId = 'test';
         }
-        $descriptionId = request()->query('richContentId', $descriptionId);
+        // $descriptionId = request()->query('richContentId', $descriptionId);
 
-        $form->hidden('description', __('Description'))->default($descriptionId);
+        // $form->hidden('description', __('Description'))->default($descriptionId);
         $form->text('id', __('Id'))->default($courseId)->readonly();
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
@@ -111,7 +112,7 @@ class AdminCourseController extends AdminController
         $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('tagline', __('Tagline'));
         $form->image('thumbnail', __('Thumbnail'))->uniqueName()->move('courseThumbnails');
-        $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $descriptionId, 'queryParam' => 'richContentId']);
+        // $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $descriptionId, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
 
         // $form->customHasMany('chapters', function (Form\NestedForm $nestedForm) {

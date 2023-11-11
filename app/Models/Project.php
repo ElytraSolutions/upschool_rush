@@ -52,4 +52,9 @@ class Project extends Model
     {
         $this->attributes['sustainability_details'] = json_encode(array_values($value));
     }
+
+    public function charity()
+    {
+        return $this->belongsTo(Charity::class);
+    }
 }

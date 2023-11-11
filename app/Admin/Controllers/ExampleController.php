@@ -7,14 +7,14 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 
-class ExampleController extends AdminController
+class MultimediaController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = 'Example controller';
+    protected $title = 'Multimedia controller';
 
     /**
      * Make a grid builder.
