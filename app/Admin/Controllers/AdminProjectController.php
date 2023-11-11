@@ -48,11 +48,7 @@ class AdminProjectController extends AdminController
         $show = new Show(Project::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
         $show->field('name', __('Name'));
-        $show->field('intro', __('Intro'));
-        $show->field('description', __('Description'));
         $show->field('active', __('Active'));
 
         return $show;
@@ -68,8 +64,34 @@ class AdminProjectController extends AdminController
         $form = new Form(new Project());
 
         $form->text('name', __('Name'));
-        $form->text('intro', __('Intro'));
-        $form->textarea('description', __('Description'));
+        $form->select('charity_id', __('Charity'))->options(\App\Models\Charity::all()->pluck('name', 'id'));
+        $form->ckeditor('intro', __('Intro'));
+        $form->ckeditor('description', __('Description'));
+        $form->text('location', __('Location'));
+        $form->text('genre', __('Genre'));
+        $form->image('image', __('Image'));
+        $form->image('thumbnail', __('Thumbnail'));
+        $form->table('sustainability_details', __('Sustainability details'), function ($form) {
+            $form->select('Goal')->options([
+                '/sustainabilityGoals/goal1.png' => 'No Poverty',
+                '/sustainabilityGoals/goal2.png' => 'Zero Hunger',
+                '/sustainabilityGoals/goal3.png' => 'Good Health and Well-being',
+                '/sustainabilityGoals/goal4.png' => 'Quality Education',
+                '/sustainabilityGoals/goal5.png' => 'Gender Equality',
+                '/sustainabilityGoals/goal6.png' => 'Clean Water and Sanitation',
+                '/sustainabilityGoals/goal7.png' => 'Affordable and Clean Energy',
+                '/sustainabilityGoals/goal8.png' => 'Decent Work and Economic Growth',
+                '/sustainabilityGoals/goal9.png' => 'Industry, Innovation and Infrastructure',
+                '/sustainabilityGoals/goal10.png' => 'Reduced Inequality',
+                '/sustainabilityGoals/goal11.png' => 'Sustainable Cities and Communities',
+                '/sustainabilityGoals/goal12.png' => 'Responsible Consumption and Production',
+                '/sustainabilityGoals/goal13.png' => 'Climate Action',
+                '/sustainabilityGoals/goal14.png' => 'Life Below Water',
+                '/sustainabilityGoals/goal15.png' => 'Life on Land',
+                '/sustainabilityGoals/goal16.png' => 'Peace and Justice Strong Institutions',
+                '/sustainabilityGoals/goal17.png' => 'Partnerships to achieve the Goal',
+            ]);
+        });
         $form->switch('active', __('Active'))->default(1);
 
         return $form;

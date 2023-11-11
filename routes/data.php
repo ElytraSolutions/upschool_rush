@@ -2,6 +2,7 @@
 
 namespace App\Routes\Data;
 
+use App\Http\Controllers\BulkRegistrationController;
 use App\Http\Controllers\CourseEnrollmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,8 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RichContentsController;
 use App\CustomErrors\Errors;
+use App\Http\Controllers\CharityController;
+use App\Http\Controllers\TeacherStudentsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +24,7 @@ use Symfony\Component\Process\Process;
 
 
 Route::get('/books', [BookController::class, 'index']);
-Route::get('/books/{book}', [BookController::class, 'show'])->missing(Errors::missing());
+//Route::get('/books/{book}', [BookController::class, 'show'])->missing(Errors::missing());
 Route::post('/books/validate', [BookController::class, 'validateData']);
 Route::post('/books/add-category', [BookController::class, 'addCategory']);
 
@@ -30,8 +33,11 @@ Route::post('/books/add-category', [BookController::class, 'addCategory']);
 //testing start
 //Note :: without validation of Book Page
 
-Route::post('/books/list', [BookController::class, 'list']);
-Route::post('/books/filter-by-category', [BookController::class, 'filterByCategory']);
+Route::get('/books/list', [BookController::class, 'list']);
+Route::get('/books/best-sellers', [BookController::class, 'bestSeller']);
+Route::get('/books/featured', [BookController::class, 'featured']);
+Route::get('/books/detail/{id}', [BookController::class, 'detail']);
+//Route::post('/books/filter-by-category', [BookController::class, 'filterByCategory']);
 //testing end
 
 Route::get('/courseCategories', [CourseCategoryController::class, 'index']);
@@ -49,12 +55,23 @@ Route::get('/chapters/{chapter:slug}/lessons', [ChapterController::class, 'lesso
 Route::get('/lessons', [LessonController::class, 'index']);
 Route::get('/lessons/{lesson:slug}', [LessonController::class, 'show'])->missing(Errors::missing());
 
+Route::get('/charities', [CharityController::class, 'index']);
+Route::get('/charities/{charity:slug}', [CharityController::class, 'show'])->missing(Errors::missing());
+Route::get('/charities/{charity:slug}/projects', [CharityController::class, 'projects'])->missing(Errors::missing());
+
 Route::get('/projects', [ProjectController::class, 'index']);
-Route::get('/projects/{project}', [ProjectController::class, 'show'])->missing(Errors::missing());
+Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->missing(Errors::missing());
 
 Route::get('/richContents', [RichContentsController::class, 'index']);
 Route::get('/richContents/{richContent}', [RichContentsController::class, 'show'])->missing(Errors::missing());
 
+
+Route::get('/userTypes', function () {
+    return [
+        'success' => true,
+        'data' => \App\Models\UserType::all(),
+    ];
+});
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->get('/users/{user}', [UserController::class, 'show'])->missing(Errors::missing());
@@ -70,7 +87,6 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/books', [BookController::class, 'store']);
     $route->put('/books/{book}', [BookController::class, 'update'])->missing(Errors::missing());
     $route->delete('/books/{book}', [BookController::class, 'destroy'])->missing(Errors::missing());
-
     $route->post('/books/validate', [BookController::class, 'validateData'])->missing(Errors::missing());
 });
 
@@ -126,4 +142,16 @@ Route::get('/images/{path}', function (Request $request) {
     $file = Storage::disk('s3')->get($path);
     $type = Storage::disk('s3')->mimeType($path);
     return response($file, 200)->header('Content-Type', $type);
+});
+
+
+Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->get('/teacher/students', [TeacherStudentsController::class, 'index']);
+    $route->post('/teacher/addStudent', [TeacherStudentsController::class, 'store']);
+    $route->post('/teacher/inviteStudent', [TeacherStudentsController::class, 'inviteStudent']);
+});
+
+Route::middleware(['auth:sanctum'])->group(function ($route) {
+    $route->get('/bulkRegistrations/{bulkRegistration}', [BulkRegistrationController::class, 'show']);
+    $route->post('/bulkRegistrations', [BulkRegistrationController::class, 'store']);
 });

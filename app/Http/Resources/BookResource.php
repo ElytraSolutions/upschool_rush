@@ -33,8 +33,10 @@ class BookResource extends JsonResource
             'canva_link' => $this->canva_link,
             'active' => $this->active,
             'categories'=>CategoryResource::collection($this->categories),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'project'=>new ProjectResource($this->project),
+            'thumbnail' =>$this->thumbnail,
+//            'created_at' => $this->created_at,
+//            'updated_at' => $this->updated_at,
         ];
     }
 

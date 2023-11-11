@@ -16,6 +16,11 @@ class Project extends Model
         'name',
         'intro',
         'description',
+        'location',
+        'genre',
+        'image',
+        'thumbnail',
+        'sustainability_details',
         'active',
     ];
 
@@ -38,8 +43,18 @@ class Project extends Model
         ];
     }
 
+    public function getSustainabilityDetailsAttribute($value)
+    {
+        return array_values(json_decode($value, true) ?: []);
+    }
 
-    public function books(){
-        return $this->belongsToMany(Book::class,'book_projects','project_id','book_id');
+    public function setSustainabilityDetailsAttribute($value)
+    {
+        $this->attributes['sustainability_details'] = json_encode(array_values($value));
+    }
+
+    public function charity()
+    {
+        return $this->belongsTo(Charity::class);
     }
 }

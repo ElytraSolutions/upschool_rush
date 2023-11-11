@@ -23,6 +23,7 @@ class Course extends Model
         'image',
         'theme',
         'description',
+        'text_description',
         'active',
         'course_category_id',
         'tagline',
@@ -67,5 +68,10 @@ class Course extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'course_enrollments');
+    }
+
+    public function description()
+    {
+        return $this->hasOne(CourseDescription::class);
     }
 }

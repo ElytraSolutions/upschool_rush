@@ -90,49 +90,74 @@ class AdminLessonSectionContentsController extends AdminController
             'video' => 'Video',
             'flipbook' => 'Flipbook',
         ]);
-        $form->select('source', __('Source'))->options([
-            'local' => 'Local',
-            'url' => 'URL',
-        ]);
-        $form->customFile('content', __('Content File'));
-        // ->when('=', 'image', function (Form $form) {
-        //     $form->select('source', __('Source'))->options([
+        $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
+        $form->image('image_content', __('Image Content'));
+        $form->url('video_content', __('Video Content'));
+        $form->file('flipbook_content', __('Flipbook Content'));
+        // ->when('image', function (Form $form) {
+        //     $form->select('image_source', __('Source'))->options([
         //         'local' => 'Local',
         //         'url' => 'URL',
-        //     ])->default('local')->when('=', 'local', function (Form $form) {
-        //         $form->file('content', __('Content File'));
-        //     })->when('=', 'url', function (Form $form) {
-        //         $form->url('content', __('Content URL'));
+        //     ])->when('local', function (Form $form) {
+        //         $form->image('local_image', __('Content File'));
+        //     })->when('url', function (Form $form) {
+        //         $form->url('image_url', __('Content URL'));
         //     });
-        // })->when('=', 'video', function (Form $form) {
+        // })->when('flipbook', function (Form $form) {
+        //     $form->select('flipbook_source', __('Source'))->options([
+        //         'local' => 'Local',
+        //         'url' => 'URL',
+        //     ])->when('local', function (Form $form) {
+        //         $form->file('local_flipbook', __('Content File'));
+        //     })->when('url', function (Form $form) {
+        //         $form->url('url_flipbook', __('Content URL'));
+        //     });
+        // })->when('video', function (Form $form) {
         //     $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
-        //     $form->select('source', __('Source'))->options([
-        //         'local' => 'Local',
-        //         'url' => 'URL',
-        //     ])->default('local')->when('=', 'local', function (Form $form) {
-        //         $form->image('content', __('Content File'));
-        //     })->when('=', 'url', function (Form $form) {
-        //         $form->url('content', __('Content URL'));
-        //     });
-        // })->when('=', 'flipbook', function (Form $form) {
-        //     $form->select('source', __('Source'))->options([
-        //         'local' => 'Local',
-        //         'url' => 'URL',
-        //     ])->default('local')->when('=', 'local', function (Form $form) {
-        //         $form->file('content', __('Content File'));
-        //     })->when('=', 'url', function (Form $form) {
-        //         $form->url('content', __('Content URL'));
-        //     });
+        //     $form->url('video_url', __('Content URL'));
         // });
+        $form->file('content', __('Content'));
+
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
 
-
         $form->saving(function (Form $form) {
-            $form->ignore(['course_id', 'chapter_id', 'lesson_id']);
+            // if ($form->type == 'image') {
+            //     if ($form->image_source == 'local') {
+            //         $form->content = clone $form->local_image;
+            //     } else if ($form->image_source == 'url') {
+            //         $form->content = $form->image_url;
+            //     }
+            // } else if ($form->type == 'flipbook') {
+            //     if ($form->flipbook_source == 'local') {
+            //         $form->content = $form->local_flipbook;
+            //     } else if ($form->flipbook_source == 'url') {
+            //         $form->content = $form->url_flipbook;
+            //     }
+            // } else if ($form->type == 'video') {
+            //     $form->content = $form->video_url;
+            // }
+            // dd($form);
+            // $form->ignore(['course_id', 'chapter_id', 'lesson_id', 'image_source', 'local_image', 'image_url', 'flipbook_source', 'local_flipbook', 'url_flipbook1', 'video_url',]);
         });
         $form->submitted(function (Form $form) {
+            // if ($form->type == 'image') {
+            //     if ($form->image_source == 'local') {
+            //         $form->content = clone $form->local_image;
+            //     } else if ($form->image_source == 'url') {
+            //         $form->content = $form->image_url;
+            //     }
+            // } else if ($form->type == 'flipbook') {
+            //     if ($form->flipbook_source == 'local') {
+            //         $form->content = $form->local_flipbook;
+            //     } else if ($form->flipbook_source == 'url') {
+            //         $form->content = $form->url_flipbook;
+            //     }
+            // } else if ($form->type == 'video') {
+            //     $form->content = $form->video_url;
+            // }
             $form->ignore(['course_id', 'chapter_id', 'lesson_id']);
+            // $form->ignore(['course_id', 'chapter_id', 'lesson_id', 'image_source', 'local_image', 'image_url', 'flipbook_source', 'local_flipbook', 'url_flipbook', 'video_url',]);
         });
 
         return $form;

@@ -14,12 +14,6 @@ class CharityController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->user()->cannot('viewAny', Charity::class)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view charities.',
-            ], 403);
-        }
         return [
             'success' => true,
             'data' => Charity::all(),
@@ -56,14 +50,8 @@ class CharityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Charity $charity)
+    public function show(Request $request, Charity $charity)
     {
-        if (auth()->user()->cannot('view', $charity)) {
-            return response([
-                'success' => false,
-                'message' => 'You are not authorized to view this charity.',
-            ], 403);
-        }
         return [
             'success' => true,
             'data' => $charity,
@@ -101,9 +89,9 @@ class CharityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Charity $charity)
+    public function destroy(Request $request, Charity $charity)
     {
-        if (auth()->user()->cannot('delete', $charity)) {
+        if ($request->user()->cannot('delete', $charity)) {
             return response([
                 'success' => false,
                 'message' => 'You are not authorized to delete this charity.',
@@ -113,6 +101,14 @@ class CharityController extends Controller
         return [
             'success' => true,
             'data' => $charity,
+        ];
+    }
+
+    public function projects(Request $request, Charity $charity)
+    {
+        return [
+            'success' => true,
+            'data' => $charity->projects,
         ];
     }
 }

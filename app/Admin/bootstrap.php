@@ -6,8 +6,6 @@ use App\Admin\Extensions\Form\CustomImage;
 use App\Admin\Extensions\Form\HTMLEditor;
 use App\Admin\Extensions\Form\Select;
 use OpenAdmin\Admin\Form;
-use OpenAdmin\Admin\Form\Field\File;
-use OpenAdmin\Admin\Form\Field\Select as FieldSelect;
 
 /**
  * Open-admin - admin builder based on Laravel.
@@ -32,4 +30,4 @@ Form::extend('customSelect', Select::class);
 Form::extend('customHasMany', CustomHasMany::class);
 Form::extend('customFile', CustomFile::class);
 Form::extend('customImage', CustomImage::class);
-Form::forget(['map', 'editor']);
+Form::forget(['map']);
