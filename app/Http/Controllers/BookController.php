@@ -8,6 +8,7 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Smalot\PdfParser\Parser;
 
@@ -276,8 +277,8 @@ class BookController extends Controller
             $books = $query->where('is_best_seller', '=', 'YES')->paginate($per_page);
             $response['data'] = BookResource::collection($books)->map(
 
-                function($resource){
-                    return $resource->only(['id','slug','title','description','country','first_name','categories','thumbnail']);
+                function ($resource) {
+                    return $resource->only(['id', 'slug', 'title', 'description', 'country', 'first_name', 'categories', 'thumbnail']);
                 }
             );
             if ($request->page > 1) {
@@ -310,7 +311,7 @@ class BookController extends Controller
             $books = $query->where('is_featured', '=', 'YES')->paginate($per_page);
             $response['data'] = BookResource::collection($books)->map(
                 function ($resource) {
-                    return $resource->only(['id','slug','title','description','country','first_name','categories','thumbnail']);
+                    return $resource->only(['id', 'slug', 'title', 'description', 'country', 'first_name', 'categories', 'thumbnail']);
                 }
             );
             if ($request->page > 1) {
@@ -352,6 +353,65 @@ class BookController extends Controller
                 $response['status'] = 400;
                 return response()->json($response, $response['status']);
             }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    protected function resolveQuery($filter)
+    {
+        $query = Book::query();
+        if (!$filter) {
+            return $query;
+        }
+        if (array_key_exists('title', $filter) && $filter['title']) {
+            $query = $query->where('title', 'LIKE', '%' . $filter['title'] . '%');
+        }
+        if (array_key_exists('section', $filter) && $filter['section']) {
+            if ($filter['section'] == 'best_seller') {
+                $query = $query->where('is_best_seller', '=', 'YES');
+            } elseif ($filter['section'] == 'featured') {
+                $query = $query->where('is_featured', '=', 'YES');
+            }
+        }
+        if (array_key_exists('category', $filter) && $filter['category']) {
+            $query = $query->whereHas('categories', function ($q) use ($filter) {
+                $q->whereIn('categories.id', $filter['category']);
+            });
+        }
+        return $query;
+    }
+
+    public function filter(Request $request)
+    {
+        $filters = $request->filters;
+        $per_page = $request->per_page ?? 10;
+        $query = $this->resolveQuery($filters);
+        try {
+            $books = $query->paginate($per_page);
+            $response['data'] = BookResource::collection($books);
+            // ->map(
+            // function ($resource) {
+            // return $resource->only(['id', 'slug', 'title', 'description', 'country', 'first_name', 'thumbnail']);
+            // }
+            // );
+            if ($request->page > 1) {
+                $count = $per_page * $request->page - $per_page + 1;
+            } else {
+                $count = 1;
+            }
+            $response['pagination'] = [
+                'total_number' => $books->total(),
+                'count' => $count,
+                'per_page' => $per_page,
+                'current_page' => $books->currentPage(),
+                'last_page' => $books->lastPage(),
+            ];
+
+            $response['message'] = "Data fetched.";
+            $response['error'] = null;
+            $response['status'] = 200;
+            return response()->json($response, $response['status']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
