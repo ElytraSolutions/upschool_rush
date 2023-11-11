@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('charities', function (Blueprint $table) {
-            $table->dropPrimary();
             $table->uuid('id')->primary()->change();
         });
         Schema::table('projects', function (Blueprint $table) {
@@ -30,7 +29,6 @@ return new class extends Migration
         });
         Schema::table('charities', function (Blueprint $table) {
             $table->dropPrimary();
-            $table->string('slug')->primary()->change();
         });
     }
 };
