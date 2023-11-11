@@ -169,6 +169,13 @@ class AdminAll extends Seeder
             ],
             [
                 'parent_id' => $manageMenu->id,
+                'order'     => 42,
+                'title'     => 'Charities',
+                'icon'      => 'icon-edit',
+                'uri'       => '/charities',
+            ],
+            [
+                'parent_id' => $manageMenu->id,
                 'order'     => 45,
                 'title'     => 'Projects',
                 'icon'      => 'icon-edit',

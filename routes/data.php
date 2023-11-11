@@ -57,6 +57,7 @@ Route::get('/lessons/{lesson:slug}', [LessonController::class, 'show'])->missing
 
 Route::get('/charities', [CharityController::class, 'index']);
 Route::get('/charities/{charity:slug}', [CharityController::class, 'show'])->missing(Errors::missing());
+Route::get('/charities/{charity:slug}/projects', [CharityController::class, 'projects'])->missing(Errors::missing());
 
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->missing(Errors::missing());

@@ -2,6 +2,7 @@
 
 use App\Models\Lesson;
 use App\Models\RichContent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,16 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'auth'], function() {
-    require __DIR__.'/auth.php';
+Route::group(['prefix' => 'auth'], function () {
+    require __DIR__ . '/auth.php';
 });
 
-Route::group(['prefix' => 'data'], function() {
-    require __DIR__.'/data.php';
+Route::group(['prefix' => 'data'], function () {
+    require __DIR__ . '/data.php';
 });
 
-Route::get('/richContentView/{richContent}', function(RichContent $richContent) {
+Route::get('/richContentView/{richContent}', function (RichContent $richContent) {
     return view('richContentView', ['content' => $richContent]);
+});
+
+Route::get('/filemanager/view', function (Request $request) {
+    return view('filemanager');
 });
 
 Route::get('/{any?}', function (String $any = null) {
