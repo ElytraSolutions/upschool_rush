@@ -1,1 +1,11 @@
-﻿CKEDITOR.plugins.setLang("colordialog","hi",{clear:"Clear",highlight:"Highlight",options:"Color Options",selected:"Selected Color",title:"Select color"});
+/*
+Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+*/
+CKEDITOR.plugins.setLang( 'colordialog', 'hi', {
+	clear: 'Clear', // MISSING
+	highlight: 'Highlight', // MISSING
+	options: 'Color Options', // MISSING
+	selected: 'Selected Color', // MISSING
+	title: 'Select color' // MISSING
+} );

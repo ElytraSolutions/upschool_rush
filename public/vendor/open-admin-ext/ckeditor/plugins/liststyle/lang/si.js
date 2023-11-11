@@ -1,1 +1,21 @@
-﻿CKEDITOR.plugins.setLang("liststyle","si",{bulletedTitle:"Bulleted List Properties",circle:"Circle",decimal:"Decimal (1, 2, 3, etc.)",disc:"Disc",lowerAlpha:"Lower Alpha (a, b, c, d, e, etc.)",lowerRoman:"Lower Roman (i, ii, iii, iv, v, etc.)",none:"කිසිවක්ම නොවේ",notset:"\x3cයොදා \x3e",numberedTitle:"Numbered List Properties",square:"Square",start:"Start",type:"වර්ගය",upperAlpha:"Upper Alpha (A, B, C, D, E, etc.)",upperRoman:"Upper Roman (I, II, III, IV, V, etc.)",validateStartNumber:"List start number must be a whole number."});
+/*
+Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+*/
+CKEDITOR.plugins.setLang( 'liststyle', 'si', {
+	bulletedTitle: 'Bulleted List Properties', // MISSING
+	circle: 'Circle', // MISSING
+	decimal: 'Decimal (1, 2, 3, etc.)', // MISSING
+	disc: 'Disc', // MISSING
+	lowerAlpha: 'Lower Alpha (a, b, c, d, e, etc.)', // MISSING
+	lowerRoman: 'Lower Roman (i, ii, iii, iv, v, etc.)', // MISSING
+	none: 'කිසිවක්ම නොවේ',
+	notset: '<යොදා >',
+	numberedTitle: 'Numbered List Properties', // MISSING
+	square: 'Square', // MISSING
+	start: 'Start', // MISSING
+	type: 'වර්ගය',
+	upperAlpha: 'Upper Alpha (A, B, C, D, E, etc.)', // MISSING
+	upperRoman: 'Upper Roman (I, II, III, IV, V, etc.)', // MISSING
+	validateStartNumber: 'List start number must be a whole number.' // MISSING
+} );

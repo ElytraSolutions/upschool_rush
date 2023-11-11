@@ -65,7 +65,7 @@ class CourseController extends Controller
         // Public route
         return [
             'success' => true,
-            'data' => $course,
+            'data' => $course->load(['description']),
         ];
     }
 
@@ -241,6 +241,17 @@ class CourseController extends Controller
         return [
             'success' => true,
             'data' => $course->chapters->lessons,
+        ];
+    }
+
+    /**
+     * Return resource's description.
+     */
+    public function description(Request $request, Course $course)
+    {
+        return [
+            'success' => true,
+            'data' => $course->description,
         ];
     }
 }
