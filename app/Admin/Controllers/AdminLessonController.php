@@ -80,9 +80,9 @@ class AdminLessonController extends AdminController
         $form = new Form(new Lesson());
 
         $form->tab('Lesson Data', function (Form $form) {
-            $form->text('name', __('Name'));
             $form->select('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
             $form->select('chapter_id', __('Chapters'));
+            $form->text('name', __('Name'));
             $form->number('priority', __('Priority'))->default(1);
             $form->switch('active', __('Active'))->default(1);
         });
