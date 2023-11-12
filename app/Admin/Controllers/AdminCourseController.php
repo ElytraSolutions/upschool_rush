@@ -94,9 +94,9 @@ class AdminCourseController extends AdminController
         }
         if ($courseId != null) {
             $course = Course::find($courseId);
-            if ($course->description) {
-                $descriptionId = $course->description;
-            }
+            // if ($course->description) {
+            //     $descriptionId = $course->description;
+            // }
         } else {
             $courseId = 'test';
         }
@@ -112,7 +112,7 @@ class AdminCourseController extends AdminController
         $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('tagline', __('Tagline'));
         $form->image('thumbnail', __('Thumbnail'))->uniqueName()->move('courseThumbnails');
-        $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $descriptionId, 'queryParam' => 'richContentId']);
+        // $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $descriptionId, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
 
         // $form->customHasMany('chapters', function (Form\NestedForm $nestedForm) {

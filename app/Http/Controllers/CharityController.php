@@ -103,4 +103,12 @@ class CharityController extends Controller
             'data' => $charity,
         ];
     }
+
+    public function projects(Request $request, Charity $charity)
+    {
+        return [
+            'success' => true,
+            'data' => $charity->projects,
+        ];
+    }
 }
