@@ -107,11 +107,11 @@ class AdminCourseController extends AdminController
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
         $form->text('starredText', __('StarredText'));
+        $form->color('theme', __('Theme Color'))->default('#F0FFF0');
+        $form->image('thumbnail', __('Thumbnail'))->uniqueName()->move('courseThumbnails');
         $form->image('image', __('Image'))->uniqueName()->move('courseImages');
-        $form->color('theme', __('Theme'))->default('#F0FFF0');
         $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('tagline', __('Tagline'));
-        $form->image('thumbnail', __('Thumbnail'))->uniqueName()->move('courseThumbnails');
         // $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $descriptionId, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
 

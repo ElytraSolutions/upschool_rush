@@ -34,8 +34,9 @@ class AdminLessonSectionController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
-        $grid->column('slug', __('Slug'));
-        $grid->column('lessons.name', __('Lesson'));
+        $grid->column('lesson.chapter.course.name', __('Course'));
+        $grid->column('lesson.chapter.name', __('Chapter'));
+        $grid->column('lesson.name', __('Lesson'));
         $grid->column('priority', __('Priority'));
         $grid->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';
@@ -82,10 +83,10 @@ class AdminLessonSectionController extends AdminController
     {
         $form = new Form(new LessonSection());
 
-        $form->text('name', __('Name'));
         $form->customSelect('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
         $form->customSelect('chapter_id', __('Chapters'))->load('lesson_id', '/admin/api/lessons/byChapterId');
         $form->customSelect('lesson_id', __('Lessons'));
+        $form->text('name', __('Name'));
         $form->textarea('teachers_note', __('Teachers Notes'));
         $form->ckeditor('text', __('Text'));
         $form->number('priority', __('Priority'))->default(1);
