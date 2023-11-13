@@ -89,7 +89,6 @@ class AdminBookController extends AdminController
         $form = new Form(new Book());
 
         $form->text('title', __('Title'));
-        $form->text('slug', __('Slug'));
         $form->textarea('description', __('Description'));
         $form->text('teacher_email', __('Teacher email'));
         $form->text('first_name', __('First name'));

@@ -28,7 +28,7 @@ class AdminCourseDescriptionController extends AdminController
         $grid = new Grid(new CourseDescription());
 
         $grid->column('id', __('Description id'));
-        $grid->column('courses.name', __('Course'));
+        $grid->column('course.name', __('Course'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 

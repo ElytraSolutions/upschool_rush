@@ -62,10 +62,6 @@ class AdminCourseController extends AdminController
         $show->field('intro', __('Intro'));
         $show->field('tagline', __('Tagline'));
         $show->field('starredText', __('StarredText'));
-        $show->field('description', __('Description'))->unescape()->as(function ($description) {
-            $baseUrl = URL::to('/richContentView/' . $description);
-            return '<a href="' . $baseUrl . '" target="_blank">View Description</a>';
-        });
         $show->field('image', __('Image'))->image();
         $show->field('thubmnail', __('Thubmnail'));
         $show->field('theme', __('Theme'));
