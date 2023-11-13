@@ -194,7 +194,10 @@ class CourseController extends Controller
         $validated = $request->validate($rules);
         $data = CourseEnrollment::create($validated);
         $firstChapter = $course->chapters->first();
-        $firstLesson = $firstChapter->lessons->first();
+        $firstLesson = null;
+        if ($firstChapter) {
+            $firstLesson = $firstChapter->lessons->first();
+        }
         return [
             'success' => true,
             'data' => [
