@@ -7,6 +7,8 @@ use App\Models\Chapter;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\LessonSection;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
@@ -34,9 +36,9 @@ class AdminLessonSectionController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
-        $grid->column('lesson.chapter.course.name', __('Course'));
-        $grid->column('lesson.chapter.name', __('Chapter'));
-        $grid->column('lesson.name', __('Lesson'));
+        $grid->column('lessons.chapter.course.name', __('Course'));
+        $grid->column('lessons.chapter.name', __('Chapter'));
+        $grid->column('lessons.name', __('Lesson'));
         $grid->column('priority', __('Priority'));
         $grid->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';
@@ -159,5 +161,16 @@ class AdminLessonSectionController extends AdminController
             'active' => false,
         ]);
         return ['lessonId' => $lesson->id];
+    }
+
+    public function byLessonId(Request $request)
+    {
+        $lesson_id = $request->get('query');
+        $lesson = Lesson::find($lesson_id);
+        if (!$lesson) {
+            return response()->json(['message' => 'Could not find lesson'], 404);
+        }
+        $lessonSections = LessonSection::where('lesson_id', $lesson_id)->get(['id', DB::raw('name as text')]);
+        return (new Response($lessonSections))->header('Content-Type', 'application/json');
     }
 }

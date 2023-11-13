@@ -84,8 +84,8 @@ class AdminLessonSectionContentsController extends AdminController
 
         $form->customSelect('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
         $form->customSelect('chapter_id', __('Chapters'))->load('lesson_id', '/admin/api/lessons/byChapterId');
-        $form->customSelect('lesson_id', __('Lessons'));
-        $form->customSelect('lesson_section_id', __('Lesson Sections'))->options(LessonSection::all()->pluck('name', 'id'));
+        $form->customSelect('lesson_id', __('Lessons'))->load('lesson_section_id', '/admin/api/lesson-sections/byLessonId');
+        $form->customSelect('lesson_section_id', __('Lesson Sections'));
         $form->select('type', 'Type')->options([
             'image' => 'Image',
             'video' => 'Video',
@@ -157,7 +157,7 @@ class AdminLessonSectionContentsController extends AdminController
             // } else if ($form->type == 'video') {
             //     $form->content = $form->video_url;
             // }
-            // $form->ignore(['course_id', 'chapter_id', 'lesson_id']);
+            $form->ignore(['course_id', 'chapter_id', 'lesson_id']);
             // $form->ignore(['course_id', 'chapter_id', 'lesson_id', 'image_source', 'local_image', 'image_url', 'flipbook_source', 'local_flipbook', 'url_flipbook', 'video_url',]);
         });
 
