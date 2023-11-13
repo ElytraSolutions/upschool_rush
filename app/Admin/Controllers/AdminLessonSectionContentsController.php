@@ -116,7 +116,7 @@ class AdminLessonSectionContentsController extends AdminController
         //     $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
         //     $form->url('video_url', __('Content URL'));
         // });
-        $form->file('content', __('Content'));
+        // $form->file('content', __('Content'));
 
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
