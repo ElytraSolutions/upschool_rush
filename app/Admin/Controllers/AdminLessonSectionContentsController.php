@@ -34,9 +34,11 @@ class AdminLessonSectionContentsController extends AdminController
         $grid = new Grid(new LessonSectionContent());
 
         $grid->column('id', __('Id'));
+        $grid->column('lessonSection.lesson.chapter.course.name', __('Course'));
+        $grid->column('lessonSection.lesson.chapter.name', __('Chapter'));
+        $grid->column('lessonSection.lesson.name', __('Lesson'));
         $grid->column('lessonSection.name', __('Lesson Section'));
         $grid->column('type', __('Type'));
-        $grid->column('content', __('Content'));
         $grid->column('priority', __('Priority'));
         $grid->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';
@@ -61,7 +63,6 @@ class AdminLessonSectionContentsController extends AdminController
         $show->column('lesson_section.name', __('Lesson Section'));
         $show->column('priority', __('Priority'));
         $show->column('type', __('Type'));
-        $show->column('content', __('Content'));
         $show->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';
         });
@@ -156,7 +157,7 @@ class AdminLessonSectionContentsController extends AdminController
             // } else if ($form->type == 'video') {
             //     $form->content = $form->video_url;
             // }
-            $form->ignore(['course_id', 'chapter_id', 'lesson_id']);
+            // $form->ignore(['course_id', 'chapter_id', 'lesson_id']);
             // $form->ignore(['course_id', 'chapter_id', 'lesson_id', 'image_source', 'local_image', 'image_url', 'flipbook_source', 'local_flipbook', 'url_flipbook', 'video_url',]);
         });
 
