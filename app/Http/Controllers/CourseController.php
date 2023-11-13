@@ -135,8 +135,12 @@ class CourseController extends Controller
             ->where('user_id', $request->user()->getAttribute('id'))
             ->first();
         $firstChapter = $course->chapters->sortBy('priority')->first();
-        $firstLesson = $firstChapter->lessons->sortBy('priority')->first();
-        $lastCompletedLesson = $request->user()->lastCompletedLesson($course);
+        $firstLesson = null;
+        $lastCompletedLesson = null;
+        if ($firstChapter) {
+            $firstLesson = $firstChapter->lessons->sortBy('priority')->first();
+            $lastCompletedLesson = $request->user()->lastCompletedLesson($course);
+        }
         $totalLessons = $course->lessons->count();
         $totalCompletedLessonCount = DB::table('lesson_completions')->where('user_id', '=', $request->user()->getAttribute('id'))
             ->join('lessons', 'lesson_completions.lesson_id', '=', 'lessons.id')
