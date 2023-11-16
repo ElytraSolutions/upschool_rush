@@ -62,16 +62,35 @@ class AdminCourseController extends AdminController
         $show->field('intro', __('Intro'));
         $show->field('tagline', __('Tagline'));
         $show->field('starredText', __('StarredText'));
-        $show->field('description', __('Description'))->unescape()->as(function ($description) {
-            $baseUrl = URL::to('/richContentView/' . $description);
-            return '<a href="' . $baseUrl . '" target="_blank">View Description</a>';
-        });
         $show->field('image', __('Image'))->image();
         $show->field('thubmnail', __('Thubmnail'));
         $show->field('theme', __('Theme'));
         $show->field('active', __('Active'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
+        $show->relation('course_description', __('Description'), function ($show) {
+            $show->setResource('/admin/course-descriptions');
+            $show->field('id', __('Id'));
+            $show->field('title', __('Title'));
+            $show->field('subtitle', __('Subtitle'));
+            $show->field('description', __('Description'));
+            $show->field('testimonials', __('Testimonials'));
+            $show->field('objectives', __('Objectives'));
+            $show->field('steps', __('Steps'))->json();
+            $show->field('faq', __('Faq'))->json();
+            $show->field('created_at', __('Created at'));
+            $show->field('updated_at', __('Updated at'));
+        });
+        $show->relation('chapters', __('Chapters'), function ($show) {
+            $show->setResource('/admin/chapters');
+            $show->field('id', __('ID'));
+            $show->field('name', __('Name'));
+        });
+        $show->relation('lessons', __('Chapters'), function ($show) {
+            $show->setResource('/admin/lessons');
+            $show->field('id', __('ID'));
+            $show->field('name', __('Name'));
+        });
 
         return $show;
     }
@@ -107,11 +126,11 @@ class AdminCourseController extends AdminController
         $form->text('name', __('Name'));
         $form->text('intro', __('Intro'));
         $form->text('starredText', __('StarredText'));
+        $form->color('theme', __('Theme Color'))->default('#F0FFF0');
+        $form->image('thumbnail', __('Thumbnail'))->uniqueName()->move('courseThumbnails');
         $form->image('image', __('Image'))->uniqueName()->move('courseImages');
-        $form->color('theme', __('Theme'))->default('#F0FFF0');
         $form->select('course_category_id', __('Course Category'))->options(CourseCategory::all()->pluck('name', 'id'));
         $form->text('tagline', __('Tagline'));
-        $form->image('thumbnail', __('Thumbnail'))->uniqueName()->move('courseThumbnails');
         // $form->htmleditor('contentBtn', __('Description'), ['form' => $form, 'id' => $descriptionId, 'queryParam' => 'richContentId']);
         $form->switch('active', __('Active'))->default(1);
 

@@ -8,7 +8,7 @@
 
 
   <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-51aea806.js"></script>
+  <script type="module" crossorigin src="/assets/index-fd202cbf.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-a222d563.js">
   <link rel="modulepreload" crossorigin href="/assets/react-f4831f7c.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -24,7 +24,7 @@
   <link rel="modulepreload" crossorigin href="/assets/stylis-79144faa.js">
   <link rel="modulepreload" crossorigin href="/assets/@emotion-00b492a8.js">
   <link rel="modulepreload" crossorigin href="/assets/react-transition-group-d316e552.js">
-  <link rel="modulepreload" crossorigin href="/assets/@mui-ab14f015.js">
+  <link rel="modulepreload" crossorigin href="/assets/@mui-a9dfbe4a.js">
   <link rel="modulepreload" crossorigin href="/assets/react-multi-carousel-bd78dd3d.js">
   <link rel="modulepreload" crossorigin href="/assets/prop-types-8f4a5b05.js">
   <link rel="modulepreload" crossorigin href="/assets/react-easy-swipe-df549a88.js">
@@ -34,11 +34,11 @@
   <link rel="modulepreload" crossorigin href="/assets/lodash-es-062508fc.js">
   <link rel="modulepreload" crossorigin href="/assets/react-fast-compare-7a99964f.js">
   <link rel="modulepreload" crossorigin href="/assets/tiny-warning-c932d744.js">
-  <link rel="modulepreload" crossorigin href="/assets/formik-644e6282.js">
+  <link rel="modulepreload" crossorigin href="/assets/formik-3a13360e.js">
   <link rel="modulepreload" crossorigin href="/assets/property-expr-38205fa5.js">
   <link rel="modulepreload" crossorigin href="/assets/tiny-case-d0726479.js">
   <link rel="modulepreload" crossorigin href="/assets/toposort-9cddb164.js">
-  <link rel="modulepreload" crossorigin href="/assets/yup-7c6aa1cf.js">
+  <link rel="modulepreload" crossorigin href="/assets/yup-c4aaba64.js">
   <link rel="modulepreload" crossorigin href="/assets/react-toastify-ae7d9bcd.js">
   <link rel="modulepreload" crossorigin href="/assets/tslib-515cc0eb.js">
   <link rel="modulepreload" crossorigin href="/assets/file-selector-bdf450a1.js">
@@ -51,13 +51,14 @@
   <link rel="modulepreload" crossorigin href="/assets/jspdf-3d222c54.js">
   <link rel="modulepreload" crossorigin href="/assets/@svg-maps-e08e3392.js">
   <link rel="modulepreload" crossorigin href="/assets/react-svg-map-2878d202.js">
-  <link rel="modulepreload" crossorigin href="/assets/react-icons-6ffb6e55.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-icons-cad616e4.js">
   <link rel="modulepreload" crossorigin href="/assets/react-share-0fce3d21.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-hook-form-970657bd.js">
   <link rel="stylesheet" href="/assets/react-multi-carousel-cd7c611b.css">
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
   <link rel="stylesheet" href="/assets/react-toastify-93d8b085.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-5e1fdabe.css">
+  <link rel="stylesheet" href="/assets/index-521a74ee.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 

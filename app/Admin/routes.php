@@ -59,6 +59,9 @@ Route::group([
         $router->post('/lessons/byChapterId', [AdminLessonController::class, 'byChapterId']);
         $router->post('/lessons/byCourseId', [AdminLessonController::class, 'byCourseId']);
 
+        $router->get('/lesson-sections/byLessonId', [AdminLessonSectionController::class, 'byLessonId']);
+        $router->post('/lesson-sections/byLessonId', [AdminLessonSectionController::class, 'byLessonId']);
+
         $router->get('richContents', [APIRichContentsController::class, 'index']);
         $router->get('richContents/{richContent}', [APIRichContentsController::class, 'show']);
         $router->post('/richContents', [APIRichContentsController::class, 'store']);

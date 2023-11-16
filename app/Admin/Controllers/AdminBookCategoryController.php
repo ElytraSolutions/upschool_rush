@@ -27,10 +27,9 @@ class AdminBookCategoryController extends AdminController
     {
         $grid = new Grid(new Category());
 
-        $grid->column('id', __('Id'));
+        $grid->column('title', __('Title'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-        $grid->column('title', __('Title'));
 
         return $grid;
     }
@@ -46,9 +45,9 @@ class AdminBookCategoryController extends AdminController
         $show = new Show(Book::findOrFail($id));
 
         $show->field('id', __('Id'));
+        $show->field('title', __('Title'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
-        $show->field('title', __('Title'));
 
         return $show;
     }

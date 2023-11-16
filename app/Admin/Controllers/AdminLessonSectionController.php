@@ -7,6 +7,8 @@ use App\Models\Chapter;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\LessonSection;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
@@ -34,7 +36,8 @@ class AdminLessonSectionController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
-        $grid->column('slug', __('Slug'));
+        $grid->column('lessons.chapter.course.name', __('Course'));
+        $grid->column('lessons.chapter.name', __('Chapter'));
         $grid->column('lessons.name', __('Lesson'));
         $grid->column('priority', __('Priority'));
         $grid->column('active', __('Active'))->display(function ($active) {
@@ -82,10 +85,10 @@ class AdminLessonSectionController extends AdminController
     {
         $form = new Form(new LessonSection());
 
-        $form->text('name', __('Name'));
         $form->customSelect('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
         $form->customSelect('chapter_id', __('Chapters'))->load('lesson_id', '/admin/api/lessons/byChapterId');
         $form->customSelect('lesson_id', __('Lessons'));
+        $form->text('name', __('Name'));
         $form->textarea('teachers_note', __('Teachers Notes'));
         $form->ckeditor('text', __('Text'));
         $form->number('priority', __('Priority'))->default(1);
@@ -158,5 +161,16 @@ class AdminLessonSectionController extends AdminController
             'active' => false,
         ]);
         return ['lessonId' => $lesson->id];
+    }
+
+    public function byLessonId(Request $request)
+    {
+        $lesson_id = $request->get('query');
+        $lesson = Lesson::find($lesson_id);
+        if (!$lesson) {
+            return response()->json(['message' => 'Could not find lesson'], 404);
+        }
+        $lessonSections = LessonSection::where('lesson_id', $lesson_id)->get(['id', DB::raw('name as text')]);
+        return (new Response($lessonSections))->header('Content-Type', 'application/json');
     }
 }
