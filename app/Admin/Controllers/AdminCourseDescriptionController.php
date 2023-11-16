@@ -27,17 +27,10 @@ class AdminCourseDescriptionController extends AdminController
     {
         $grid = new Grid(new CourseDescription());
 
-        $grid->column('id', __('Id'));
-        $grid->column('title', __('Title'));
-        $grid->column('subtitle', __('Subtitle'));
-        $grid->column('description', __('Description'));
-        $grid->column('testimonials', __('Testimonials'));
-        $grid->column('objectives', __('Objectives'));
-        $grid->column('steps', __('Steps'));
-        $grid->column('faq', __('Faq'));
+        $grid->column('id', __('Description id'));
+        $grid->column('course.name', __('Course'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-        $grid->column('course_id', __('Course id'));
 
         return $grid;
     }

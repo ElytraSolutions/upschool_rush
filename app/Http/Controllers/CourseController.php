@@ -135,8 +135,12 @@ class CourseController extends Controller
             ->where('user_id', $request->user()->getAttribute('id'))
             ->first();
         $firstChapter = $course->chapters->sortBy('priority')->first();
-        $firstLesson = $firstChapter->lessons->sortBy('priority')->first();
-        $lastCompletedLesson = $request->user()->lastCompletedLesson($course);
+        $firstLesson = null;
+        $lastCompletedLesson = null;
+        if ($firstChapter) {
+            $firstLesson = $firstChapter->lessons->sortBy('priority')->first();
+            $lastCompletedLesson = $request->user()->lastCompletedLesson($course);
+        }
         $totalLessons = $course->lessons->count();
         $totalCompletedLessonCount = DB::table('lesson_completions')->where('user_id', '=', $request->user()->getAttribute('id'))
             ->join('lessons', 'lesson_completions.lesson_id', '=', 'lessons.id')
@@ -190,7 +194,10 @@ class CourseController extends Controller
         $validated = $request->validate($rules);
         $data = CourseEnrollment::create($validated);
         $firstChapter = $course->chapters->first();
-        $firstLesson = $firstChapter->lessons->first();
+        $firstLesson = null;
+        if ($firstChapter) {
+            $firstLesson = $firstChapter->lessons->first();
+        }
         return [
             'success' => true,
             'data' => [

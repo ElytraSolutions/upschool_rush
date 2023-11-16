@@ -34,9 +34,11 @@ class AdminLessonSectionContentsController extends AdminController
         $grid = new Grid(new LessonSectionContent());
 
         $grid->column('id', __('Id'));
+        $grid->column('lessonSection.lesson.chapter.course.name', __('Course'));
+        $grid->column('lessonSection.lesson.chapter.name', __('Chapter'));
+        $grid->column('lessonSection.lesson.name', __('Lesson'));
         $grid->column('lessonSection.name', __('Lesson Section'));
         $grid->column('type', __('Type'));
-        $grid->column('content', __('Content'));
         $grid->column('priority', __('Priority'));
         $grid->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';
@@ -61,7 +63,6 @@ class AdminLessonSectionContentsController extends AdminController
         $show->column('lesson_section.name', __('Lesson Section'));
         $show->column('priority', __('Priority'));
         $show->column('type', __('Type'));
-        $show->column('content', __('Content'));
         $show->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';
         });
@@ -83,8 +84,8 @@ class AdminLessonSectionContentsController extends AdminController
 
         $form->customSelect('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
         $form->customSelect('chapter_id', __('Chapters'))->load('lesson_id', '/admin/api/lessons/byChapterId');
-        $form->customSelect('lesson_id', __('Lessons'));
-        $form->customSelect('lesson_section_id', __('Lesson Sections'))->options(LessonSection::all()->pluck('name', 'id'));
+        $form->customSelect('lesson_id', __('Lessons'))->load('lesson_section_id', '/admin/api/lesson-sections/byLessonId');
+        $form->customSelect('lesson_section_id', __('Lesson Sections'));
         $form->select('type', 'Type')->options([
             'image' => 'Image',
             'video' => 'Video',
@@ -116,7 +117,7 @@ class AdminLessonSectionContentsController extends AdminController
         //     $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
         //     $form->url('video_url', __('Content URL'));
         // });
-        $form->file('content', __('Content'));
+        // $form->file('content', __('Content'));
 
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
