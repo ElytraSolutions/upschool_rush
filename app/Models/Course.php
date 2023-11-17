@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Course extends Model
 {
@@ -70,8 +71,8 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'course_enrollments');
     }
 
-    public function description()
+    public function course_description(): HasOne
     {
-        return $this->hasOne(CourseDescription::class);
+        return $this->hasOne(CourseDescription::class, 'course_id');
     }
 }
