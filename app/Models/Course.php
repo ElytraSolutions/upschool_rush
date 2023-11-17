@@ -71,7 +71,7 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'course_enrollments');
     }
 
-    public function course_description(): HasOne
+    public function description(): HasOne
     {
         return $this->hasOne(CourseDescription::class, 'course_id');
     }
