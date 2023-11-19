@@ -407,7 +407,6 @@ class BookController extends Controller
                 'current_page' => $books->currentPage(),
                 'last_page' => $books->lastPage(),
             ];
-
             $response['message'] = "Data fetched.";
             $response['error'] = null;
             $response['status'] = 200;
