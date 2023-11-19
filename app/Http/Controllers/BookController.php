@@ -197,7 +197,10 @@ class BookController extends Controller
      */
     public function bookCategories(Request $request)
     {
-        return Category::all();
+        return [
+            'success' => true,
+            'data' => Category::all(),
+        ];
     }
 
 
@@ -385,6 +388,12 @@ class BookController extends Controller
             }
         }
         if (array_key_exists('category', $filter) && $filter['category']) {
+            // Get books where category matches
+            $query = DB::table('books')
+                ->join('book_category', 'books.id', '=', 'book_category.book_id')
+                ->join('categories', 'book_category.category_id', '=', 'categories.id')
+                ->select('books.*')
+                ->whereIn('categories.id', $filter['category']);
             $query = $query->whereHas('categories', function ($q) use ($filter) {
                 $q->whereIn('categories.id', $filter['category']);
             });
@@ -398,7 +407,7 @@ class BookController extends Controller
         $per_page = $request->per_page ?? 10;
         $query = $this->resolveQuery($filters);
         try {
-            $books = $query->paginate($per_page);
+            $books = $query->get()->paginate($per_page);
             $response['data'] = BookResource::collection($books);
             // ->map(
             // function ($resource) {
