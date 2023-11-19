@@ -3,12 +3,12 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/svg+xml" href="/upschool-logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
-  <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-7db8cb7b.js"></script>
+  <title>Upschool</title>
+  <script type="module" crossorigin src="/assets/index-5bfc45fb.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-a222d563.js">
   <link rel="modulepreload" crossorigin href="/assets/react-f4831f7c.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
