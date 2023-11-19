@@ -98,7 +98,7 @@ class AdminLessonSectionContentsController extends AdminController
         $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
         $form->image('image_content', __('Image Content'));
         $form->url('video_content', __('Video Content'));
-        $form->file('flipbook_content', __('Flipbook Content'))->uniqueName();
+        $form->file('flipbook_content', __('Flipbook Content'))->uniqueName()->move('unprocesed-flipbooks');
         // ->when('image', function (Form $form) {
         //     $form->select('image_source', __('Source'))->options([
         //         'local' => 'Local',
@@ -177,6 +177,8 @@ class AdminLessonSectionContentsController extends AdminController
                     'status' => 'pending',
                 ]);
                 ProcessFlipbookJob::dispatch($flipbookJob);
+                $model->flipbook_content = $outputFolder;
+                $model->save();
                 Log::info(json_encode([
                     'id' => $model->id,
                     'sourceFile' => $sourceFile,

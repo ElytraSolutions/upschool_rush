@@ -56,9 +56,11 @@ class ProcessFlipbookJob implements ShouldQueue
                 Storage::disk('s3')->writeStream($file, Storage::disk('local')->readStream($file));
             }
             $deleted = Storage::disk('local')->deleteDirectory($outputFolder);
-            Log::info("Deleted local folder: $deleted");
+            Log::info("Deleted local output folder: $deleted");
             $deleted = Storage::disk('local')->delete($inputFilePath);
-            Log::info("Deleted local file: $deleted");
+            Log::info("Deleted local input file: $deleted");
+            $deleted = Storage::disk('s3')->delete($inputFilePath);
+            Log::info("Deleted s3 input file: $deleted");
             $this->flipBookJobStatus->status = FlipBookJobStatus::$STATUS_COMPLETED;
             $this->flipBookJobStatus->save();
         } catch (\Exception $e) {
