@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -187,6 +188,18 @@ class BookController extends Controller
         return [
             'success' => true,
             'data' => $reponse
+        ];
+    }
+
+    /**
+     * @lrd:start
+     * @lrd:end
+     */
+    public function bookCategories(Request $request)
+    {
+        return [
+            'success' => true,
+            'data' => Category::all(),
         ];
     }
 
@@ -375,6 +388,12 @@ class BookController extends Controller
             }
         }
         if (array_key_exists('category', $filter) && $filter['category']) {
+            // Get books where category matches
+            // $query = DB::table('books')
+            //     ->join('book_category', 'books.id', '=', 'book_category.book_id')
+            //     ->join('categories', 'book_category.category_id', '=', 'categories.id')
+            //     ->select('books.*')
+            //     ->whereIn('categories.id', $filter['category']);
             $query = $query->whereHas('categories', function ($q) use ($filter) {
                 $q->whereIn('categories.id', $filter['category']);
             });
