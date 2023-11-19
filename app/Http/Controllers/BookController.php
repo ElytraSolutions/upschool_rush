@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -188,6 +189,15 @@ class BookController extends Controller
             'success' => true,
             'data' => $reponse
         ];
+    }
+
+    /**
+     * @lrd:start
+     * @lrd:end
+     */
+    public function bookCategories(Request $request)
+    {
+        return Category::all();
     }
 
 

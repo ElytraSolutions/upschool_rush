@@ -38,6 +38,7 @@ Route::get('/books/best-sellers', [BookController::class, 'bestSeller']);
 Route::get('/books/featured', [BookController::class, 'featured']);
 Route::get('/books/detail/{id}', [BookController::class, 'detail']);
 Route::post('/books/filter', [BookController::class, 'filter']);
+Route::get('/bookCategories', [BookController::class, 'bookCategories']);
 //Route::post('/books/filter-by-category', [BookController::class, 'filterByCategory']);
 //testing end
 
