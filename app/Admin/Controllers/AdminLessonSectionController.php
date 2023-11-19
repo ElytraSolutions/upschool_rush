@@ -2,8 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Extensions\Form\CascadingSelect;
-use App\Models\Chapter;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\LessonSection;
@@ -14,6 +12,7 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log as FacadesLog;
 use OpenAdmin\Admin\Form\NestedForm;
 
 class AdminLessonSectionController extends AdminController
@@ -141,6 +140,7 @@ class AdminLessonSectionController extends AdminController
             $form->ignore('chapter_id');
             $form->ignore('lessonSectionContents');
         });
+
 
         return $form;
     }
