@@ -3,8 +3,10 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Extensions\Form\CascadingSelect;
+use App\Jobs\ProcessFlipbookJob;
 use App\Models\Chapter;
 use App\Models\Course;
+use App\Models\FlipBookJobStatus;
 use App\Models\Lesson;
 use App\Models\LessonSection;
 use App\Models\LessonSectionContent;
@@ -13,6 +15,8 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use OpenAdmin\Admin\Form\NestedForm;
 
 class AdminLessonSectionContentsController extends AdminController
@@ -94,7 +98,7 @@ class AdminLessonSectionContentsController extends AdminController
         $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
         $form->image('image_content', __('Image Content'));
         $form->url('video_content', __('Video Content'));
-        $form->file('flipbook_content', __('Flipbook Content'));
+        $form->file('flipbook_content', __('Flipbook Content'))->uniqueName()->move('unprocesed-flipbooks');
         // ->when('image', function (Form $form) {
         //     $form->select('image_source', __('Source'))->options([
         //         'local' => 'Local',
@@ -159,6 +163,28 @@ class AdminLessonSectionContentsController extends AdminController
             // }
             $form->ignore(['course_id', 'chapter_id', 'lesson_id']);
             // $form->ignore(['course_id', 'chapter_id', 'lesson_id', 'image_source', 'local_image', 'image_url', 'flipbook_source', 'local_flipbook', 'url_flipbook', 'video_url',]);
+        });
+
+        $form->saved(function (Form $form) {
+            $model = $form->model();
+            if ($model->type === 'flipbook') {
+                $sourceFile = $model->flipbook_content;
+                $outputFolder = 'flipbooks/' . $model->id;
+                $flipbookJob = FlipBookJobStatus::create([
+                    'uploaded_by' => auth()->user()->id,
+                    'source_file' => $sourceFile,
+                    'destination_folder' => $outputFolder,
+                    'status' => 'pending',
+                ]);
+                ProcessFlipbookJob::dispatch($flipbookJob);
+                $model->flipbook_content = $outputFolder;
+                $model->save();
+                Log::info(json_encode([
+                    'id' => $model->id,
+                    'sourceFile' => $sourceFile,
+                    'outputFolder' => $outputFolder,
+                ]));
+            }
         });
 
         return $form;
