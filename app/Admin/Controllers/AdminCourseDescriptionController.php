@@ -28,9 +28,7 @@ class AdminCourseDescriptionController extends AdminController
         $grid = new Grid(new CourseDescription());
 
         $grid->column('id', __('Description id'));
-        $grid->column('course.name', __('Course'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('course.name', __('Course'))->sortable();
 
         return $grid;
     }
@@ -46,6 +44,7 @@ class AdminCourseDescriptionController extends AdminController
         $show = new Show(CourseDescription::findOrFail($id));
 
         $show->field('id', __('Id'));
+        $show->field('course_id', __('Course id'));
         $show->field('title', __('Title'));
         $show->field('subtitle', __('Subtitle'));
         $show->field('description', __('Description'));
@@ -55,7 +54,6 @@ class AdminCourseDescriptionController extends AdminController
         $show->field('faq', __('Faq'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
-        $show->field('course_id', __('Course id'));
 
         return $show;
     }
