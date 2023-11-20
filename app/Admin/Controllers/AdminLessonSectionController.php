@@ -33,6 +33,10 @@ class AdminLessonSectionController extends AdminController
     {
         $grid = new Grid(new LessonSection());
 
+        $grid->filter(function ($filter) {
+            $filter->like('name', 'name');
+        });
+
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
         $grid->column('lessons.chapter.course.name', __('Course'));

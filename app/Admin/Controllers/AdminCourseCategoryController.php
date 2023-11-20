@@ -27,8 +27,12 @@ class AdminCourseCategoryController extends AdminController
     {
         $grid = new Grid(new CourseCategory());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->filter(function ($filter) {
+            $filter->like('name', 'name');
+        });
+
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
 
         return $grid;
     }
