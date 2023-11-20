@@ -68,7 +68,7 @@ class AdminCourseController extends AdminController
         $show->field('active', __('Active'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
-        $show->relation('description', __('Description'), function ($show) {
+        $show->relation('course_description', __('Description'), function ($show) {
             $show->setResource('/admin/course-descriptions');
             $show->field('id', __('Id'));
             $show->field('title', __('Title'));
@@ -83,13 +83,14 @@ class AdminCourseController extends AdminController
         });
         $show->relation('chapters', __('Chapters'), function ($show) {
             $show->setResource('/admin/chapters');
-            $show->field('id', __('ID'));
-            $show->field('name', __('Name'));
+            $show->id();
+            $show->name();
         });
         $show->relation('lessons', __('Lessons'), function ($show) {
             $show->setResource('/admin/lessons');
-            $show->field('id', __('ID'));
-            $show->field('name', __('Name'));
+            $show->id();
+            $show->name();
+            $show->chapter()->name();
         });
 
         return $show;
