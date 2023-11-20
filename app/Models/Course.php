@@ -71,6 +71,11 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'course_enrollments');
     }
 
+    public function course_description()
+    {
+        return $this->hasOne(CourseDescription::class, 'course_id', 'id');
+    }
+
     public function description(): HasOne
     {
         return $this->hasOne(CourseDescription::class, 'course_id');
