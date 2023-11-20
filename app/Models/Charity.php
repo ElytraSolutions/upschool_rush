@@ -17,6 +17,7 @@ class Charity extends Model
         'name',
         'slug',
         'image',
+        'thumbnail',
         'website',
         'facebook',
         'instagram',
