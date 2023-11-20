@@ -71,7 +71,8 @@ class AdminCharityController extends AdminController
 
         $form->display('id', __('ID'));
         $form->text('name', 'Name');
-        $form->image('image', 'Image');
+        $form->image('image', 'Image')->move('charityImages');
+        $form->image('thumbnail', 'Thumbnail')->move('charityThumbnails');
         $form->url('website', 'Website');
         $form->url('facebook', 'Facebook');
         $form->url('instagram', 'Instagram');
