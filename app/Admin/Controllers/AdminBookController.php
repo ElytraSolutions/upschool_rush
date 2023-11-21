@@ -26,20 +26,15 @@ class AdminBookController extends AdminController
     {
         $grid = new Grid(new Book());
 
-        $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('title', __('Title'));
-        $grid->column('slug', __('Slug'));
-        $grid->column('description', __('Description'));
-        $grid->column('teacher_email', __('Teacher email'));
+        $grid->filter(function ($filter) {
+            $filter->like('title', 'title');
+        });
+
+
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('title', __('Title'))->sortable();
         $grid->column('first_name', __('First name'));
         $grid->column('last_name', __('Last name'));
-        $grid->column('school_name', __('School name'));
-        $grid->column('country', __('Country'));
-        $grid->column('age', __('Age'));
-        $grid->column('path', __('Path'));
-        $grid->column('canva_link', __('Canva link'));
         $grid->column('is_featured', __('Featured'));
         $grid->column('is_best_seller', __('Best Seller'));
         $grid->column('active', __('Active'));
@@ -58,8 +53,6 @@ class AdminBookController extends AdminController
         $show = new Show(Book::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
         $show->field('title', __('Title'));
         $show->field('slug', __('Slug'));
         $show->field('description', __('Description'));
@@ -75,6 +68,8 @@ class AdminBookController extends AdminController
         $show->field('is_featured', __('Featured'));
         $show->field('is_best_seller', __('Best Seller'));
         $show->field('active', __('Active'));
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
 
         return $show;
     }

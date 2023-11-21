@@ -27,9 +27,11 @@ class AdminBookCategoryController extends AdminController
     {
         $grid = new Grid(new Category());
 
-        $grid->column('title', __('Title'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->filter(function ($filter) {
+            $filter->like('title', 'title');
+        });
+
+        $grid->column('title', __('Title'))->sortable();
 
         return $grid;
     }
@@ -42,12 +44,10 @@ class AdminBookCategoryController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(Book::findOrFail($id));
+        $show = new Show(Category::findOrFail($id));
 
         $show->field('id', __('Id'));
         $show->field('title', __('Title'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -59,7 +59,7 @@ class AdminBookCategoryController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Book());
+        $form = new Form(new Category());
 
         $form->text('title', __('Title'));
 

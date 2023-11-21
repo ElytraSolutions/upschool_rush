@@ -26,18 +26,18 @@ class AdminUserController extends AdminController
     {
         $grid = new Grid(new User());
 
+        $grid->filter(function ($filter) {
+            $filter->like('email', 'Email');
+            $filter->like('first_name', 'First Name');
+            $filter->like('last_name', 'Last Name');
+        });
+
         $grid->column('id', __('Id'));
         $grid->column('email', __('Email'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('password', __('Password'));
-        $grid->column('remember_token', __('Remember token'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
         $grid->column('first_name', __('First name'));
         $grid->column('last_name', __('Last name'));
         $grid->column('country', __('Country'));
-        $grid->column('date_of_birth', __('Date of birth'));
-        $grid->column('user_type_id', __('User type id'));
+        $grid->column('type.name', __('User type'));
         $grid->column('is_admin', __('Is admin'));
 
         return $grid;
@@ -56,16 +56,14 @@ class AdminUserController extends AdminController
         $show->field('id', __('Id'));
         $show->field('email', __('Email'));
         $show->field('email_verified_at', __('Email verified at'));
-        $show->field('password', __('Password'));
-        $show->field('remember_token', __('Remember token'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
         $show->field('first_name', __('First name'));
         $show->field('last_name', __('Last name'));
         $show->field('country', __('Country'));
         $show->field('date_of_birth', __('Date of birth'));
         $show->field('user_type_id', __('User type id'));
         $show->field('is_admin', __('Is admin'));
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
 
         return $show;
     }

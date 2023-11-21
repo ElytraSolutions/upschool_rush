@@ -25,12 +25,14 @@ class AdminCharityController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Charity());
+
+        $grid->filter(function ($filter) {
+            $filter->like('name', 'name');
+        });
+
         $grid->column('id', __('ID'))->sortable();
-        $grid->column('name', 'Name');
-        $grid->column('slug', 'slug');
+        $grid->column('name', 'Name')->sortable();
         $grid->column('website', 'Website');
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -49,6 +51,7 @@ class AdminCharityController extends AdminController
         $show->field('name', 'Name');
         $show->field('slug', 'slug');
         $show->field('image', 'Image`');
+        $show->field('thumbnail', 'Thumbnail');
         $show->field('website', 'Website');
         $show->field('facebook', 'Facebook');
         $show->field('instagram', 'Instagram');
