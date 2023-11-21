@@ -26,10 +26,12 @@ class AdminUserTypeController extends AdminController
     {
         $grid = new Grid(new UserType());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->filter(function ($filter) {
+            $filter->like('name', 'name');
+        });
+
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
 
         return $grid;
     }

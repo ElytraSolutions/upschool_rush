@@ -31,8 +31,12 @@ class AdminChapterController extends AdminController
     {
         $grid = new Grid(new Chapter());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->filter(function ($filter) {
+            $filter->like('name', 'name');
+        });
+
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
         $grid->column('course.name', __('Course'));
         $grid->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';
