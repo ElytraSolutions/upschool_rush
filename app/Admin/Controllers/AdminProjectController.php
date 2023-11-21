@@ -26,12 +26,13 @@ class AdminProjectController extends AdminController
     {
         $grid = new Grid(new Project());
 
+        $grid->filter(function ($filter) {
+            $filter->like('name', 'name');
+        });
+
         $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
         $grid->column('name', __('Name'));
         $grid->column('intro', __('Intro'));
-        $grid->column('description', __('Description'));
         $grid->column('active', __('Active'));
 
         return $grid;

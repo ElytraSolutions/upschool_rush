@@ -3,12 +3,12 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/svg+xml" href="/upschool-logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
-  <title>upschool</title>
-  <script type="module" crossorigin src="/assets/index-6e44a345.js"></script>
+  <title>Upschool</title>
+  <script type="module" crossorigin src="/assets/index-2a9e9be2.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/@babel-a222d563.js">
   <link rel="modulepreload" crossorigin href="/assets/react-f4831f7c.js">
   <link rel="modulepreload" crossorigin href="/assets/scheduler-765c72db.js">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="/assets/react-responsive-carousel-5440303d.css">
   <link rel="stylesheet" href="/assets/react-toastify-93d8b085.css">
   <link rel="stylesheet" href="/assets/react-svg-map-cf9544dd.css">
-  <link rel="stylesheet" href="/assets/index-562d3e42.css">
+  <link rel="stylesheet" href="/assets/index-b03a3b64.css">
   <link rel="stylesheet" href="/assets/font-awesome-3db6547a.css">
 </head>
 
