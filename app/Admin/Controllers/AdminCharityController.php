@@ -80,7 +80,7 @@ class AdminCharityController extends AdminController
         $form->url('facebook', 'Facebook');
         $form->url('instagram', 'Instagram');
         $form->url('linkedin', 'Linkedin');
-        $form->ckeditor('description', 'Description');
+        $form->editor2('description', 'Description');
         $form->display('created_at', __('Created At'));
         $form->display('updated_at', __('Updated At'));
 
