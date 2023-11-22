@@ -102,7 +102,7 @@ class UserController extends Controller
                     SELECT course_id FROM course_enrollments
                         WHERE user_id = "{$request->user()->id}"
                 )
-                GROUP BY c.id, c.name, c.slug, c.image;
+                GROUP BY c.id, c.name, c.slug, c.image, c.thumbnail;
         SQL;
         $enrolledCourses = DB::select('' . $dbQuery . '');
 
