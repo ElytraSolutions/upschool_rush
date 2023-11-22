@@ -93,7 +93,7 @@ class UserController extends Controller
     public function myCourses(Request $request)
     {
         $dbQuery = <<<SQL
-            SELECT c.name, c.slug, c.image, count(l.id) TotalLessons, count(lc.id) CompletedLessons
+            SELECT c.name, c.slug, c.thumbnail, c.image, count(l.id) TotalLessons, count(lc.id) CompletedLessons
                 FROM courses c
                 LEFT JOIN chapters ch ON ch.course_id = c.id
                 LEFT JOIN lessons l ON l.chapter_id = ch.id
@@ -102,7 +102,7 @@ class UserController extends Controller
                     SELECT course_id FROM course_enrollments
                         WHERE user_id = "{$request->user()->id}"
                 )
-                GROUP BY c.id, c.name, c.slug, c.image;
+                GROUP BY c.id, c.name, c.slug, c.image, c.thumbnail;
         SQL;
         $enrolledCourses = DB::select('' . $dbQuery . '');
 
