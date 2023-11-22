@@ -62,7 +62,7 @@ class ProjectController extends Controller
         // Public Route
         return [
             'success' => true,
-            'data' => $project,
+            'data' => $project->load(['charity']),
         ];
     }
 
@@ -109,6 +109,5 @@ class ProjectController extends Controller
             'success' => true,
             'data' => $project->delete(),
         ];
-
     }
 }
