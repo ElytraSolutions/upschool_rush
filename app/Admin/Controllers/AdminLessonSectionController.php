@@ -93,7 +93,7 @@ class AdminLessonSectionController extends AdminController
         $form->customSelect('lesson_id', __('Lessons'));
         $form->text('name', __('Name'));
         $form->textarea('teachers_note', __('Teachers Notes'));
-        $form->ckeditor('text', __('Text'));
+        $form->editor2('text', __('Text'));
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
 

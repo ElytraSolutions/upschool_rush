@@ -70,9 +70,9 @@ class AdminCourseDescriptionController extends AdminController
         $form->select('course_id', __('Course'))->options(Course::all()->pluck('name', 'id'));
         $form->text('title', __('Title'))->default('About this course');
         $form->text('subtitle', __('Subtitle'));
-        $form->ckeditor('description', __('Description'));
-        $form->ckeditor('testimonials', __('Testimonials'));
-        $form->ckeditor('objectives', __('Objectives'));
+        $form->editor2('description', __('Description'));
+        $form->editor2('testimonials', __('Testimonials'));
+        $form->editor2('objectives', __('Objectives'));
         $form->table('steps', __('Steps'), function ($table) {
             $table->file('image');
             $table->textarea('data');
