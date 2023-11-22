@@ -66,8 +66,8 @@ class AdminProjectController extends AdminController
 
         $form->text('name', __('Name'));
         $form->select('charity_id', __('Charity'))->options(\App\Models\Charity::all()->pluck('name', 'id'));
-        $form->ckeditor('intro', __('Intro'));
-        $form->ckeditor('description', __('Description'));
+        $form->editor2('intro', __('Intro'));
+        $form->editor2('description', __('Description'));
         $form->text('location', __('Location'));
         $form->text('genre', __('Genre'));
         $form->image('image', __('Image'));
