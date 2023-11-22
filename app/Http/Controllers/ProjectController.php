@@ -18,12 +18,12 @@ class ProjectController extends Controller
         if ($request->showAll) {
             return [
                 'success' => true,
-                'data' => Project::all(),
+                'data' => Project::all()->load('charity'),
             ];
         }
         return [
             'success' => true,
-            'data' => Project::all()->where('active', true),
+            'data' => Project::all()->where('active', true)->load('charity'),
         ];
     }
 
@@ -62,7 +62,7 @@ class ProjectController extends Controller
         // Public Route
         return [
             'success' => true,
-            'data' => $project,
+            'data' => $project->load(['charity']),
         ];
     }
 
@@ -109,6 +109,5 @@ class ProjectController extends Controller
             'success' => true,
             'data' => $project->delete(),
         ];
-
     }
 }
