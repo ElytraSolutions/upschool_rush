@@ -144,12 +144,12 @@ class User extends Authenticatable
     public function courseCompletions()
     {
         return DB::table('courses')
-            ->selectRaw('courses.id, courses.name, courses.slug, courses.image')
+            ->selectRaw('courses.id, courses.name, courses.slug, courses.image, courses.thumbnail')
             ->join('course_enrollments', 'course_enrollments.course_id', '=', 'courses.id')
             ->leftJoin('chapters', 'chapters.course_id', '=', 'courses.id')
             ->leftJoin('lessons', 'lessons.chapter_id', '=', 'chapters.id')
             ->leftJoin('lesson_completions', 'lesson_completions.lesson_id', '=', 'lessons.id')
-            ->groupBy('courses.id', 'courses.name', 'courses.slug', 'courses.image')
+            ->groupBy('courses.id', 'courses.name', 'courses.slug', 'courses.image', 'courses.thumbnail')
             ->havingRaw('count(lessons.id) = count(lesson_completions.id)')
             ->get();
     }
