@@ -115,4 +115,13 @@ class UserController extends Controller
             ],
         ];
     }
+
+    public function books(Request $request)
+    {
+        $books = $request->user()->books()->get(['id', 'title', 'slug', 'thumbnail']);
+        return [
+            'success' => true,
+            'data' => $books,
+        ];
+    }
 }

@@ -170,4 +170,13 @@ class User extends Authenticatable
             ->first();
         return $result;
     }
+
+    /**
+     * Get books created by user
+     *
+     */
+    public function books()
+    {
+        return $this->hasMany(Book::class, 'book_author', 'id');
+    }
 }
