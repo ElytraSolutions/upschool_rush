@@ -83,6 +83,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
         return $request->user()->load('type');
     });
     $route->get('/user/courses', [UserController::class, 'myCourses']);
+    $route->get('/user/books', [UserController::class, 'books']);
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {

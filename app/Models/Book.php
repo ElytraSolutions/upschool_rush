@@ -59,4 +59,9 @@ class Book extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'book_author', 'id');
+    }
 }
