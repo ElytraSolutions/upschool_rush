@@ -27,7 +27,7 @@ class AdminCourseDescriptionController extends AdminController
     {
         $grid = new Grid(new CourseDescription());
 
-        $grid->column('id', __('Description id'));
+        // $grid->column('id', __('Description id'));
         $grid->column('course.name', __('Course'))->sortable();
 
         return $grid;

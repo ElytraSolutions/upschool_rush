@@ -31,7 +31,7 @@ class AdminCourseCategoryController extends AdminController
             $filter->like('name', 'name');
         });
 
-        $grid->column('id', __('Id'))->sortable();
+        // $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
 
         return $grid;

@@ -35,7 +35,7 @@ class AdminChapterController extends AdminController
             $filter->like('name', 'name');
         });
 
-        $grid->column('id', __('Id'))->sortable();
+        // $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
         $grid->column('course.name', __('Course'));
         $grid->column('active', __('Active'))->display(function ($active) {
