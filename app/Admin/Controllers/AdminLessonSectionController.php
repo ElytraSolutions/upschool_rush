@@ -97,42 +97,17 @@ class AdminLessonSectionController extends AdminController
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
 
-        // $form->hasMany('lessonSectionContents', function (NestedForm $nestedForm) {
-        //     $nestedForm->text('name', __('Name'));
-        //     $nestedForm->select('type', __('Type'))->options([
-        //         'image' => 'Image',
-        //         'video' => 'Video',
-        //         'flipbook' => 'Flipbook',
-        //     ])->default('video')->when('=', 'image', function (Form $form) {
-        //         $form->select('source', __('Source'))->options([
-        //             'local' => 'Local',
-        //             'url' => 'URL',
-        //         ])->default('local')->when('=', 'local', function (Form $form) {
-        //             $form->file('content', __('Content File'));
-        //         })->when('=', 'url', function (Form $form) {
-        //             $form->text('content', __('Content URL'));
-        //         });
-        //     });
-        // })->when('=', 'video', function (Form $form) {
-        //     $form->select('source', __('Source'))->options([
-        //         'local' => 'Local',
-        //         'url' => 'URL',
-        //     ])->default('local')->when('=', 'local', function (Form $form) {
-        //         $form->file('content', __('Content File'));
-        //     })->when('=', 'url', function (Form $form) {
-        //         $form->text('content', __('Content URL'));
-        //     });
-        // })->when('=', 'flipbook', function (Form $form) {
-        //     $form->select('source', __('Source'))->options([
-        //         'local' => 'Local',
-        //         'url' => 'URL',
-        //     ])->default('local')->when('=', 'local', function (Form $form) {
-        //         $form->file('content', __('Content File'));
-        //     })->when('=', 'url', function (Form $form) {
-        //         $form->text('content', __('Content URL'));
-        //     });
-        // });
-        // })->mode('tab');
+        $form->hasMany('lessonSectionContents', 'Lesson Section Contents', function (NestedForm $form) {
+            $form->select('type', 'Type')->options([
+                'image' => 'Image',
+                'video' => 'Video',
+                'flipbook' => 'Flipbook',
+            ]);
+            $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
+            $form->image('image_content', __('Image Content'));
+            $form->url('video_content', __('Video Content'));
+            $form->file('flipbook_content', __('Flipbook Content'))->uniqueName()->move('unprocesed-flipbooks');
+        })->mode('tab');
 
         $form->saving(function (Form $form) {
             $form->ignore('course_id');
