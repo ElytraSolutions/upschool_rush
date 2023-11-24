@@ -169,6 +169,9 @@ class AdminLessonSectionContentsController extends AdminController
             $model = $form->model();
             if ($model->type === 'flipbook') {
                 $sourceFile = $model->flipbook_content;
+                if (!$sourceFile || !Storage::exists($sourceFile)) {
+                    return;
+                }
                 $outputFolder = 'flipbooks/' . $model->id;
                 $flipbookJob = FlipBookJobStatus::create([
                     'uploaded_by' => auth()->user()->id,
