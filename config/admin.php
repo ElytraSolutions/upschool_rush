@@ -413,6 +413,9 @@ return [
             'config' => [
                 'filebrowserBrowseUrl' => '/file-manager/ckeditor',
                 'filebrowserImageBrowseUrl' => '/file-manager/ckeditor',
+                "iframe_attributes" => [
+                    "sandbox" => "allow-scripts allow-same-origin",
+                ],
             ],
         ],
     ],
