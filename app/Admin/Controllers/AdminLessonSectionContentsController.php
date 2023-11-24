@@ -37,7 +37,7 @@ class AdminLessonSectionContentsController extends AdminController
     {
         $grid = new Grid(new LessonSectionContent());
 
-        $grid->column('id', __('Id'));
+        // $grid->column('id', __('Id'));
         $grid->column('lessonSection.lesson.chapter.course.name', __('Course'));
         $grid->column('lessonSection.lesson.chapter.name', __('Chapter'));
         $grid->column('lessonSection.lesson.name', __('Lesson'));

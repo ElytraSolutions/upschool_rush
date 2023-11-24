@@ -40,7 +40,7 @@ class AdminCourseController extends AdminController
             $filter->like('name', 'name');
         });
 
-        $grid->column('id', __('Id'))->sortable();
+        // $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
         $grid->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';

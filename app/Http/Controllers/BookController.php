@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use App\Models\BookValidation;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -127,20 +128,30 @@ class BookController extends Controller
     public function validateData(Request $request)
     {
         try {
-            $parser = new Parser();
             $book = $request->file('pdfFile');
+            $bookHash = hash_file('sha256', $book);
+            $existingRecord = BookValidation::query()->where('book_hash', $bookHash);
+
+            if ($existingRecord->exists()) {
+                return [
+                    'success' => true,
+                    'data' => json_decode($existingRecord->first()->data),
+                ];
+            }
+
+            $parser = new Parser();
             $pdf = $parser->parseFile($book);
             $pages = $pdf->getPages();
             $total_pages = count($pdf->getPages());
-            $reponse = array();
+            $response = array();
 
             if ($total_pages % 2 == 0) {
-                $reponse[] = array(
+                $response[] = array(
                     "label" => "The total number of pages in my book is an even number. (12, 14, 16, 18, 20, ...)",
                     "value" => true
                 );
             } elseif ($total_pages % 2 != 0) {
-                $reponse[] = array(
+                $response[] = array(
                     "label" => "The total number of pages in my book is an even number. (12, 14, 16, 18, 20, ...)",
                     "value" => false
                 );
@@ -149,6 +160,7 @@ class BookController extends Controller
 
             $a4_test = true;
             $blank_page = true;
+            $a4_data = array();
 
 
             foreach ($pages as $key => $page) {
@@ -162,6 +174,10 @@ class BookController extends Controller
 
                 $page_width = $page_details["MediaBox"][2];
                 $page_height = $page_details["MediaBox"][3];
+                $a4_data[] = array(
+                    "page_width" => $page_width,
+                    "page_height" => $page_height
+                );
 
                 if ($page_width != 841.92 && $page_height != 603.12) {
                     $a4_test = false;
@@ -171,23 +187,26 @@ class BookController extends Controller
             return response()->json(['error' => $e->getMessage()], 400);
         }
 
-        $reponse[] = array(
+        $response[] = array(
             "label" => "My book is A4 size (210mm x 297mm)",
-            "value" => $a4_test
+            "value" => $a4_test,
+            "data" => $a4_data
         );
 
-        $reponse[] = array(
+        $response[] = array(
             "label" => "Book has blank page after the front cover and another before the back cover.",
             "value" => $blank_page
         );
 
-        $filename = uuid_create();
-        Storage::disk('s3')->put('books/' . $filename, $book);
+        BookValidation::create([
+            'book_hash' => hash_file('sha256', $book),
+            'data' => json_encode($response),
+        ]);
 
 
         return [
             'success' => true,
-            'data' => $reponse
+            'data' => $response
         ];
     }
 

@@ -31,7 +31,7 @@ class AdminBookController extends AdminController
         });
 
 
-        $grid->column('id', __('Id'))->sortable();
+        // $grid->column('id', __('Id'))->sortable();
         $grid->column('title', __('Title'))->sortable();
         $grid->column('first_name', __('First name'));
         $grid->column('last_name', __('Last name'));
