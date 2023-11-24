@@ -12,8 +12,11 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log as FacadesLog;
 use OpenAdmin\Admin\Form\NestedForm;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use App\Jobs\ProcessFlipbookJob;
+use App\Models\FlipBookJobStatus;
 
 class AdminLessonSectionController extends AdminController
 {
@@ -97,17 +100,42 @@ class AdminLessonSectionController extends AdminController
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
 
-        $form->hasMany('lessonSectionContents', 'Lesson Section Contents', function (NestedForm $form) {
-            $form->select('type', 'Type')->options([
-                'image' => 'Image',
-                'video' => 'Video',
-                'flipbook' => 'Flipbook',
-            ]);
-            $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
-            $form->image('image_content', __('Image Content'));
-            $form->url('video_content', __('Video Content'));
-            $form->file('flipbook_content', __('Flipbook Content'))->uniqueName()->move('unprocesed-flipbooks');
-        })->mode('tab');
+        // $form->hasMany('lessonSectionContents', 'Lesson Section Contents', function (NestedForm $form) {
+        //     $form->select('type', 'Type')->options([
+        //         'image' => 'Image',
+        //         'video' => 'Video',
+        //         'flipbook' => 'Flipbook',
+        //     ]);
+        //     $form->select('name', __('Name'))->options(['Youtube' => 'Youtube', 'Vimeo' => 'Vimeo']);
+        //     $form->image('image_content', __('Image Content'));
+        //     $form->url('video_content', __('Video Content'));
+        //     $form->file('flipbook_content', __('Flipbook Content'))->uniqueName()->move('unprocesed-flipbooks');
+
+        // $form->saved(function (Form $form) {
+        //     $model = $form->model();
+        //     if ($model->type === 'flipbook') {
+        //         $sourceFile = $model->flipbook_content;
+        //         if (!$sourceFile || !Storage::exists($sourceFile)) {
+        //             return;
+        //         }
+        //         $outputFolder = 'flipbooks/' . $model->id;
+        //         $flipbookJob = FlipBookJobStatus::create([
+        //             'uploaded_by' => auth()->user()->id,
+        //             'source_file' => $sourceFile,
+        //             'destination_folder' => $outputFolder,
+        //             'status' => 'pending',
+        //         ]);
+        //         ProcessFlipbookJob::dispatch($flipbookJob);
+        //         $model->flipbook_content = $outputFolder;
+        //         $model->save();
+        //         Log::info(json_encode([
+        //             'id' => $model->id,
+        //             'sourceFile' => $sourceFile,
+        //             'outputFolder' => $outputFolder,
+        //         ]));
+        //     }
+        // });
+        // })->mode('tab');
 
         $form->saving(function (Form $form) {
             $form->ignore('course_id');
