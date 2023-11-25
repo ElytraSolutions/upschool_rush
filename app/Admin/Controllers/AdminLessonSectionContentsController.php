@@ -37,11 +37,24 @@ class AdminLessonSectionContentsController extends AdminController
     {
         $grid = new Grid(new LessonSectionContent());
 
-        // $grid->column('id', __('Id'));
-        $grid->column('lessonSection.lesson.chapter.course.name', __('Course'));
-        $grid->column('lessonSection.lesson.chapter.name', __('Chapter'));
-        $grid->column('lessonSection.lesson.name', __('Lesson'));
-        $grid->column('lessonSection.name', __('Lesson Section'));
+        $grid->column('lessonSection', __('Lesson Section'))->display(function ($lessonSection) {
+            return $this->lessonSection->name || $this->lessonSection->id;
+        });
+        $grid->column('lesson', __('Lesson Name'))->display(function () {
+            if ($this->lessonSection !== null && $this->lessonSection->lessons != null) {
+                return $this->lessonSection->lessons->name;
+            }
+        });
+        $grid->column('chapter', __('Chapter Name'))->display(function () {
+            if ($this->lessonSection !== null && $this->lessonSection->lessons != null && $this->lessonSection->lessons->chapter != null) {
+                return $this->lessonSection->lessons->chapter->name;
+            }
+        });
+        $grid->column('course', __('Course Name'))->display(function () {
+            if ($this->lessonSection !== null && $this->lessonSection->lessons != null && $this->lessonSection->lessons->chapter != null && $this->lessonSection->lessons->chapter->course != null) {
+                return $this->lessonSection->lessons->chapter->course->name;
+            }
+        });
         $grid->column('type', __('Type'));
         $grid->column('priority', __('Priority'));
         $grid->column('active', __('Active'))->display(function ($active) {
