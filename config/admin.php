@@ -417,9 +417,10 @@ return [
                     "sandbox" => "allow-scripts allow-same-origin",
                 ],
                 "contentsCss" => [
-                    "/vendor/open-admin-ext/ckeditor/fonts.css",
+                    "/vendor/open-admin-ext/ckeditor/fonts_kumbh.css",
+                    "/vendor/open-admin-ext/ckeditor/fonts_nunito.css"
                 ],
-                "font_names" => "Kumbh Sans;Arial;Helvetica;Comic Sans MS;Courier New;Georgia;Lucida Sans Unicode;Tahoma;Times New Roman;Trebuchet MS;Verdana",
+                "font_names" => "Kumbh Sans;Nunito Sans;Arial;Helvetica;Comic Sans MS;Courier New;Georgia;Lucida Sans Unicode;Tahoma;Times New Roman;Trebuchet MS;Verdana",
             ],
         ],
     ],
