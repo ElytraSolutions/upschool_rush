@@ -30,7 +30,7 @@ class AdminProjectController extends AdminController
             $filter->like('name', 'name');
         });
 
-        $grid->column('id', __('Id'));
+        // $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
         $grid->column('intro', __('Intro'));
         $grid->column('active', __('Active'));

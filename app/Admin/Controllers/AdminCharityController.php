@@ -72,7 +72,7 @@ class AdminCharityController extends AdminController
     {
         $form = new Form(new Charity());
 
-        $form->display('id', __('ID'));
+        // $form->display('id', __('ID'));
         $form->text('name', 'Name');
         $form->image('image', 'Image')->move('charityImages');
         $form->image('thumbnail', 'Thumbnail')->move('charityThumbnails');

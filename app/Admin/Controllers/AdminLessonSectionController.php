@@ -42,9 +42,12 @@ class AdminLessonSectionController extends AdminController
 
         // $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
-        $grid->column('lessons.chapter.course.name', __('Course'));
-        $grid->column('lessons.chapter.name', __('Chapter'));
-        $grid->column('lessons.name', __('Lesson'));
+        $grid->column('lessons.name', __('Lesson Name'));
+        $grid->column('Course Name')->display(function () {
+            if ($this->lessons !== null && $this->lessons->chapter != null && $this->lessons->chapter->course != null) {
+                return $this->lessons->chapter->course->name;
+            }
+        });
         $grid->column('priority', __('Priority'));
         $grid->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';

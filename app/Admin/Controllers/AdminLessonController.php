@@ -40,8 +40,12 @@ class AdminLessonController extends AdminController
 
         // $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
-        $grid->column('chapter.course.name', __('Course'));
-        $grid->column('chapter.name', __('Chapter'));
+        $grid->column('chapter.name', __('Chapter Name'));
+        $grid->column('Course Name')->display(function ($chapter) {
+            if ($this->chapter != null && $this->chapter->course != null) {
+                return $this->chapter->course->name;
+            }
+        });
         $grid->column('active', __('Active'))->display(function ($active) {
             return ($active == 1) ? 'Yes' : 'No';
         });

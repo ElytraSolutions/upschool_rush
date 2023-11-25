@@ -50,7 +50,7 @@ class LessonSection extends Model
 
     public function lessons(): BelongsTo
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(Lesson::class, 'lesson_id');
     }
 
     public function lessonSectionContents(): HasMany

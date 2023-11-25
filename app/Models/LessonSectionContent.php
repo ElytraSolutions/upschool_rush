@@ -32,6 +32,6 @@ class LessonSectionContent extends Model
 
     public function lessonSection()
     {
-        return $this->belongsTo(LessonSection::class);
+        return $this->belongsTo(LessonSection::class, 'lesson_section_id');
     }
 }
