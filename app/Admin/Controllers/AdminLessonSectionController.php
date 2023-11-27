@@ -100,6 +100,9 @@ class AdminLessonSectionController extends AdminController
         $form->text('name', __('Name'));
         $form->textarea('teachers_note', __('Teachers Notes'));
         $form->editor2('text', __('Text'));
+        $form->switch('downloadable', __('Allow Downloads'))->default(0);
+        $form->text('canva_template', __('Canva Template'));
+        $form->switch('share_with_upschool', __('Share With Upschool'))->default(0);
         $form->number('priority', __('Priority'))->default(1);
         $form->switch('active', __('Active'))->default(1);
 
