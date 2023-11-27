@@ -26,12 +26,17 @@ class LessonSection extends Model
         'active',
         'text',
         'teachers_note',
+        'downloadable',
+        'canva_template',
+        'share_with_upschool',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'active' => 'boolean',
+        'downloadable' => 'boolean',
+        'share_with_upschool' => 'boolean',
     ];
 
     /**
