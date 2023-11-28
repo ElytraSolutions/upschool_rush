@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCourseEnrollmentRequest;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
+use App\Models\CourseCompletion;
 use App\Models\CourseEnrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -158,6 +159,9 @@ class CourseController extends Controller
                 ],
             ];
         }
+        $courseCompletion = CourseCompletion::where('course_id', $course->getAttribute('id'))
+            ->where('user_id', $request->user()->getAttribute('id'))
+            ->first();
         return [
             'success' => true,
             'data' => [
@@ -168,6 +172,7 @@ class CourseController extends Controller
                 'lastCompletedLesson' => $lastCompletedLesson,
                 'totalLessons' => $totalLessons,
                 'totalCompletedLessonCount' => $totalCompletedLessonCount,
+                'courseCompletion' => $courseCompletion,
             ],
         ];
     }
