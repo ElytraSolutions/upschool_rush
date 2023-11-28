@@ -80,4 +80,9 @@ class Course extends Model
     {
         return $this->hasOne(CourseDescription::class, 'course_id');
     }
+
+    public function completion()
+    {
+        return $this->hasOne(CourseCompletion::class);
+    }
 }
