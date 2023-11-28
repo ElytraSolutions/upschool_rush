@@ -16,6 +16,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RichContentsController;
 use App\CustomErrors\Errors;
 use App\Http\Controllers\CharityController;
+use App\Http\Controllers\CourseCompletionController;
 use App\Http\Controllers\TeacherStudentsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Log;
@@ -103,6 +104,8 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->get('/courses/{course:slug}/students', [CourseController::class, 'students'])->missing(Errors::missing());
     $route->post('/courses/{course:slug}/enroll', [CourseController::class, 'enroll'])->missing(Errors::missing());
     $route->delete('/courses/{course:slug}/enroll', [CourseController::class, 'unenroll'])->missing(Errors::missing());
+
+    $route->post('/courses/{course:slug}/complete', [CourseCompletionController::class, 'store'])->missing(Errors::missing());
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {
