@@ -8,7 +8,7 @@
  * Author:  Olivier PLATHEY                                                     *
  *******************************************************************************/
 
-namespace App\Utils\fpdf186;
+// namespace App\Utils\fpdf186;
 
 
 class FPDF
