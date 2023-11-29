@@ -51,9 +51,10 @@ class CourseCompletionController extends Controller
             ->count();
         if ($completedLessonCount === $courseLessonCount) {
             $currentCompletion = CourseCompletion::where('user_id', $userId)
-                ->where('course_id', $course->id);
-            if (!$currentCompletion->exists() || $currentCompletion->certificate_path !== null) {
+                ->where('course_id', $course->id)->first();
+            if (!$currentCompletion->exists() || $currentCompletion["certificate_path"] !== null) {
                 $name = $request->user()->first_name . ' ' . $request->user()->last_name;
+                $name = ucwords(strtolower($name));
                 $pdf = $this->generatePDF($name, $course->name);
                 $output = $pdf->Output('S');
                 $storagePath = 'certificates/' . $userId . '/' . $course->slug . '.pdf';
@@ -115,7 +116,7 @@ class CourseCompletionController extends Controller
     {
         $pdf = new \setasign\Fpdi\Fpdi();
 
-        $pageCount = $pdf->setSourceFile(__DIR__ . '/../../resources/CertificateBase.pdf');
+        $pageCount = $pdf->setSourceFile(__DIR__ . '/../../../resources/CertificateBase.pdf');
         $pageId = $pdf->importPage(1, \setasign\Fpdi\PdfReader\PageBoundaries::MEDIA_BOX);
         $pdf->AddFont('GoodVibrations', '', 'GoodVibrations-Script-400.php');
         $pdf->AddFont('GreatVibes', '', 'GreatVibes-Regular.php');
