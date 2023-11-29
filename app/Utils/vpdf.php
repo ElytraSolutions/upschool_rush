@@ -22,16 +22,15 @@ function generatePDF($user, $course)
 
     // $pdf->Image(__DIR__ . '../resources/Certificate_base.png', 0, 0, 210, 297);
 
-    $pdf->Ln(107);
+    $pdf->Ln(110);
 
     $pdf->SetTextColor(3, 1, 76);
     $pdf->SetFont('GreatVibes', '', '32');
     $pdf->Cell(0, 30, $user, 0, 1, 'C');
 
-    $pdf->Ln(2);
     $pdf->SetFont('NunitoSans', 'B', '10.5');
     $pdf->SetTextColor(29, 14, 76);
     $pdf->Cell(0, 5, 'for submitting a work task to Upschool indicating completion of the', 0, 1, 'C');
-    $pdf->Cell(0, 10, "\"$course\" course", 0, 1, 'C');
+    $pdf->Cell(0, 5, "\"$course\" course", 0, 1, 'C');
     return $pdf;
 }
