@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\CourseCompletion;
 use App\Models\CourseEnrollment;
+use App\Models\LessonCompletion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -231,6 +232,39 @@ class CourseController extends Controller
         return [
             'success' => true,
             'data' => $courseEnrollment->delete(),
+        ];
+    }
+
+    /**
+     * Reset course progress
+     */
+    public function reset(Request $request, Course $course)
+    {
+        $courseEnrollment = CourseEnrollment::where('course_id', $course->getAttribute('id'))
+            ->where('user_id', $request->user()->getAttribute('id'))
+            ->first();
+        if ($courseEnrollment === null) {
+            return [
+                'success' => false,
+                'message' => 'You are not enrolled in this course.',
+            ];
+        }
+        $courseCompletion = CourseCompletion::where('course_id', $course->getAttribute('id'))
+            ->where('user_id', $request->user()->getAttribute('id'))
+            ->first();
+        if ($courseCompletion) {
+            $courseCompletion->delete();
+        }
+        LessonCompletion::where('user_id', $request->user()->getAttribute('id'))
+            ->join('lessons', 'lesson_completions.lesson_id', '=', 'lessons.id')
+            ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id')
+            ->join('courses', 'chapters.course_id', '=', 'courses.id')
+            ->where('courses.id', '=', $course->getAttribute('id'))
+            ->where('lesson_completions.user_id', '=', $request->user()->getAttribute('id'))
+            ->delete();
+        return [
+            'success' => true,
+            'data' => 'Course progress has been reset.',
         ];
     }
 
