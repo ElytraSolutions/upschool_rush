@@ -105,6 +105,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     $route->post('/courses/{course:slug}/enroll', [CourseController::class, 'enroll'])->missing(Errors::missing());
     $route->delete('/courses/{course:slug}/enroll', [CourseController::class, 'unenroll'])->missing(Errors::missing());
 
+    $route->post('/courses/{course:slug}/reset', [CourseController::class, 'reset'])->missing(Errors::missing());
     $route->post('/courses/{course:slug}/complete', [CourseCompletionController::class, 'store'])->missing(Errors::missing());
 });
 
