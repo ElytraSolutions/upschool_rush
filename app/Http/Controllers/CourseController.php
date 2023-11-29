@@ -252,13 +252,9 @@ class CourseController extends Controller
         $courseCompletion = CourseCompletion::where('course_id', $course->getAttribute('id'))
             ->where('user_id', $request->user()->getAttribute('id'))
             ->first();
-        if ($courseCompletion === null) {
-            return [
-                'success' => false,
-                'message' => 'You have not completed this course.',
-            ];
+        if ($courseCompletion) {
+            $courseCompletion->delete();
         }
-        $courseCompletion->delete();
         LessonCompletion::where('user_id', $request->user()->getAttribute('id'))
             ->join('lessons', 'lesson_completions.lesson_id', '=', 'lessons.id')
             ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id')
