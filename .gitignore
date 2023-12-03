@@ -18,3 +18,4 @@ yarn-error.log
 /.idea
 /push.bat
 /pull.bat
+/pull.sh
