@@ -30,6 +30,16 @@ class CourseDescription extends Model
         'faq' => 'array',
     ];
 
+    public function getSustainabilityDetailsAttribute($value)
+    {
+        return array_values(json_decode($value, true) ?: []);
+    }
+
+    public function setSustainabilityDetailsAttribute($value)
+    {
+        $this->attributes['sustainability_details'] = json_encode(array_values($value));
+    }
+
     public function course()
     {
         return $this->belongsTo(Course::class, 'course_id');
