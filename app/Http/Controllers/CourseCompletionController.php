@@ -46,6 +46,7 @@ class CourseCompletionController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'You have completed this course.',
+                'completion' => $currentCompletion,
                 'certificate_url' => Storage::disk('s3')->url($currentCompletion->certificate_path),
             ], 201);
         }
@@ -89,6 +90,7 @@ class CourseCompletionController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'You have completed this course.',
+                'completion' => $currentCompletion,
                 'certificate_url' => Storage::disk('s3')->url($currentCompletion->certificate_path),
             ], 201);
         } else {
