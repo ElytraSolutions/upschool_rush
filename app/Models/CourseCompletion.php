@@ -17,6 +17,8 @@ class CourseCompletion extends Model
         'user_id',
         'course_id',
         'certificate_path',
+        'coursework_path',
+        'email_sent',
     ];
 
     public function course()
