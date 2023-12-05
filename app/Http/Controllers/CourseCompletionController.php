@@ -46,6 +46,7 @@ class CourseCompletionController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'You have completed this course.',
+                'completion' => $currentCompletion,
                 'certificate_url' => Storage::disk('s3')->url($currentCompletion->certificate_path),
             ], 201);
         }
@@ -53,7 +54,7 @@ class CourseCompletionController extends Controller
         $courseworkType = $request->input('coursework_type');
         if ($courseworkType === 'link') {
             $coursework_path = $request->input('coursework');
-        } else if ($courseworkType === 'file') {
+        } else if ($courseworkType === 'file' && $request->hasFile('coursework')) {
             $coursework_path = $request->file('coursework')->store('coursework/' . $userId . '/' . $course->slug, 's3');
         } else {
             return response()->json([
@@ -89,6 +90,7 @@ class CourseCompletionController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'You have completed this course.',
+                'completion' => $currentCompletion,
                 'certificate_url' => Storage::disk('s3')->url($currentCompletion->certificate_path),
             ], 201);
         } else {
