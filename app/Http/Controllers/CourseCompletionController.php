@@ -53,7 +53,7 @@ class CourseCompletionController extends Controller
         $courseworkType = $request->input('coursework_type');
         if ($courseworkType === 'link') {
             $coursework_path = $request->input('coursework');
-        } else if ($courseworkType === 'file') {
+        } else if ($courseworkType === 'file' && $request->hasFile('coursework')) {
             $coursework_path = $request->file('coursework')->store('coursework/' . $userId . '/' . $course->slug, 's3');
         } else {
             return response()->json([
