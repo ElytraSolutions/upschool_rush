@@ -16,3 +16,6 @@ npm-debug.log
 yarn-error.log
 /.fleet
 /.idea
+/push.bat
+/pull.bat
+/pull.sh

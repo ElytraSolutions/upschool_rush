@@ -65,7 +65,7 @@ class CourseCompletionController extends Controller
         if ($completedLessonCount === $courseLessonCount) {
             $currentCompletion = CourseCompletion::where('user_id', $userId)
                 ->where('course_id', $course->id)->first();
-            if (!$currentCompletion->exists() || $currentCompletion["certificate_path"] !== null) {
+            if (!$currentCompletion || !$currentCompletion->exists() || $currentCompletion["certificate_path"] !== null) {
                 $name = $request->user()->first_name . ' ' . $request->user()->last_name;
                 $name = ucwords(strtolower($name));
                 $pdf = $this->generatePDF($name, $course->name);
