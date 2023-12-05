@@ -70,6 +70,27 @@ class AdminCourseDescriptionController extends AdminController
         $form->select('course_id', __('Course'))->options(Course::all()->pluck('name', 'id'));
         $form->text('title', __('Title'))->default('About this course');
         $form->text('subtitle', __('Subtitle'));
+        $form->table('sustainability_details', __('Sustainability details'), function ($form) {
+            $form->select('Goal')->options([
+                '/sustainabilityGoals/goal1.png' => 'No Poverty',
+                '/sustainabilityGoals/goal2.png' => 'Zero Hunger',
+                '/sustainabilityGoals/goal3.png' => 'Good Health and Well-being',
+                '/sustainabilityGoals/goal4.png' => 'Quality Education',
+                '/sustainabilityGoals/goal5.png' => 'Gender Equality',
+                '/sustainabilityGoals/goal6.png' => 'Clean Water and Sanitation',
+                '/sustainabilityGoals/goal7.png' => 'Affordable and Clean Energy',
+                '/sustainabilityGoals/goal8.png' => 'Decent Work and Economic Growth',
+                '/sustainabilityGoals/goal9.png' => 'Industry, Innovation and Infrastructure',
+                '/sustainabilityGoals/goal10.png' => 'Reduced Inequality',
+                '/sustainabilityGoals/goal11.png' => 'Sustainable Cities and Communities',
+                '/sustainabilityGoals/goal12.png' => 'Responsible Consumption and Production',
+                '/sustainabilityGoals/goal13.png' => 'Climate Action',
+                '/sustainabilityGoals/goal14.png' => 'Life Below Water',
+                '/sustainabilityGoals/goal15.png' => 'Life on Land',
+                '/sustainabilityGoals/goal16.png' => 'Peace and Justice Strong Institutions',
+                '/sustainabilityGoals/goal17.png' => 'Partnerships to achieve the Goal',
+            ]);
+        });
         $form->editor2('description', __('Description'));
         $form->editor2('testimonials', __('Testimonials'));
         $form->editor2('objectives', __('Objectives'));
