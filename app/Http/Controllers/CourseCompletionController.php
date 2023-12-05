@@ -39,6 +39,17 @@ class CourseCompletionController extends Controller
     {
         $userId = $request->user()->id;
 
+        $currentCompletion = CourseCompletion::where('user_id', $userId)
+            ->where('course_id', $course->id)->first();
+
+        if ($currentCompletion && $currentCompletion->exists() && $currentCompletion["certificate_path"] !== null) {
+            return response()->json([
+                'success' => true,
+                'message' => 'You have completed this course.',
+                'certificate_url' => Storage::disk('s3')->url($currentCompletion->certificate_path),
+            ], 201);
+        }
+
         $courseworkType = $request->input('coursework_type');
         if ($courseworkType === 'link') {
             $coursework_path = $request->input('coursework');
@@ -63,22 +74,18 @@ class CourseCompletionController extends Controller
             })
             ->count();
         if ($completedLessonCount === $courseLessonCount) {
-            $currentCompletion = CourseCompletion::where('user_id', $userId)
-                ->where('course_id', $course->id)->first();
-            if (!$currentCompletion || !$currentCompletion->exists() || $currentCompletion["certificate_path"] !== null) {
-                $name = $request->user()->first_name . ' ' . $request->user()->last_name;
-                $name = ucwords(strtolower($name));
-                $pdf = $this->generatePDF($name, $course->name);
-                $output = $pdf->Output('S');
-                $storagePath = 'certificates/' . $userId . '/' . $course->slug . '.pdf';
-                Storage::disk('s3')->put($storagePath, $output);
-                $currentCompletion = CourseCompletion::create([
-                    'user_id' => $userId,
-                    'course_id' => $course->id,
-                    'coursework_path' => $coursework_path,
-                    'certificate_path' => $storagePath,
-                ]);
-            }
+            $name = $request->user()->first_name . ' ' . $request->user()->last_name;
+            $name = ucwords(strtolower($name));
+            $pdf = $this->generatePDF($name, $course->name);
+            $output = $pdf->Output('S');
+            $storagePath = 'certificates/' . $userId . '/' . $course->slug . '.pdf';
+            Storage::disk('s3')->put($storagePath, $output);
+            $currentCompletion = CourseCompletion::create([
+                'user_id' => $userId,
+                'course_id' => $course->id,
+                'coursework_path' => $coursework_path,
+                'certificate_path' => $storagePath,
+            ]);
             return response()->json([
                 'success' => true,
                 'message' => 'You have completed this course.',
