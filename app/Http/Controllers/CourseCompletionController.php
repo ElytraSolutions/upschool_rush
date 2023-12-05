@@ -38,6 +38,19 @@ class CourseCompletionController extends Controller
     public function store(Request $request, Course $course)
     {
         $userId = $request->user()->id;
+
+        $courseworkType = $request->input('coursework_type');
+        if ($courseworkType === 'link') {
+            $coursework_path = $request->input('coursework');
+        } else if ($courseworkType === 'file') {
+            $coursework_path = $request->file('coursework')->store('coursework/' . $userId . '/' . $course->slug, 's3');
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid coursework type.',
+            ], 400);
+        }
+
         $courseLessonCount = $course->lessons()->count();
         $completedLessonCount = DB::table('lesson_completions')
             ->where('user_id', $userId)
@@ -62,6 +75,7 @@ class CourseCompletionController extends Controller
                 $currentCompletion = CourseCompletion::create([
                     'user_id' => $userId,
                     'course_id' => $course->id,
+                    'coursework_path' => $coursework_path,
                     'certificate_path' => $storagePath,
                 ]);
             }
