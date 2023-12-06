@@ -85,6 +85,7 @@ Route::middleware(['auth:sanctum'])->group(function ($route) {
     });
     $route->get('/user/courses', [UserController::class, 'myCourses']);
     $route->get('/user/books', [UserController::class, 'books']);
+    $route->get('/user/courses/eligibleForCertificate', [UserController::class, 'eligibleCoursesForCertificate']);
 });
 
 Route::middleware(['auth:sanctum'])->group(function ($route) {

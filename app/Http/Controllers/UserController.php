@@ -124,4 +124,30 @@ class UserController extends Controller
             'data' => $books,
         ];
     }
+
+    public function eligibleCoursesForCertificate(Request $request)
+    {
+        $dbQuery = <<<SQL
+            SELECT c.name, c.slug, COUNT(l.id) TotalLessons, COUNT(lc.id) CompletedLessons
+                FROM courses c
+                LEFT JOIN chapters ch ON ch.course_id = c.id
+                LEFT JOIN lessons l ON l.chapter_id = ch.id
+                LEFT JOIN lesson_completions lc ON lc.lesson_id = l.id
+                WHERE c.id IN (
+                    SELECT course_id FROM course_enrollments
+                        WHERE user_id = "{$request->user()->id}"
+                ) AND c.id NOT IN (
+                    SELECT course_id FROM course_completions
+                        WHERE user_id = "{$request->user()->id}"
+                )
+                GROUP BY c.name, c.slug
+                HAVING TotalLessons = CompletedLessons;
+        SQL;
+        $eligibleCourses = DB::select('' . $dbQuery . '');
+
+        return [
+            'success' => true,
+            'data' => $eligibleCourses,
+        ];
+    }
 }
