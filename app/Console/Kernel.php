@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\CertificateGenerated;
 
 class Kernel extends ConsoleKernel
 {
@@ -27,7 +28,7 @@ class Kernel extends ConsoleKernel
                         continue;
                     }
                     $course = DB::table('courses')->where('id', '=', $row->course_id)->first();
-                    $msgOutput = Mail::to($user->email)->send(new \App\Mail\CertificateGenerated($row->certificate_path, $user->first_name . " " . $user->last_name, $course->name));
+                    $msgOutput = Mail::to($user->email)->send(new CertificateGenerated($row->certificate_path, $user->first_name . " " . $user->last_name, $course->name));
                     if ($msgOutput) {
                         DB::table('course_completions')->where('id', '=', $row->id)->update(['email_sent' => 1]);
                         Log::info('Email sent to ' . $user->email . " for course " . $course->name);
