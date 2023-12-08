@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
                     }
                 }
             }
-        })->everyMinute()->appendOutputTo(storage_path('logs/laravel.log'));
+        })->hourly()->appendOutputTo(storage_path('logs/laravel.log'));
     }
 
     /**
