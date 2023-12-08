@@ -74,6 +74,7 @@ class CourseCompletionController extends AdminController
         $form->text('certificate_path', __('Certificate path'));
         $form->text('coursework_path', __('Coursework path'));
         $form->switch('email_sent', __('Email sent'));
+        $form->datetime('created_at', __('Created at'));
 
         return $form;
     }
