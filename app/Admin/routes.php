@@ -46,6 +46,7 @@ Route::group([
     $router->resource('users', AdminUserController::class);
     $router->resource('user-types', AdminUserTypeController::class);
     $router->resource('rich-content', RichContentController::class);
+    $router->resource('course-completions', CourseCompletionController::class);
 
     $router->group(['prefix' => 'api'], function (Router $router) {
         $router->get('/chapters', [AdminChapterController::class, 'chapters']);
