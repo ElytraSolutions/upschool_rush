@@ -8,6 +8,7 @@ use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\CourseDescription;
+use OpenAdmin\Admin\Facades\Admin;
 
 class AdminCourseDescriptionController extends AdminController
 {
@@ -26,6 +27,21 @@ class AdminCourseDescriptionController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new CourseDescription());
+
+        $grid->model()->whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
+            $isAdministrator = Admin::user()->isAdministrator();
+            $roles = Admin::user()->roles->pluck('slug');
+            if ($isAdministrator) {
+                $query->select('id')->from('course_descriptions');
+            } else if ($roles->contains('author')) {
+                $query->select('id')->from('course_descriptions')->whereIn('course_id', function (\Illuminate\Database\Query\Builder $query) {
+                    $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+                });
+            } else {
+                dd($roles);
+            }
+            return $query;
+        });
 
         // $grid->column('id', __('Description id'));
         $grid->column('course.name', __('Course'))->sortable();
@@ -67,7 +83,17 @@ class AdminCourseDescriptionController extends AdminController
     {
         $form = new Form(new CourseDescription());
 
-        $form->select('course_id', __('Course'))->options(Course::all()->pluck('name', 'id'));
+        $courses = [];
+        if (Admin::user()->isAdministrator()) {
+            $courses = Course::all()->pluck('name', 'id');
+        } else if (Admin::user()->roles->pluck('slug')->contains('author')) {
+            $courses = Course::whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
+                $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+            })->pluck('name', 'id');
+        } else {
+            dd(Admin::user()->roles->pluck('slug'));
+        }
+        $form->select('course_id', __('Course'))->options($courses);
         $form->text('title', __('Title'))->default('About this course');
         $form->text('subtitle', __('Subtitle'));
         $form->table('sustainability_details', __('Sustainability details'), function ($form) {

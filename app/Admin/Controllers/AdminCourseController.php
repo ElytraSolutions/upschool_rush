@@ -7,12 +7,14 @@ use \App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Lesson;
 use Database\Seeders\ChapterSeeder;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use OpenAdmin\Admin\Controllers\AdminController;
+use OpenAdmin\Admin\Facades\Admin;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Form\NestedForm;
 use OpenAdmin\Admin\Grid;
@@ -35,6 +37,19 @@ class AdminCourseController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Course());
+
+        $grid->model()->whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
+            $isAdministrator = Admin::user()->isAdministrator();
+            $roles = Admin::user()->roles->pluck('slug');
+            if ($isAdministrator) {
+                $query->select('id')->from('courses');
+            } else if ($roles->contains('author')) {
+                $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+            } else {
+                dd($roles);
+            }
+            return $query;
+        });
 
         $grid->filter(function ($filter) {
             $filter->like('name', 'name');
@@ -144,6 +159,12 @@ class AdminCourseController extends AdminController
         //     $nestedForm->hidden('priority', __('Priority'));
         // })->mode('table');
 
+        $form->saved(function (Form $form) {
+            DB::table('course_author')->insert([
+                'course_id' => $form->model()->id,
+                'user_id' => Admin::user()->id
+            ]);
+        });
         $form->saving(function (Form $form) {
             $form->ignore(['contentBtn']);
             // $chapters = [];
