@@ -124,7 +124,8 @@ return [
         'providers' => [
             'admin' => [
                 'driver' => 'eloquent',
-                'model'  => OpenAdmin\Admin\Auth\Database\Administrator::class,
+                'model' => App\Models\AdminUser::class,
+                // 'model'  => OpenAdmin\Admin\Auth\Database\Administrator::class,
             ],
         ],
 

@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use OpenAdmin\Admin\Form\NestedForm;
+use OpenAdmin\Admin\Facades\Admin;
 
 class AdminLessonSectionContentsController extends AdminController
 {
@@ -36,6 +37,25 @@ class AdminLessonSectionContentsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new LessonSectionContent());
+
+        $grid->model()->whereIn('lesson_section_id', function (\Illuminate\Database\Query\Builder $query) {
+            $isAdministrator = Admin::user()->isAdministrator();
+            $roles = Admin::user()->roles->pluck('slug');
+            if ($isAdministrator) {
+                $query->select('id')->from('lesson_sections');
+            } else if ($roles->contains('author')) {
+                $query->select('id')->from('lesson_sections')->whereIn('lesson_id', function (\Illuminate\Database\Query\Builder $query) {
+                    $query->select('id')->from('lessons')->whereIn('chapter_id', function (\Illuminate\Database\Query\Builder $query) {
+                        $query->select('id')->from('chapters')->whereIn('course_id', function (\Illuminate\Database\Query\Builder $query) {
+                            $query->select('course_id as id')->from('course_author')->where('user_id', admin_user()->id);
+                        });
+                    });
+                });
+            } else {
+                dd($roles);
+            }
+            return $query;
+        });
 
         $grid->column('lessonSection', __('Lesson Section'))->display(function ($lessonSection) {
             return $this->lessonSection->name || $this->lessonSection->id;
@@ -99,7 +119,18 @@ class AdminLessonSectionContentsController extends AdminController
     {
         $form = new Form(new LessonSectionContent());
 
-        $form->customSelect('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
+        $courses = [];
+        if (Admin::user()->isAdministrator()) {
+            $courses = Course::all()->pluck('name', 'id');
+        } else if (Admin::user()->roles->pluck('slug')->contains('author')) {
+            $courses = Course::whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
+                $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+            })->pluck('name', 'id');
+        } else {
+            dd(Admin::user()->roles->pluck('slug'));
+        }
+
+        $form->customSelect('course_id', __('Courses'))->options($courses)->load('chapter_id', '/admin/api/chapters/byCourseId');
         $form->customSelect('chapter_id', __('Chapters'))->load('lesson_id', '/admin/api/lessons/byChapterId');
         $form->customSelect('lesson_id', __('Lessons'))->load('lesson_section_id', '/admin/api/lesson-sections/byLessonId');
         $form->customSelect('lesson_section_id', __('Lesson Sections'));

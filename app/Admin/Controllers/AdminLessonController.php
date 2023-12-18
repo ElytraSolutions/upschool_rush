@@ -15,6 +15,7 @@ use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use App\Admin\Field\HTMLEditor;
 use Illuminate\Http\Request;
+use OpenAdmin\Admin\Facades\Admin;
 
 class AdminLessonController extends AdminController
 {
@@ -36,6 +37,23 @@ class AdminLessonController extends AdminController
 
         $grid->filter(function ($filter) {
             $filter->like('name', 'name');
+        });
+
+        $grid->model()->whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
+            $isAdministrator = Admin::user()->isAdministrator();
+            $roles = Admin::user()->roles->pluck('slug');
+            if ($isAdministrator) {
+                $query->select('id')->from('lessons');
+            } else if ($roles->contains('author')) {
+                $query->select('id')->from('lessons')->whereIn('chapter_id', function (\Illuminate\Database\Query\Builder $query) {
+                    $query->select('id')->from('chapters')->whereIn('course_id', function (\Illuminate\Database\Query\Builder $query) {
+                        $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+                    });
+                });
+            } else {
+                dd($roles);
+            }
+            return $query;
         });
 
         // $grid->column('id', __('Id'))->sortable();
@@ -87,8 +105,19 @@ class AdminLessonController extends AdminController
     {
         $form = new Form(new Lesson());
 
-        $form->tab('Lesson Data', function (Form $form) {
-            $form->select('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
+        $courses = [];
+        if (Admin::user()->isAdministrator()) {
+            $courses = Course::all()->pluck('name', 'id');
+        } else if (Admin::user()->roles->pluck('slug')->contains('author')) {
+            $courses = Course::whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
+                $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+            })->pluck('name', 'id');
+        } else {
+            dd(Admin::user()->roles->pluck('slug'));
+        }
+
+        $form->tab('Lesson Data', function (Form $form) use ($courses) {
+            $form->select('course_id', __('Courses'))->options($courses)->load('chapter_id', '/admin/api/chapters/byCourseId');
             $form->select('chapter_id', __('Chapters'));
             $form->text('name', __('Name'));
             $form->number('priority', __('Priority'))->default(1);

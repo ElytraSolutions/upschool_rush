@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Jobs\ProcessFlipbookJob;
 use App\Models\FlipBookJobStatus;
+use OpenAdmin\Admin\Facades\Admin;
 
 class AdminLessonSectionController extends AdminController
 {
@@ -35,6 +36,25 @@ class AdminLessonSectionController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new LessonSection());
+
+        $grid->model()->whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
+            $isAdministrator = Admin::user()->isAdministrator();
+            $roles = Admin::user()->roles->pluck('slug');
+            if ($isAdministrator) {
+                $query->select('id')->from('lesson_sections');
+            } else if ($roles->contains('author')) {
+                $query->select('id')->from('lesson_sections')->whereIn('lesson_id', function (\Illuminate\Database\Query\Builder $query) {
+                    $query->select('id')->from('lessons')->whereIn('chapter_id', function (\Illuminate\Database\Query\Builder $query) {
+                        $query->select('id')->from('chapters')->whereIn('course_id', function (\Illuminate\Database\Query\Builder $query) {
+                            $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+                        });
+                    });
+                });
+            } else {
+                dd($roles);
+            }
+            return $query;
+        });
 
         $grid->filter(function ($filter) {
             $filter->like('name', 'name');
@@ -66,8 +86,6 @@ class AdminLessonSectionController extends AdminController
     {
         $show = new Show(LessonSection::findOrFail($id));
 
-        // $grid = new Grid(new LessonSection());
-
         $show->column('id', __('Id'));
         $show->column('name', __('Name'));
         $show->column('slug', __('Slug'));
@@ -94,7 +112,18 @@ class AdminLessonSectionController extends AdminController
     {
         $form = new Form(new LessonSection());
 
-        $form->customSelect('course_id', __('Courses'))->options(Course::all()->pluck('name', 'id'))->load('chapter_id', '/admin/api/chapters/byCourseId');
+        $courses = [];
+        if (Admin::user()->isAdministrator()) {
+            $courses = Course::all()->pluck('name', 'id');
+        } else if (Admin::user()->roles->pluck('slug')->contains('author')) {
+            $courses = Course::whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
+                $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+            })->pluck('name', 'id');
+        } else {
+            dd(Admin::user()->roles->pluck('slug'));
+        }
+
+        $form->customSelect('course_id', __('Courses'))->options($courses)->load('chapter_id', '/admin/api/chapters/byCourseId');
         $form->customSelect('chapter_id', __('Chapters'))->load('lesson_id', '/admin/api/lessons/byChapterId');
         $form->customSelect('lesson_id', __('Lessons'));
         $form->text('name', __('Name'));
