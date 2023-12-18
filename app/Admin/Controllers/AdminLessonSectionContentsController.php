@@ -42,12 +42,14 @@ class AdminLessonSectionContentsController extends AdminController
             $isAdministrator = Admin::user()->isAdministrator();
             $roles = Admin::user()->roles->pluck('slug');
             if ($isAdministrator) {
-                $query->select('id')->from('lesson_sections');
+                $query->select('id')->from('lesson_section_contents');
             } else if ($roles->contains('author')) {
-                $query->select('id')->from('lesson_sections')->whereIn('lesson_id', function (\Illuminate\Database\Query\Builder $query) {
-                    $query->select('id')->from('lessons')->whereIn('chapter_id', function (\Illuminate\Database\Query\Builder $query) {
-                        $query->select('id')->from('chapters')->whereIn('course_id', function (\Illuminate\Database\Query\Builder $query) {
-                            $query->select('course_id as id')->from('course_author')->where('user_id', admin_user()->id);
+                $query->select('id')->from('lesson_section_contents')->whereIn('lesson_section_id', function (\Illuminate\Database\Query\Builder $query) {
+                    $query->select('id')->from('lesson_sections')->whereIn('lesson_id', function (\Illuminate\Database\Query\Builder $query) {
+                        $query->select('id')->from('lessons')->whereIn('chapter_id', function (\Illuminate\Database\Query\Builder $query) {
+                            $query->select('id')->from('chapters')->whereIn('course_id', function (\Illuminate\Database\Query\Builder $query) {
+                                $query->select('course_id as id')->from('course_author')->where('user_id', Admin::user()->id);
+                            });
                         });
                     });
                 });
