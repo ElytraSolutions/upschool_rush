@@ -38,7 +38,7 @@ class AdminLessonSectionContentsController extends AdminController
     {
         $grid = new Grid(new LessonSectionContent());
 
-        $grid->model()->whereIn('lesson_section_id', function (\Illuminate\Database\Query\Builder $query) {
+        $grid->model()->whereIn('id', function (\Illuminate\Database\Query\Builder $query) {
             $isAdministrator = Admin::user()->isAdministrator();
             $roles = Admin::user()->roles->pluck('slug');
             if ($isAdministrator) {
