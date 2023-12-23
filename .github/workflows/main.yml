@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - "prod"
+      - "uat"
   workflow_dispatch:
 jobs:
   build-frontend:
