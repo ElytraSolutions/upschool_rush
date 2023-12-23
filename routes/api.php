@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Process;
 Route::post('/githubwebhook', function (Request $request) {
     $secret = env('GITHUB_WEBHOOK_SECRET');
     $hash = "sha1=" . hash_hmac('sha1', $request->getContent(), $secret);
-    if ($request->ref != 'refs/heads/prod') {
+    if ($request->ref != 'refs/heads/uat') {
         Log::error('Invalid ref');
         return Response('Invalid ref', 200);
     }
