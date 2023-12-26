@@ -38,5 +38,5 @@ jobs:
           git status
           git add .
           git add -A -f public
-          git diff-index --quiet HEAD ||  git commit -am "deploy frontend"  # commit to the repository (ignore if no modification)
+          git diff-index --quiet HEAD &&  git commit -am "deploy frontend"  # commit to the repository (ignore if no modification)
           git push origin uat
