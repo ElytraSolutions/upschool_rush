@@ -13,6 +13,7 @@ jobs:
         working-directory: upschool_frontend
     env:
       VITE_IMG_ROOT_URL: "https://d1bpxl2yzyk1zq.cloudfront.net"
+      VITE_APP_URL: "https://upschooltest.digitalschoolsbuilds.com"
     steps:
       - name: Pull repository
         uses: actions/checkout@v3
