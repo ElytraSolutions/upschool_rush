@@ -29,6 +29,8 @@ jobs:
         env:
           VITE_APP_URL: https://upschooltest.digitalschoolsbuilds.com/
         run: npm run build
+      - name: Delete old assets
+        run: rm -rf ../public/assets/*
       - name: Copy dist to backend
         run: cp -r dist/* ../public && cp dist/index.html ../resources/views/reactApp.blade.php
       - name: Push changes
